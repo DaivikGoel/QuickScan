@@ -3,6 +3,7 @@
 .AppleDouble
 .LSOverride
 *.MOV
+*.JPG
 
 # Icon must end with two \r
 Icon
