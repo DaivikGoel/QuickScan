@@ -4,6 +4,7 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 const cors = require('cors');
 const admin = require('firebase-admin');
+const bodyParser = require('body-parser')
 const serviceAccount = require('./config/serviceAccountKey.json');
 
 admin.initializeApp({
@@ -34,6 +35,12 @@ function checkAuth(req, res, next) {
   }
 }
 
+app.use(bodyParser.json())
+app.use(
+  bodyParser.urlencoded({
+    extended: true,
+  })
+)
 app.use('/', checkAuth)
 
 app.get('/', (req, res) => {
