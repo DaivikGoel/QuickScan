@@ -45,6 +45,7 @@ CREATE TABLE collection (
     user_id numeric NOT NULL DEFAULT 0,
     video_blob_storage VARCHAR(30),
     3d_object_blob_storage VARCHAR(30)
+    timestamp timestamp default current_timestamp
 );
 
 CREATE TABLE image (

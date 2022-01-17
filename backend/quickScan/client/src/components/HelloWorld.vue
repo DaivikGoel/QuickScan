@@ -34,6 +34,7 @@ export default {
   methods: {
     sendRequest() {
       if (getAuth().currentUser) {
+        console.log(getAuth().currentUser)
         getAuth().currentUser.getIdToken(true)
         .then((idToken) => {
           client({
