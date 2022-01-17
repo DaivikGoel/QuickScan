@@ -11,7 +11,7 @@ def variance_of_laplacian(image):
 def isblurry(image):
     # construct the argument parse and parse the arguments
     #imagelocation = "/Users/daivikgoel/Desktop/frames/"
-    threshold = 50
+    threshold = 40
     # loop over the input images
     #for imagePath in paths.list_images(imagelocation):
         # load the image, convert it to grayscale, and compute the
@@ -24,6 +24,6 @@ def isblurry(image):
     # then the image should be considered "blurry"
     #print("FM:", fm)
     if fm < threshold:
-        return True
+        return True, fm
     else:
-        return False
+        return False, fm
