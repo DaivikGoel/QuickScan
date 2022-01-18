@@ -1,12 +1,17 @@
-import argparse
-from imutils import paths
 import cv2
 from blurdetect import isblurry
 import shutil
 import os
-shutil.rmtree('./frames') 
-os.mkdir('./frames')
-vidcap = cv2.VideoCapture('IMG_3171.MOV')
+
+output_directory = './frames'
+
+if os.path.exists(output_directory):
+  shutil.rmtree(output_directory)
+
+os.makedirs(output_directory)
+
+
+vidcap = cv2.VideoCapture('IMG_3177.MOV')
 success,image = vidcap.read()
 count = 0
 
