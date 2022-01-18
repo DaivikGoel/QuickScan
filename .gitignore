@@ -4,6 +4,7 @@
 .LSOverride
 *.MOV
 *.JPG
+*.LOCK
 
 # Icon must end with two \r
 Icon
