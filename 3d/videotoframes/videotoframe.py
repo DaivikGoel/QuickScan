@@ -1,5 +1,6 @@
 import cv2
 from blurdetect import isblurry
+from similaritydetect import removeSimilarFrames
 import shutil
 import os
 
@@ -11,7 +12,7 @@ if os.path.exists(output_directory):
 os.makedirs(output_directory)
 
 
-vidcap = cv2.VideoCapture('input.MOV')
+vidcap = cv2.VideoCapture('./input_videos/input.MOV')
 success,image = vidcap.read()
 count = 0
 
@@ -32,9 +33,10 @@ while success:
     print ("Frame was deleted")
 
 
-print('Completed')
-os.system('./HelloPhotogrammetry ./frames result.usdz -d medium ')
+removeSimilarFrames()
+
+print('Completed video to frame processing, generating model now...')
+
+os.system('./HelloPhotogrammetry ./frames ./output_models/result.usdz -d medium ')
 
 print('Completed Model')
-
-# ["/Users/boscoh/Desktop/photos/shoe", "/Users/boscoh/Desktop/shoe_result.usdz", "-d", "medium"]
