@@ -17,6 +17,10 @@ count = 0
 
 while success:
   success,image = vidcap.read()
+
+  if image is None:
+    continue
+
   pictureblurred, fm = isblurry(image)
   if pictureblurred == False:
     #cv2.putText(image, "{}: {:.2f}".format('Blur', fm), (10, 30),
