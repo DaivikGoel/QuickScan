@@ -255,7 +255,7 @@ extension PhotogrammetrySession.Configuration.FeatureSensitivity {
 
 // Run the program until completion.
 if #available(macOS 12.0, *) {
-    HelloPhotogrammetry.main(["/Users/boscoh/Desktop/photos/shoe", "/Users/boscoh/Desktop/shoe_result.usdz", "-d", "medium"])
+    HelloPhotogrammetry.main()
 } else {
     fatalError("Requires minimum macOS 12.0!")
 }

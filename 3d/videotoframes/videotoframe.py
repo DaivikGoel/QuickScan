@@ -11,7 +11,7 @@ if os.path.exists(output_directory):
 os.makedirs(output_directory)
 
 
-vidcap = cv2.VideoCapture('IMG_3177.MOV')
+vidcap = cv2.VideoCapture('input.MOV')
 success,image = vidcap.read()
 count = 0
 
@@ -31,3 +31,10 @@ while success:
   else:
     print ("Frame was deleted")
 
+
+print('Completed')
+os.system('./HelloPhotogrammetry ./frames result.usdz -d medium ')
+
+print('Completed Model')
+
+# ["/Users/boscoh/Desktop/photos/shoe", "/Users/boscoh/Desktop/shoe_result.usdz", "-d", "medium"]

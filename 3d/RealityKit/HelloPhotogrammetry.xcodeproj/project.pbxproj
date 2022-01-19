@@ -26,7 +26,6 @@
 /* Begin PBXFileReference section */
 		3AACFD8D2CBD36EDA66607F9 /* LICENSE.txt */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = LICENSE.txt; sourceTree = "<group>"; };
 		662F77A0D8C65CF208ABB917 /* ACKNOWLEDGEMENTS.txt */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = ACKNOWLEDGEMENTS.txt; sourceTree = "<group>"; };
-		7365C4E25C9381B7EBEE3701 /* SampleCode.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = SampleCode.xcconfig; path = Configuration/SampleCode.xcconfig; sourceTree = "<group>"; };
 		7B35772F26155F6900EC1A97 /* HelloPhotogrammetry */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = HelloPhotogrammetry; sourceTree = BUILT_PRODUCTS_DIR; };
 		7B35773226155F6900EC1A97 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 		7B357763261566B200EC1A97 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
@@ -56,7 +55,6 @@
 		3FA622068595B839DAC9BC34 /* Configuration */ = {
 			isa = PBXGroup;
 			children = (
-				7365C4E25C9381B7EBEE3701 /* SampleCode.xcconfig */,
 			);
 			name = Configuration;
 			sourceTree = "<group>";
@@ -161,7 +159,6 @@
 /* Begin XCBuildConfiguration section */
 		7B35773426155F6900EC1A97 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 7365C4E25C9381B7EBEE3701 /* SampleCode.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_NONNULL = YES;
@@ -223,7 +220,6 @@
 		};
 		7B35773526155F6900EC1A97 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 7365C4E25C9381B7EBEE3701 /* SampleCode.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_NONNULL = YES;
@@ -278,11 +274,10 @@
 		};
 		7B35773726155F6900EC1A97 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 7365C4E25C9381B7EBEE3701 /* SampleCode.xcconfig */;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "Mac Developer";
+				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = N385DWXB46;
+				DEVELOPMENT_TEAM = TKRGGAG7YF;
 				ENABLE_HARDENED_RUNTIME = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.example.apple-samplecode.HelloPhotogrammetry${SAMPLE_CODE_DISAMBIGUATOR}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -293,11 +288,10 @@
 		};
 		7B35773826155F6900EC1A97 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 7365C4E25C9381B7EBEE3701 /* SampleCode.xcconfig */;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "Mac Developer";
+				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = N385DWXB46;
+				DEVELOPMENT_TEAM = TKRGGAG7YF;
 				ENABLE_HARDENED_RUNTIME = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.example.apple-samplecode.HelloPhotogrammetry${SAMPLE_CODE_DISAMBIGUATOR}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
