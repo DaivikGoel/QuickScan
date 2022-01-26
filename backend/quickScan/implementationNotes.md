@@ -26,7 +26,7 @@ psql postgres
 # used to find the port to connect to the datbase (modify the port in queries.js)
 
 CREATE ROLE admin WITH LOGIN PASSWORD 'password';
-ALTER ROLE me CREATEDB;
+ALTER ROLE admin CREATEDB;
 \du 
 
 # lists all roles/users
@@ -35,16 +35,17 @@ ALTER ROLE me CREATEDB;
 
 # quit so that we can connect back with the role we created
 
-psql -d postgres -U me
+psql -d postgres -U admin 
 CREATE DATABASE quickScan
 \c quickScan 
 
 # connect to the new quickScan database 
 CREATE TABLE collection (
     collection_id SERIAL PRIMARY KEY,
+    name VARCHAR(30),
     user_id numeric NOT NULL DEFAULT 0,
     video_blob_storage VARCHAR(30),
-    3d_object_blob_storage VARCHAR(30)
+    three_dimen_object_blob_storage VARCHAR(30),
     timestamp timestamp default current_timestamp
 );
 
@@ -53,18 +54,47 @@ CREATE TABLE image (
     image_blob_storage VARCHAR(30)
 );
 
+CREATE TABLE tag (
+    tag_id SERIAL PRIMARY KEY,
+    tag_title VARCHAR(30)
+);
+
 CREATE TABLE collection_image (
     collection_id int REFERENCES collection (collection_id) ON UPDATE CASCADE ON DELETE CASCADE,
     image_id int REFERENCES image (image_id) ON UPDATE CASCADE,
-    CONSTRAINT collection_image_pkey PRIMARY KEY (collectiion_id, image_id)
+    CONSTRAINT collection_image_pkey PRIMARY KEY (collection_id, image_id)
+);
+
+CREATE TABLE collection_tag (
+    collection_id int REFERENCES collection (collection_id) ON UPDATE CASCADE ON DELETE CASCADE,
+    tag_id int REFERENCES tag (tag_id) ON UPDATE CASCADE,
+    CONSTRAINT collection_tag_pkey PRIMARY KEY (collection_id, tag_id)
 );
 ```
 
 In regards to the table the collection -> many images relationship is usually implemented by a separate table - `collection_image` in this case. 
+
+This intermediary table can help with overcoming the many-to-many obstacle - it might be that the web
+app is very very popular and needs de-normalizing down the road, but it is pointless muddying the 
+waters too early.
 
 https://blog.logrocket.com/nodejs-expressjs-postgresql-crud-rest-api-example/
 
 https://stackoverflow.com/questions/9789736/how-to-implement-a-many-to-many-relationship-in-postgresql
 
 
+## Implementation of createCollection 
 
+The general idea is once the user hits the endpoint for creating a Collection with the required user_id and name: 
+
+1. Generate a presigned URL and store the s3 location 
+
+
+
+
+
+# starting commands
+```
+backend - DEBUG=server:* nodemon start
+frontend - npm run serve
+```

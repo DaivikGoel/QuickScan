@@ -4,8 +4,9 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 const cors = require('cors');
 const admin = require('firebase-admin');
-const bodyParser = require('body-parser')
+const bodyParser = require('body-parser');
 const serviceAccount = require('./config/serviceAccountKey.json');
+const db = require('./queries');
 
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
@@ -43,6 +44,7 @@ app.use(
 )
 app.use('/', checkAuth)
 
+app.post('/collection', db.createCollection)
 app.get('/', (req, res) => {
   res.json({
     message: 'Hello World!'
