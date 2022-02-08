@@ -29,7 +29,7 @@ Temporary Items
 .apdisk
 
 # Node stuff
-node_modules
+node_modules/
 
 #XCode
 DerivedData/
