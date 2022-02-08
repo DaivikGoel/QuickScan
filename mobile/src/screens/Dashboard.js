@@ -9,10 +9,9 @@ export default function Dashboard({ navigation }) {
   return (
     <Background>
       <Logo />
-      <Header>Let’s start</Header>
+      <Header>Welcome</Header>
       <Paragraph>
-        Your amazing app starts here. Open you favorite code editor and start
-        editing this project.
+        Logged in.
       </Paragraph>
       <Button
         mode="outlined"
