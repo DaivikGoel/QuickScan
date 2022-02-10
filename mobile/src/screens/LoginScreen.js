@@ -10,25 +10,10 @@ import BackButton from '../components/BackButton'
 import { theme } from '../core/theme'
 import { emailValidator } from '../helpers/emailValidator'
 import { passwordValidator } from '../helpers/passwordValidator'
-import { initializeApp } from 'firebase/app';
-import { getFirestore, collection, getDocs } from 'firebase/firestore/lite';
-import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
+import { signInWithEmailAndPassword } from "firebase/auth";
+import { auth, db } from '../helpers/firebase'
 
-// TODO: Replace the following with your app's Firebase project configuration
-const firebaseConfig = {
-  apiKey: "AIzaSyAidQ4LnvFBCBU6Q1VbTPVivfJZ_E6APbQ",
-  authDomain: "quickscan-2f853.firebaseapp.com",
-  projectId: "quickscan-2f853",
-  storageBucket: "quickscan-2f853.appspot.com",
-  messagingSenderId: "361465475773",
-  appId: "1:361465475773:web:45dc4aace1a0962ffbbdd4",
-  measurementId: "G-V91KRP3H7K"
-};
-
-const app = initializeApp(firebaseConfig);
-const db = getFirestore(app);
-
-const auth = getAuth();
+// TODO: Replace the following with your app's Firebase project configurati
 
 const loginValidator = async (email, password) => {
   try {

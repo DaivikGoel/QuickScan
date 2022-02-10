@@ -11,20 +11,36 @@ import { theme } from '../core/theme'
 import { emailValidator } from '../helpers/emailValidator'
 import { passwordValidator } from '../helpers/passwordValidator'
 import { nameValidator } from '../helpers/nameValidator'
+import { auth, db } from '../helpers/firebase'
+import { createUserWithEmailAndPassword } from "firebase/auth";
 
-export default function RegisterScreen({ navigation }) {
+const registerValidator = async (email, password) => {
+  try {
+    let userCredential = await createUserWithEmailAndPassword(auth, email, password);
+    return userCredential
+  } catch {
+    console.log("Error occured during account creation")
+    return null
+  }
+}
+
+const RegisterScreen = ({ navigation }) => {
   const [name, setName] = useState({ value: '', error: '' })
   const [email, setEmail] = useState({ value: '', error: '' })
   const [password, setPassword] = useState({ value: '', error: '' })
 
-  const onSignUpPressed = () => {
+  const onSignUpPressed = async () => {
     const nameError = nameValidator(name.value)
     const emailError = emailValidator(email.value)
     const passwordError = passwordValidator(password.value)
+    const registerError = await registerValidator(email.value, password.value)
     if (emailError || passwordError || nameError) {
       setName({ ...name, error: nameError })
       setEmail({ ...email, error: emailError })
       setPassword({ ...password, error: passwordError })
+      return
+    }
+    if (registerError == null || registerError == undefined) {
       return
     }
     navigation.reset({
@@ -94,3 +110,5 @@ const styles = StyleSheet.create({
     color: theme.colors.primary,
   },
 })
+
+export default RegisterScreen;
