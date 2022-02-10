@@ -30,29 +30,24 @@ const db = getFirestore(app);
 
 const auth = getAuth();
 
-function loginValidator(email, password) {
-  signInWithEmailAndPassword(auth, email, password)
-  .then((userCredential) => {
-    // Signed in 
-    const user = userCredential.user;
-    // ...
-    return 'loggedin'
-  })
-  .catch((error) => {
-    const errorCode = error.code;
-    const errorMessage = error.message;
-    return "Incorrect email or password."
-  });
+const loginValidator = async (email, password) => {
+  try {
+    let userCredential = await signInWithEmailAndPassword(auth, email, password);
+    return userCredential
+  } catch {
+    console.log("Incorrect email or password.")
+    return null
+  }
 }
 
-export default function LoginScreen({ navigation }) {
+const LoginScreen = ({ navigation }) => {
   const [email, setEmail] = useState({ value: '', error: '' })
   const [password, setPassword] = useState({ value: '', error: '' })
 
-  const onLoginPressed = () => {
+  const onLoginPressed = async () => {
     const emailError = emailValidator(email.value)
     const passwordError = passwordValidator(password.value)
-    const loginError = loginValidator(email.value, password.value)
+    const loginError = await loginValidator(email.value, password.value)
     console.log(loginError)
     if (emailError || passwordError) {
       setEmail({ ...email, error: emailError })
@@ -60,8 +55,8 @@ export default function LoginScreen({ navigation }) {
       return
     }
     if (typeof loginError == undefined || loginError == null) {
-      setEmail({ ...email, error: "trash" })
-      setPassword({ ...password, error: "garbage" })
+      setEmail({ ...email, error: "This email or password does not exist" })
+      setPassword({ ...password, error: "" })
       return
     }
     navigation.reset({
@@ -135,3 +130,5 @@ const styles = StyleSheet.create({
     color: theme.colors.primary,
   },
 })
+
+export default LoginScreen;
