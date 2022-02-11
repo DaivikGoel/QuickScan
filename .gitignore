@@ -5,6 +5,7 @@
 *.MOV
 *.JPG
 *.LOCK
+*.usdz
 
 # Icon must end with two \r
 Icon
@@ -33,3 +34,10 @@ node_modules/
 
 #XCode
 DerivedData/
+
+#Python
+
+*.pyc
+
+#Model Output
+
