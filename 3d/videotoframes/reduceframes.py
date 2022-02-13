@@ -78,7 +78,6 @@ def removeSimilarFramesRMS():
 def removeSimilarFramesSIFT():
     lock_fd = acquireLock()
     directory = os.fsencode(frames_directory)
-    images_in_dir_cnt = len(os.listdir(directory))
 
     lastFrameNum = getMaxFrameNum(frames_directory)
     starting_idx = getStartingIdx(lastFrameNum)

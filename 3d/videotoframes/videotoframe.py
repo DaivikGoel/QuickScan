@@ -23,14 +23,13 @@ def videotoframe():
       continue
 
     pictureblurred, fm = isblurry(image)
-    if pictureblurred == False:
+    if not pictureblurred:
       #cv2.putText(image, "{}: {:.2f}".format('Blur', fm), (10, 30),
         #cv2.FONT_HERSHEY_SIMPLEX, 0.8, (0, 0, 255), 3)
       cv2.imwrite(output_directory + '/'+ "frame%d.jpg" % count, image)     # save frame as JPG file      
       count += 1
-    else:
-      print ("blurry frame was deleted")
 
+  print('number of non-blurry frames extracted: {}'.format(count))
 
   removeSimilarFramesRMS()
   removeSimilarFramesSIFT()
