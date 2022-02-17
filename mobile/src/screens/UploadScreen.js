@@ -4,9 +4,12 @@ import Logo from '../components/Logo'
 import Header from '../components/Header'
 import Paragraph from '../components/Paragraph'
 import Button from '../components/Button'
-import { isLoggedIn } from '../helpers/firebase'
+import { isLoggedIn, auth, db } from '../helpers/firebase'
 
-export default function Dashboard({ navigation }) {
+const test = auth.currentUser
+console.log(test)
+
+export default function UploadScreen({ navigation }) {
   useEffect(() => {
     if (!isLoggedIn()) {
       navigation.reset({
@@ -19,7 +22,7 @@ export default function Dashboard({ navigation }) {
   return (
     <Background>
       <Logo />
-      <Header>Welcome</Header>
+      <Header>Upload Video</Header>
       <Paragraph>
         Logged in.
       </Paragraph>
@@ -32,18 +35,7 @@ export default function Dashboard({ navigation }) {
           })
         }
       >
-        Logout
-      </Button>
-      <Button
-        mode="outlined"
-        onPress={() =>
-          navigation.reset({
-            index: 0,
-            routes: [{ name: 'UploadScreen' }],
-          })
-        }
-      >
-        Upload Video
+        gay
       </Button>
     </Background>
   )
