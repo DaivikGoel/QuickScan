@@ -23,7 +23,6 @@ struct SignInView: View {
                     .modifier(TextModifier(font: UIConfiguration.titleFont,
                                            color: UIConfiguration.tintColor))
                     .padding(.leading, 25)
-                    .padding(.bottom, 80)
                 VStack(alignment: .center, spacing: 30) {
                     VStack(alignment: .center, spacing: 25) {
                         CustomTextField(placeHolderText: "E-mail",
@@ -32,6 +31,11 @@ struct SignInView: View {
                                       text: $viewModel.password,
                                       isPasswordType: true)
                     }.padding(.horizontal, 25)
+                    VStack(alignment: .center, spacing: 40) {
+                        customButton(title: "login",
+                                     backgroundColor: UIColor(hexString: "#334D92"),
+                                     action: self.viewModel.login)
+                    }
                 }
             }
             Spacer()

@@ -3,34 +3,32 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>350995020018-m0vuq46boceiv3anhfa7kjdoji6bahtt.apps.googleusercontent.com</string>
+	<string>361465475773-1lhmvgmi6ot1e02ggmo73h4d17b0rvl9.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.350995020018-m0vuq46boceiv3anhfa7kjdoji6bahtt</string>
+	<string>com.googleusercontent.apps.361465475773-1lhmvgmi6ot1e02ggmo73h4d17b0rvl9</string>
 	<key>API_KEY</key>
-	<string>AIzaSyA1qqQCsd6tGFoah3bNPCsNtNUpnB4Gdb0</string>
+	<string>AIzaSyBJ2GRDcSP9rkszKV4PCo0T07FcNB8-Ri0</string>
 	<key>GCM_SENDER_ID</key>
-	<string>350995020018</string>
+	<string>361465475773</string>
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>iosapptemplate.tutorial.StarterSwiftUIApp</string>
+	<string>com.quickscan</string>
 	<key>PROJECT_ID</key>
-	<string>iosapptemplate-1572482863259</string>
+	<string>quickscan-2f853</string>
 	<key>STORAGE_BUCKET</key>
-	<string>iosapptemplate-1572482863259.appspot.com</string>
+	<string>quickscan-2f853.appspot.com</string>
 	<key>IS_ADS_ENABLED</key>
-	<false/>
+	<false></false>
 	<key>IS_ANALYTICS_ENABLED</key>
-	<false/>
+	<false></false>
 	<key>IS_APPINVITE_ENABLED</key>
-	<true/>
+	<true></true>
 	<key>IS_GCM_ENABLED</key>
-	<true/>
+	<true></true>
 	<key>IS_SIGNIN_ENABLED</key>
-	<true/>
+	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:350995020018:ios:447cbbd8087a50f7b5786b</string>
-	<key>DATABASE_URL</key>
-	<string>https://iosapptemplate-1572482863259.firebaseio.com</string>
+	<string>1:361465475773:ios:e7431cc3d0c6cac6fbbdd4</string>
 </dict>
 </plist>

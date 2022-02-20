@@ -53,18 +53,6 @@ struct WelcomeView: View {
                                     .stroke(Color.gray, lineWidth: 1)
                             )
                         }
-                        Button(action: {
-                            self.index = 3
-                            self.pushActive = true
-                        }) {
-                            Text("Upload")
-                                .modifier(TextModifier(font: UIConfiguration.buttonFont,
-                                                       color: .black))
-                                .frame(width: 275, height: 55)
-                                .overlay(RoundedRectangle(cornerRadius: 25)
-                                    .stroke(Color.gray, lineWidth: 1)
-                            )
-                        }
                     }
                 }
                 Spacer()
@@ -79,7 +67,7 @@ struct WelcomeView: View {
         case 2:
             return AnyView(SignUpView(state: state))
         default:
-            return AnyView(UploadView(state: state))
+            return AnyView(SignUpView(state: state))
         }
     }
 }
