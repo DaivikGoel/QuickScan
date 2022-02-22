@@ -6,11 +6,12 @@
     "start": "node ./bin/www"
   },
   "dependencies": {
+    "aws-sdk": "^2.1078.0",
     "cookie-parser": "~1.4.4",
     "debug": "~2.6.9",
     "express": "~4.16.1",
     "firebase": "^9.6.3",
-    "firebase-admin": "^10.0.1",
+    "firebase-admin": "^10.0.2",
     "http-errors": "~1.6.3",
     "jade": "~1.11.0",
     "morgan": "~1.9.1",

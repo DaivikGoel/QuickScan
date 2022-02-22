@@ -8,6 +8,18 @@ const bodyParser = require('body-parser');
 const serviceAccount = require('./config/serviceAccountKey.json');
 const db = require('./queries');
 
+
+var express  = require('express');
+var app      = express();
+var aws      = require('aws-sdk');
+var queueUrl = "https://sqs.ca-central-1.amazonaws.com/861570318875/3DObjectQueue.fifo";
+var receipt  = "";
+
+aws.config.update({region:'ca-central-1'})
+var sqs = new aws.SQS()
+
+var counter = 0
+
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
 })
@@ -50,5 +62,24 @@ app.get('/', (req, res) => {
     message: 'Hello World!'
   })
 })
+
+app.get('/sendToQueue', function (req, res) {
+  counter++;
+  var params = {
+      MessageGroupId: "0",
+      MessageBody: 'queue message ' + counter,
+      QueueUrl: queueUrl,
+      DelaySeconds: 0
+  };
+
+  sqs.sendMessage(params, function(err, data) {
+      if(err) {
+          res.send(err);
+      }
+      else {
+          res.send(data);
+      }
+  });
+});
 
 module.exports = app;

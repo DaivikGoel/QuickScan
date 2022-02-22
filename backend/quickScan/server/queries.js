@@ -38,7 +38,7 @@ const getCollectionsById = (request, response) => {
     })
 }
 
-const createCollection = (request, response) => {
+const createCollection = (req, response) => {
     const form = new formidable.IncomingForm();
 
     // Parsing
