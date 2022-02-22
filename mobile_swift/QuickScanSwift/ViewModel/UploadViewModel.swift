@@ -16,11 +16,39 @@ class UploadViewModel: ObservableObject {
     
     func upload() {
         print("trying to upload")
-        uploadVideo(with: "IMG_0646", type: "MOV")
+        uploadFileOld(with: "Tragoedia", type: "png")
+        //uploadVideo(with: "IMG_0646", type: "MOV")
     }
     
     let bucketName = "quickscanvideo"
     var completionHandler: AWSS3TransferUtilityUploadCompletionHandlerBlock?
+    
+    func uploadFileOld(with resource: String, type: String) {   //1
+        let key = "\(resource).\(type)"
+        let localImagePath = Bundle.main.path(forResource: resource, ofType: type)!  //2
+        let localImageUrl = URL(fileURLWithPath: localImagePath)
+        
+        let request = AWSS3TransferManagerUploadRequest()!
+        request.bucket = bucketName  //3
+        request.key = key  //4
+        request.body = localImageUrl
+        request.acl = .publicReadWrite  //5
+        
+        //6
+        let transferManager = AWSS3TransferManager.default()
+        transferManager.upload(request).continueWith(executor: AWSExecutor.mainThread()) { (task) -> Any? in
+            if let error = task.error {
+                print(error)
+            }
+            if task.result != nil {   //7
+                print("Uploaded \(key)")
+                //do any task
+            }
+            
+            return nil
+        }
+        
+    }
 
     func uploadVideo(with resource: String,type: String){   //1
             
