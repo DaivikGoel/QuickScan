@@ -74,7 +74,7 @@ const CameraScreen = ({navigation}) => {
             <Text style={styles.text}> Flip </Text>
           </TouchableOpacity>
           <RecordButton style={styles.recordButton} isRecording={isRecording} onPress={isRecording ? stopRecording : startRecording} />
-          <RecordButton style={styles.recordButton} isRecording={isRecording} onPress={isRecording ? stopRecording : startRecording} />
+          <Text>{motionData}</Text>
         </View>
       </Camera>
     </View>
