@@ -10,6 +10,7 @@ import {
   ResetPasswordScreen,
   Dashboard,
   UploadScreen,
+  CameraScreen,
 } from './src/screens'
 
 const Stack = createStackNavigator()
@@ -19,7 +20,7 @@ export default function App() {
     <Provider theme={theme}>
       <NavigationContainer>
         <Stack.Navigator
-          initialRouteName="StartScreen"
+          initialRouteName="CameraScreen"
           screenOptions={{
             headerShown: false,
           }}
@@ -29,6 +30,7 @@ export default function App() {
           <Stack.Screen name="LoginScreen" component={LoginScreen} />
           <Stack.Screen name="RegisterScreen" component={RegisterScreen} />
           <Stack.Screen name="Dashboard" component={Dashboard} />
+          <Stack.Screen name="CameraScreen" component={CameraScreen} />
           <Stack.Screen
             name="ResetPasswordScreen"
             component={ResetPasswordScreen}
