@@ -9,4 +9,7 @@ target 'QuickScanSwift' do
 	pod 'Firebase/Auth'
 	pod 'FBSDKCoreKit'
  	pod 'FBSDKLoginKit'
+	pod 'AWSS3'
+	pod 'AWSCognito'
+	pod 'AWSCore'
 end

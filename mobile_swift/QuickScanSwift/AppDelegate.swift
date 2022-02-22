@@ -1,5 +1,7 @@
 import UIKit
 import Firebase
+import AWSCore
+import AWSCognito
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
@@ -8,6 +10,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         FirebaseApp.configure()
+        self.initializeS3()
         return true
     }
 
@@ -24,6 +27,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // If any sessions were discarded while the application was not running, this will be called shortly after application:didFinishLaunchingWithOptions.
         // Use this method to release any resources that were specific to the discarded scenes, as they will not return.
     }
+    
+    func initializeS3() {
+            let poolId = "ca-central-1:043d773f-1b84-4e08-b73b-58c0c61fac00"
+            let credentialsProvider = AWSCognitoCredentialsProvider(
+                regionType: .CACentral1, //other regionType according to your location.
+                identityPoolId: poolId
+            )
+            let configuration = AWSServiceConfiguration(region: .CACentral1, credentialsProvider: credentialsProvider)
+            AWSServiceManager.default().defaultServiceConfiguration = configuration
+        }
 
 
 }
