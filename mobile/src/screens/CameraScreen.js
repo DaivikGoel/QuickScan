@@ -7,7 +7,6 @@ import RecordButton from '../components/RecordButton';
 const CameraScreen = ({navigation}) => {
   const [hasPermission, setHasPermission] = useState(null);
   const [isRecording, setIsRecording] = useState(false);
-  const [fileLocation, setFileLocation] = useState(null);
   const [motionSubscription, setMotionSubscription] = useState(null);
   const [motionData, setMotionData] = useState(null);
   const [camera, setCamera] = useState(null);
@@ -30,19 +29,21 @@ const CameraScreen = ({navigation}) => {
   const startRecording = async () => {
     if (camera) {
       setIsRecording(true);
-      trackMotion();
+      //trackMotion();
       const data = await camera.recordAsync({
         maxDuration: 30,
         mute: true,
       });
-      setFileLocation(data.uri);
+      setIsRecording(false);
+      //stopTrackingMotion();
+      navigation.push('UploadScreen', {
+        path: data.uri
+      })
     }
   }
 
-  const stopRecording = async () => {
+  const stopRecording = () => {
     camera.stopRecording();
-    setIsRecording(false);
-    stopTrackingMotion();
   }
 
   const trackMotion = () => {
