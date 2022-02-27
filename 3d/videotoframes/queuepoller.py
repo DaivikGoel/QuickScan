@@ -1,11 +1,13 @@
 from videotoframe import videotoframe
-
+from framedownloader import framedownloader
 import boto3
+import os
+from objectuploader import uploader
 
-import urllib
 
 sqs = boto3.client('sqs')
-
+s3_client = boto3.client('s3', region_name='ca-central-1')
+output_directory = './frames'
 queue_url = 'https://sqs.ca-central-1.amazonaws.com/861570318875/3DObjectQueue.fifo'
 
 # Send message to SQS queue
@@ -38,11 +40,17 @@ def queuepolling():
 
     message = response['Messages'][0]
     # print(message['MessageAttributes']['s3_bucket_links']['BinaryValue'])
-    decoded = message['MessageAttributes']['s3_bucket_links']['BinaryValue'].decode('utf-8').strip("[]").replace('"', "")
-    frame_names = list(decoded.split(","))
 
-    for framename in frame_names:
-        download_from_url(framename)
+    
+    framedownloader(message)
+
+    print('Completed video to frame processing, generating model now...')
+
+    uploader(message)
+
+    print('Completed Model')
+
+
 
     # print(message)
     receipt_handle = message['ReceiptHandle']
@@ -56,9 +64,5 @@ def queuepolling():
     #     ReceiptHandle=receipt_handle
     # )
     # print('Received and deleted message: %s' % message)
-
-def download_from_url(framename):
-    print(framename)
-    # urllib.urlretrieve("http://www.example.com/songs/mp3.mp3", "mp3.mp3")
 
 queuepolling()
