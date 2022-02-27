@@ -34,9 +34,8 @@ def queuepolling():
         )
 
 
-        # print(response)
         i += 1
-        #print( "Polled",i, response)
+        print( "Polled",i, response)
 
     message = response['Messages'][0]
     # print(message['MessageAttributes']['s3_bucket_links']['BinaryValue'])

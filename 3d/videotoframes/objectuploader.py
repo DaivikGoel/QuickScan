@@ -4,6 +4,7 @@ import os, shutil
 s3_client = boto3.client('s3', region_name='ca-central-1')
 
 output_directory = './output_models'
+frames_directory = './frames'
 
 def uploader(message):
 
@@ -16,7 +17,7 @@ def uploader(message):
     print("UUID", uuid)
 
     print("RUNNING COMMAND FOR PIPELINE")
-    os.system('./HelloPhotogrammetry {} ./output_models/result.usdz -d medium '.format(output_directory))
+    os.system('./HelloPhotogrammetry {} ./output_models/result.usdz -d medium '.format(frames_directory))
 
  
     os.chdir(output_directory)
@@ -25,7 +26,9 @@ def uploader(message):
     while os.path.exists('result.usdz') == False:
         continue
     print("OBJECT DONE")
-    s3_client.upload_file('result.usdz','quickscanimages',uuid + '.usdz')
+    s3_client.upload_file('result.usdz','quick-scan-3d-objects',uuid + '.usdz')
+
+    print("OBJECT uploaded")
 
     os.chdir('../')
     

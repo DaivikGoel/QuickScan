@@ -1,8 +1,7 @@
-from PIL import Image, ImageChops
+from PIL import ImageChops
 from functools import reduce
 import fcntl
 import math, operator
-import os
 
 
 def acquireLock():
