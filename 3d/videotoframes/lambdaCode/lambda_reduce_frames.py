@@ -61,7 +61,7 @@ def removeSimilarFramesRMS():
             reference_image = comparing_image
         else :
             # if too similar, delete the img
-            print("deleteing" + frames_directory + image_name + str(i) + image_fmt)
+            # print("deleteing" + frames_directory + image_name + str(i) + image_fmt)
             deleted += 1
             os.remove(comparing_image_path)
 
@@ -90,13 +90,13 @@ def removeSimilarFramesSIFT():
 
         if (errorScore > Threasholds.sift_error_threashold):
             #delete Image B (comparing Image)
-            print("deleteing: " + comparing_image_path)
+            # print("deleteing: " + comparing_image_path)
             deleted += 1
             os.remove(comparing_image_path)
             
         else:
             # make B reference image
-            print('replaced reference image with: {}'.format(comparing_image_path))
+            # print('replaced reference image with: {}'.format(comparing_image_path))
             reference_image_path = comparing_image_path
 
     print("Number of frames deleted using SIFT: " + str(deleted))

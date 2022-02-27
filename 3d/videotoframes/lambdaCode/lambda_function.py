@@ -8,13 +8,14 @@ import io
 import os
 import tempfile
 import logging
+import json
 
 logger = logging.getLogger()
 logger.setLevel(logging.INFO)
 
 sqs = boto3.client('sqs')
 queue_url = 'https://sqs.ca-central-1.amazonaws.com/861570318875/3DObjectQueue.fifo'
-
+s3_client = boto3.client('s3', region_name='ca-central-1')
 
 def push_to_sqs(event, number_of_images, linkarray):
     # Send message to SQS queue
@@ -25,11 +26,11 @@ def push_to_sqs(event, number_of_images, linkarray):
     MessageAttributes={
         'uuid': {
             'DataType': 'String',
-            'StringValue': event["body"]["uuid"]
+            'StringValue': str(event["body"]["uuid"])
         },
         'collection_id': {
             'DataType': 'String',
-            'StringValue': event["body"]["collection_id"]
+            'StringValue': str(event["body"]["collection_id"])
         },
         'number_of_images': {
             'DataType': 'Number',
@@ -39,7 +40,8 @@ def push_to_sqs(event, number_of_images, linkarray):
         's3_bucket_links' : {
             
             'DataType': 'Binary.array',
-            'Value': linkarray
+            'BinaryValue': json.dumps(linkarray)
+            
             
         }
     },
@@ -50,19 +52,16 @@ def push_to_sqs(event, number_of_images, linkarray):
 
 def upload_frames_to_s3(uuid, output_directory):
     linkarray = []
-    
+    print("UUID", uuid, "OUUPUT", output_directory)
     for image_path in os.listdir(output_directory):
         logger.info(f'Got Image Path: {image_path}')
-        img = Image.open(os.path.join(output_directory, image_path))
-        frame_name = uuid + image_path
+        # img = Image.open(os.path.join(output_directory, image_path))
+        frame_name = str(uuid) + str(image_path)
         logger.info(f'Frame Name: {frame_name}')
-        uploaded = s3_client.upload_file(img,'quickscanimages',frame_name, ExtraArgs={'ACL': 'public-read'})
-        
-        if uploaded == true:
-            logger.info(f'Uploaded')
-            linkarray.push(frame_name)
-            logger.info(f'linkarray: {linkarray}')
+        uploaded = s3_client.upload_file(os.path.join(output_directory, image_path),'quickscanimages',frame_name)
     
+        linkarray.append(frame_name)
+        logger.info(f'linkarray: {linkarray}')
     return linkarray
         
 
@@ -92,7 +91,7 @@ def lambda_handler(event, context):
             logger.error('Failed to delete %s. Reason: %s' % (file_path, e))
 
         
-    s3_client = boto3.client('s3', region_name='ca-central-1')
+    
     url = s3_client.generate_presigned_url( ClientMethod='get_object', Params={ 'Bucket': "quickscans3", 'Key': "meat.MOV" } )
     vidcap = cv2.VideoCapture(url)
     success,image = vidcap.read()
@@ -121,9 +120,10 @@ def lambda_handler(event, context):
             count += 1
 
         else:
-            print ("blurry frame was deleted")
+            # print ("blurry frame was deleted")
+            continue
             
-    # print("NUMBER OF FRAMES in dir /tmp after blur detection ", len(os.listdir(output_directory)))
+    print("NUMBER OF FRAMES in dir /tmp after blur detection ", len(os.listdir(output_directory)))
     logger.info(f'NUMBER OF FRAMES in dir /tmp after blur detection {len(os.listdir(output_directory))}')
     print("count of non blurry images ", count)
     logger.info(f'count of non blurry images: {count}')
@@ -136,7 +136,7 @@ def lambda_handler(event, context):
 
     # TODO: enqueue the event and contexts
     linkarray = upload_frames_to_s3(event["body"]["uuid"], output_directory)
-    
+    print("LINK ARRAY", linkarray)
     push_to_sqs(event, len(linkarray), linkarray)
     # os.system('./HelloPhotogrammetry {} ./output_models/result.usdz -d medium '.format(output_directory))
     

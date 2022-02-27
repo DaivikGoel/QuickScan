@@ -23,16 +23,16 @@ def siftCompare(imgPath1, imgPath2):
     found_keypoints_1 = len(keypoints_1); found_keypoints_2 = len(keypoints_2)
     percent_diff = abs(found_keypoints_1 - found_keypoints_2) / ((found_keypoints_1 + found_keypoints_2) / 2)
 
-    print('# of keypoints found in img1: {}, img2: {}'.format(found_keypoints_1, found_keypoints_2))
+    #print('# of keypoints found in img1: {}, img2: {}'.format(found_keypoints_1, found_keypoints_2))
 
     #feature matching
     bf = cv2.BFMatcher(cv2.NORM_L1, crossCheck=True)
     matches = bf.match(descriptors_1,descriptors_2)
     matches = sorted(matches, key = lambda x:x.distance)
-    print('matches found: {}'.format(len(matches)))
+    #print('matches found: {}'.format(len(matches)))
 
     errorScore = calculateErrorScore(len(matches), found_keypoints_1, found_keypoints_2)
-    print('error score: {}'.format(errorScore))
+    #print('error score: {}'.format(errorScore))
 
     # error score (the lower the similar the images)
     # percent diff: percent diff btw keypoints found in 2 images
