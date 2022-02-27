@@ -1,0 +1,11 @@
+Labels:
+Cat
+Window
+Felidae
+Carnivore
+Jaw
+Ear
+Small to medium-sized cats
+Window blind
+Gesture
+Whiskers
