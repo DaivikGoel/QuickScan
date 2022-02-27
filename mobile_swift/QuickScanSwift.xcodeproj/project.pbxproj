@@ -30,6 +30,8 @@
 		30F0AF9224E976410084CE6E /* SplashView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30F0AF9124E976410084CE6E /* SplashView.swift */; };
 		30F0AF9824E9868D0084CE6E /* SignInViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30F0AF9724E9868D0084CE6E /* SignInViewModel.swift */; };
 		30F0AF9B24E989020084CE6E /* CustomTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30F0AF9A24E989020084CE6E /* CustomTextField.swift */; };
+		D52D27EB27C471DD003284D8 /* IMG_0646.MOV in Resources */ = {isa = PBXBuildFile; fileRef = D52D27EA27C46D4A003284D8 /* IMG_0646.MOV */; };
+		D52D27EF27C4A2BA003284D8 /* Tragoedia.png in Resources */ = {isa = PBXBuildFile; fileRef = D52D27EE27C4A2BA003284D8 /* Tragoedia.png */; };
 		D539E1BB27BEFBD0004E3C9E /* UploadView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D539E1BA27BEFBD0004E3C9E /* UploadView.swift */; };
 		D539E1BD27BEFC36004E3C9E /* UploadViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D539E1BC27BEFC36004E3C9E /* UploadViewModel.swift */; };
 		D67277D8155DE049A430452D /* Pods_QuickScanSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9DA9DF5518C4734E912E9966 /* Pods_QuickScanSwift.framework */; };
@@ -68,6 +70,8 @@
 		8445C9E02BCD321F08E7E9E0 /* Pods-FirebaseStarterSwiftUIApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FirebaseStarterSwiftUIApp.debug.xcconfig"; path = "Target Support Files/Pods-FirebaseStarterSwiftUIApp/Pods-FirebaseStarterSwiftUIApp.debug.xcconfig"; sourceTree = "<group>"; };
 		9DA9DF5518C4734E912E9966 /* Pods_QuickScanSwift.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_QuickScanSwift.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A18896580B312E37201FC7BA /* Pods-QuickScanSwift.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-QuickScanSwift.release.xcconfig"; path = "Target Support Files/Pods-QuickScanSwift/Pods-QuickScanSwift.release.xcconfig"; sourceTree = "<group>"; };
+		D52D27EA27C46D4A003284D8 /* IMG_0646.MOV */ = {isa = PBXFileReference; lastKnownFileType = video.quicktime; path = IMG_0646.MOV; sourceTree = "<group>"; };
+		D52D27EE27C4A2BA003284D8 /* Tragoedia.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Tragoedia.png; path = ../../../../Tragoedia.png; sourceTree = "<group>"; };
 		D539E1BA27BEFBD0004E3C9E /* UploadView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadView.swift; sourceTree = "<group>"; };
 		D539E1BC27BEFC36004E3C9E /* UploadViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -105,6 +109,9 @@
 		30127DC924DE506300576F65 /* QuickScanSwift */ = {
 			isa = PBXGroup;
 			children = (
+				D52D27EE27C4A2BA003284D8 /* Tragoedia.png */,
+				D52D27EA27C46D4A003284D8 /* IMG_0646.MOV */,
+				D52D27E627C46C28003284D8 /* resources */,
 				30DDE0B724EABC8100208D32 /* Model */,
 				30F0AF9924E9885E0084CE6E /* Components */,
 				30F0AF9624E985D40084CE6E /* Configuration */,
@@ -212,6 +219,21 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		D52D27E627C46C28003284D8 /* resources */ = {
+			isa = PBXGroup;
+			children = (
+				D52D27E727C46C32003284D8 /* videos */,
+			);
+			path = resources;
+			sourceTree = "<group>";
+		};
+		D52D27E727C46C32003284D8 /* videos */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = videos;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -272,6 +294,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D52D27EB27C471DD003284D8 /* IMG_0646.MOV in Resources */,
+				D52D27EF27C4A2BA003284D8 /* Tragoedia.png in Resources */,
 				30127DD724DE506500576F65 /* LaunchScreen.storyboard in Resources */,
 				30127DDF24DE9F3400576F65 /* GoogleService-Info.plist in Resources */,
 				30127DD424DE506500576F65 /* Preview Assets.xcassets in Resources */,

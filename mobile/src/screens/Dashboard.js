@@ -39,7 +39,7 @@ export default function Dashboard({ navigation }) {
         onPress={() =>
           navigation.reset({
             index: 0,
-            routes: [{ name: 'UploadScreen' }],
+            routes: [{ name: 'CameraScreen' }],
           })
         }
       >

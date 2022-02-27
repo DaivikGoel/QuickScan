@@ -1,0 +1,21 @@
+{
+  "dev": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-quickscanupload-dev-140534-authRole",
+      "UnauthRoleArn": "arn:aws:iam::861570318875:role/amplify-quickscanupload-dev-140534-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::861570318875:role/amplify-quickscanupload-dev-140534-authRole",
+      "Region": "ca-central-1",
+      "DeploymentBucketName": "amplify-quickscanupload-dev-140534-deployment",
+      "UnauthRoleName": "amplify-quickscanupload-dev-140534-unauthRole",
+      "StackName": "amplify-quickscanupload-dev-140534",
+      "StackId": "arn:aws:cloudformation:ca-central-1:861570318875:stack/amplify-quickscanupload-dev-140534/6be0f5b0-9412-11ec-a75f-0a8265236032",
+      "AmplifyAppId": "d316t1rp4hfcew"
+    },
+    "categories": {
+      "auth": {
+        "quickscanuploadc3d86b7b": {},
+        "true": {}
+      }
+    }
+  }
+}
