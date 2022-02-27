@@ -13,9 +13,6 @@ import * as Progress from 'react-native-progress';
 
 Amplify.configure(awsmobile);
 
-const test = auth.currentUser
-console.log(test)
-
 export default function UploadScreen({ navigation, route }) {
   useEffect(() => {
     if (!isLoggedIn()) {
@@ -44,11 +41,32 @@ export default function UploadScreen({ navigation, route }) {
     const response = await fetch(route.params.path)
     const blob = await response.blob();
     const fileId = uuid.v4() + '.mov'
+    const userId = auth.currentUser.uid
 
     await Storage.put(fileId, blob, {
       contentType: 'mov',
       progressCallback
     });
+
+    console.log(userId)
+    console.log(fileId)
+    console.log(name.value)
+    console.log(description.value)
+
+    fetch('http://ec2-3-98-130-154.ca-central-1.compute.amazonaws.com:3000/collection', {
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        user_id: userId,
+        uuid: fileId,
+        name: name,
+        description: description,
+      })
+    });
+
     setShowModal(false);
     Alert.alert('Upload Finished 🎉')
   }
