@@ -4,6 +4,7 @@ import boto3
 import os
 from objectuploader import uploader
 import requests
+import sys
 
 sqs = boto3.client('sqs')
 s3_client = boto3.client('s3', region_name='ca-central-1')
@@ -73,4 +74,7 @@ def queuepolling():
     )
     print('Received and deleted message: %s' % message)
 
-queuepolling()
+
+if __name__ == '__main__': 
+    queuepolling()
+    os.execv(__file__, sys.argv)
