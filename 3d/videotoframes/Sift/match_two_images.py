@@ -1,6 +1,5 @@
 import os
 import cv2 
-import matplotlib.pyplot as plt
 
 def calculateErrorScore(matches, keypoint1, keypoint2):
     return 100 * abs((matches/keypoint1) - (matches/keypoint2))
