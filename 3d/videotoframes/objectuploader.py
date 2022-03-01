@@ -22,14 +22,16 @@ def uploader(message):
  
     os.chdir(output_directory)
     
-    print("WAITING FOR OBJECT")
-    while os.path.exists('result.usdz') == False:
-        continue
-    print("OBJECT DONE")
-    s3_client.upload_file('result.usdz','quick-scan-3d-objects',uuid + '.usdz')
+    Uploaded = False
 
-    print("OBJECT uploaded")
+    if os.path.exists('result.usdz') == False:
+        Uploaed = False
+    else: 
+        print("OBJECT DONE")
+        s3_client.upload_file('result.usdz','quick-scan-3d-objects',uuid + '.usdz')
+        Uploaded = True
+        print("OBJECT uploaded")
 
     os.chdir('../')
     
-    return True
+    return Uploaded
