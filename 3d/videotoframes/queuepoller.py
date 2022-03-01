@@ -31,7 +31,7 @@ def queuepolling():
                 's3_bucket_links',
                 'uuid'
             ],
-            VisibilityTimeout=10,
+            VisibilityTimeout=1000,
             WaitTimeSeconds=20
         )
 
@@ -74,7 +74,7 @@ def queuepolling():
     )
     print('Received and deleted message: %s' % message)
 
-
 if __name__ == '__main__': 
-    queuepolling()
-    os.execv(__file__, sys.argv)
+
+    while True:
+        queuepolling()
