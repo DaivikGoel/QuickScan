@@ -67,10 +67,10 @@ def queuepolling():
     # Do all that needs to be done within 10 minutes
     # download frames using s3 link or google drive link 
     #Delete received message from queue
-    # sqs.delete_message(
-    #     QueueUrl=queue_url,
-    #     ReceiptHandle=receipt_handle
-    # )
-    # print('Received and deleted message: %s' % message)
+    sqs.delete_message(
+        QueueUrl=queue_url,
+        ReceiptHandle=receipt_handle
+    )
+    print('Received and deleted message: %s' % message)
 
 queuepolling()
