@@ -11,25 +11,39 @@ import { Button } from '@paljs/ui/Button';
 import axios from 'axios';
 
 const Home = () => {
-  // yolo
+  
   AWS.config.update({
     accessKeyId: 'AKIA4RGMXYINS5GS6JIA',
     secretAccessKey: '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',
     region: 'ca-central-1'
   });
 
+  type cardData = {
+    title: string;
+    thumbnail: string;
+  }
+  let cardPropsServer : cardData[]
+
   const requestUrl = 'http://ec2-3-98-130-154.ca-central-1.compute.amazonaws.com:3000/collection'
+
   axios.get(requestUrl)
   .then(function (response) {
     const objects = response.data.data
-    console.log(response.data.data[1]["three_dimen_object_blob_storage"])
-    console.log(objects)
+    for (let k = 0; k< objects.size; k++) {
+      let tmp : cardData = {
+        title: objects[k]["name"],
+        thumbnail: "objects[thumbnail]"
+      }
+
+      cardPropsServer.push(tmp)
+    }
+    console.log(objects[0]["name"])
+    console.log(cardPropsServer)
     //console.log(response);
   })
   .catch(function (error) {
     console.log(error);
   });
-
 
   const handleDownload = () => {
     const fileName = '1215.usdz'

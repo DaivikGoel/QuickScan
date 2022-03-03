@@ -1,5 +1,5 @@
 import UIKit
-import Firebase
+11import Firebase
 import AWSCore
 import AWSCognito
 @UIApplicationMain
