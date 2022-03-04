@@ -16,12 +16,13 @@ struct ARView: UIViewControllerRepresentable {
         return controller
     }
     
-    func nextState() {
-        return controller.switchToNextState()
-    }
-    
-    func startRecording() {
-        return controller.startRecording()
+    func startRecording() -> Bool {
+        if controller.scan!.state == .defineBoundingBox {
+            controller.switchToNextState()
+            controller.startRecording()
+            return true
+        }
+        return false
     }
     
     func stopRecording() {

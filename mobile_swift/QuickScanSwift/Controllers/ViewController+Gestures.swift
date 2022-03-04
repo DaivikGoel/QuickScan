@@ -66,4 +66,10 @@ extension ViewController: UIGestureRecognizerDelegate {
         }
         return false
     }
+    
+    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldReceive touch: UITouch) -> Bool {
+            print("HELP")
+            let isControllTapped = touch.view is UIControl
+            return !isControllTapped
+        }
 }

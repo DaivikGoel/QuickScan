@@ -15,9 +15,6 @@ struct ARUIView: View {
           ZStack {
               ar
              VStack {
-                 Button("Next") {
-                     ar.nextState()
-                 }
                 Spacer()
                 Spacer()
                 ZStack {
@@ -29,14 +26,18 @@ struct ARUIView: View {
                         .stroke(Color.white, lineWidth: 5)
                    )
                     Button(action: {
-                        isRecording ? ar.stopRecording() : ar.startRecording()
-                        isRecording.toggle()
+                        if (isRecording) {
+                            isRecording = false
+                            ar.stopRecording()
+                        } else {
+                            isRecording = ar.startRecording()
+                        }
                     }) {
                         Text("")
                             .padding()
                             .frame(width: 40, height: 40)
                             .background(RoundedRectangle(cornerRadius: .infinity)
-                            .foregroundColor(Color.red).opacity(isRecording ? 1 : 0))
+                            .foregroundColor(isRecording ? Color.red : Color.white))
                     }
                 }
              }
