@@ -10,12 +10,13 @@ import Foundation
 struct ARUIView: View {
    @State var isRecording = false
    @State var pushActive = false
+    
    @ObservedObject var state: AppState
    let ar = ARView()
    var body: some View {
        NavigationView {
-            VStack {
-              NavigationLink(destination: UploadView(state: AppState.init(), url: ar.getUrl()),
+            VStack(spacing: -100) {
+              NavigationLink(destination: UploadView(state: state, url: ar.getUrl()),
                              isActive: self.$pushActive) {
                 EmptyView()
               }.hidden()

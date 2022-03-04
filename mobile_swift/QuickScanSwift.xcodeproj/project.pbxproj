@@ -99,7 +99,7 @@
 		073C367427CF450C000CE6C2 /* ARView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARView.swift; sourceTree = "<group>"; };
 		073C367D27CFE444000CE6C2 /* TestRun.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestRun.swift; sourceTree = "<group>"; };
 		073C367F27CFE79A000CE6C2 /* DetectedObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetectedObject.swift; sourceTree = "<group>"; };
-		073C368127CFEA30000CE6C2 /* ARUIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARUIView.swift; sourceTree = "<group>"; };
+		073C368127CFEA30000CE6C2 /* ARUIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARUIView.swift; sourceTree = "<group>"; usesTabs = 0; };
 		0B8AE8CB2A252EC929D1448D /* Pods-FirebaseStarterSwiftUIApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FirebaseStarterSwiftUIApp.release.xcconfig"; path = "Target Support Files/Pods-FirebaseStarterSwiftUIApp/Pods-FirebaseStarterSwiftUIApp.release.xcconfig"; sourceTree = "<group>"; };
 		29C8AC219E5BF9499AB43332 /* Pods-QuickScanSwift.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-QuickScanSwift.debug.xcconfig"; path = "Target Support Files/Pods-QuickScanSwift/Pods-QuickScanSwift.debug.xcconfig"; sourceTree = "<group>"; };
 		30127DC724DE506300576F65 /* QuickScanSwift.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = QuickScanSwift.app; sourceTree = BUILT_PRODUCTS_DIR; };

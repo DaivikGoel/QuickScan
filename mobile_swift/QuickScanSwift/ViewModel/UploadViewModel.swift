@@ -26,7 +26,7 @@ class UploadViewModel: ObservableObject {
         let Url = URL(string: self.url)!
         let uuid = Url.lastPathComponent
         //uploadFileOld(with: "Tragoedia", type: "png")
-        uploadVideo(with: self.url, type: "mp4")
+        uploadVideo(with: self.url, type: "mov")
         postRequest(uuid: uuid)
     }
     
@@ -65,7 +65,7 @@ class UploadViewModel: ObservableObject {
       let userId = Auth.auth().currentUser?.uid
       // declare the parameter as a dictionary that contains string as key and value combination. considering inputs are valid
       
-        let parameters: [String: Any] = ["title": self.title, "description": self.description, "user_id": userId, "uuid": uuid]
+        let parameters: [String: Any] = ["name": self.title, "description": self.description, "user_id": userId ?? "69696969", "uuid": uuid]
       
       // create the url with URL
       let url = URL(string: "http://ec2-3-98-130-154.ca-central-1.compute.amazonaws.com:3000/collection")! // change server url accordingly
