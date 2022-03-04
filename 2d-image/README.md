@@ -16,6 +16,6 @@ export GOOGLE_APPLICATION_CREDENTIALS="key/solar-icon-319404-c5165d8e60d1.json"
 
 ## Execution
 ```
-python qs.py
+python imagedetect.py
 ```
 
