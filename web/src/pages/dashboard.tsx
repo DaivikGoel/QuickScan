@@ -1,80 +1,31 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import SEO from '../components/SEO';
 import Row from '@paljs/ui/Row';
 import Select from '@paljs/ui/Select';
 import Col from '@paljs/ui/Col';
-import { InputGroup } from '@paljs/ui/Input';
 import styled from 'styled-components';
 import { Card, CardBody, CardFooter } from '@paljs/ui/Card';
-import AWS from 'aws-sdk';
 import { Button } from '@paljs/ui/Button';
 import axios from 'axios';
+import { navigate } from 'gatsby';
 
 const Home = () => {
-  
-  AWS.config.update({
-    accessKeyId: 'AKIA4RGMXYINS5GS6JIA',
-    secretAccessKey: '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',
-    region: 'ca-central-1'
-  });
-
-  type cardData = {
-    title: string;
-    thumbnail: string;
-  }
-  let cardPropsServer : cardData[]
 
   const requestUrl = 'http://ec2-3-98-130-154.ca-central-1.compute.amazonaws.com:3000/collection'
 
-  axios.get(requestUrl)
-  .then(function (response) {
-    const objects = response.data.data
-    for (let k = 0; k< objects.size; k++) {
-      let tmp : cardData = {
-        title: objects[k]["name"],
-        thumbnail: "objects[thumbnail]"
+  useEffect(() => {
+    (async () => {
+      try {
+        const response = await axios.get(requestUrl)
+        if (response) {
+          const objects = response.data.data
+          const cardProps = objects.map((obj: any) => ({title: obj["name"], thumbnail: obj["thumbnail"]}))
+        }
+      } catch (error) {
+        console.log(error)
       }
-
-      cardPropsServer.push(tmp)
-    }
-    console.log(objects[0]["name"])
-    console.log(cardPropsServer)
-    //console.log(response);
-  })
-  .catch(function (error) {
-    console.log(error);
-  });
-
-  const handleDownload = () => {
-    const fileName = '1215.usdz'
-    const s3 = new AWS.S3();
-
-    const params = {
-      Bucket: 'quick-scan-3d-objects',
-      Key: fileName,
-    };
-
-    const signedUrl = s3.getSignedUrl('getObject', params)
-    const link = document.createElement('a');
-    // Set link's href to point to the Blob URL
-    link.href = signedUrl;
-    link.download = fileName;
-    // Append link to the body
-    document.body.appendChild(link);
-    // Dispatch click event on the link
-    // This is necessary as link.click() does not work on the latest firefox
-    link.dispatchEvent(
-      new MouseEvent('click', {
-        bubbles: true,
-        cancelable: true,
-        view: window,
-      })
-    );
-
-    // Remove link from body
-    document.body.removeChild(link);
-}
-
+    })();
+  }, [])
 
   const FilterStyle = styled.div`
     margin: 1rem;
@@ -145,15 +96,16 @@ const Home = () => {
         {cardProps.map((cardProp) => (
           // Need to change the breakpoint when changing the num of cards per col
           <Col breakPoint={{ xs: 12, sm: 6, md: 3, lg: 3 }}>
-            <Card accent="Info">
-              <CardBody>
-                <img src={cardProp.thumbnail} />
-                <Button onClick={handleDownload}>
-                  Download from aws
-                </Button>
-              </CardBody>
-              <CardFooter>{cardProp.title}</CardFooter>
-            </Card>
+            <div onClick={() => navigate("/view")} >
+              <Card accent="Info">
+                <CardBody>
+                  <img src={cardProp.thumbnail} />
+                </CardBody>
+                <CardFooter>
+                    {cardProp.title}
+                </CardFooter>
+              </Card>
+            </div>
           </Col>
         ))}
       </Row>
