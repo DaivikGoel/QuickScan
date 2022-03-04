@@ -1,5 +1,5 @@
 import UIKit
-11import Firebase
+import Firebase
 import AWSCore
 import AWSCognito
 import ARKit
