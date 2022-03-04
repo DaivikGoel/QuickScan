@@ -8,8 +8,8 @@ struct UploadView: View {
     @State var pushActive = false
     @ObservedObject private var viewModel: UploadViewModel
     
-    init(state: AppState) {
-        self.viewModel = UploadViewModel(authAPI: AuthService(), state: state)
+    init(state: AppState, url: String) {
+        self.viewModel = UploadViewModel(authAPI: AuthService(), state: state, url: url)
     }
     
     var body: some View {

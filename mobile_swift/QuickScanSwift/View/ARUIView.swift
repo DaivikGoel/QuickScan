@@ -9,9 +9,14 @@ import SwiftUI
 import Foundation
 struct ARUIView: View {
    @State var isRecording = false
+   @State var pushActive = false
    let ar = ARView()
    var body: some View {
       VStack {
+          NavigationLink(destination: UploadView(state: AppState.init(), url: ar.getUrl()),
+                         isActive: self.$pushActive) {
+            EmptyView()
+          }.hidden()
           ZStack {
               ar
              VStack {
@@ -29,6 +34,7 @@ struct ARUIView: View {
                         if (isRecording) {
                             isRecording = false
                             ar.stopRecording()
+                            pushActive = true
                         } else {
                             isRecording = ar.startRecording()
                         }

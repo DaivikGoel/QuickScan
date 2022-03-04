@@ -29,6 +29,10 @@ struct ARView: UIViewControllerRepresentable {
         return controller.stopRecording()
     }
     
+    func getUrl() -> String {
+        return controller.outputUrl
+    }
+    
     func updateUIViewController(_ uiViewController:
        ARView.UIViewControllerType, context:
        UIViewControllerRepresentableContext<ARView>) { }

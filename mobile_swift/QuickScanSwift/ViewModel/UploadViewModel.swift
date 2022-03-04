@@ -8,10 +8,12 @@ class UploadViewModel: ObservableObject {
     
     private var cancellableBag = Set<AnyCancellable>()
     private let authAPI: AuthAPI
+    private let url: String
     
-    init(authAPI: AuthAPI, state: AppState) {
+    init(authAPI: AuthAPI, state: AppState, url: String) {
         self.authAPI = authAPI
         self.state = state
+        self.url = url
     }
     
     func upload() {

@@ -54,6 +54,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, UI
     var pixelBufferAdaptor:AVAssetWriterInputPixelBufferAdaptor?
     var videoInput:AVAssetWriterInput?;
     var assetWriter:AVAssetWriter?;
+    var outputUrl: String
     
     var viewController: ARSCNView {
         return self.view as! ARSCNView
@@ -189,6 +190,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, UI
 //                        self.finishVideoRecordingAndSave();
 //
 //                    });
+                    self.outputUrl = videoURL
                     self.isRecording = true
                 });
             }
