@@ -34,7 +34,7 @@ def queuepolling():
                 'uuid'
             ],
             VisibilityTimeout=1000,
-            WaitTimeSeconds=20
+            WaitTimeSeconds=10
         )
 
 
