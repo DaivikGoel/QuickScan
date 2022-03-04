@@ -62,9 +62,6 @@
 		30F0AF9B24E989020084CE6E /* CustomTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30F0AF9A24E989020084CE6E /* CustomTextField.swift */; };
 		D539E1BB27BEFBD0004E3C9E /* UploadView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D539E1BA27BEFBD0004E3C9E /* UploadView.swift */; };
 		D539E1BD27BEFC36004E3C9E /* UploadViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D539E1BC27BEFC36004E3C9E /* UploadViewModel.swift */; };
-		D580538727D2050E0009EE2B /* IMG_0646.MOV in Resources */ = {isa = PBXBuildFile; fileRef = D52D27EA27C46D4A003284D8 /* IMG_0646.MOV */; };
-		D580538827D205140009EE2B /* Tragoedia.png in Resources */ = {isa = PBXBuildFile; fileRef = D52D27EE27C4A2BA003284D8 /* Tragoedia.png */; };
-		D580538A27D2B0340009EE2B /* logo6.png in Resources */ = {isa = PBXBuildFile; fileRef = D580538927D2B0340009EE2B /* logo6.png */; };
 		D580538C27D2B56F0009EE2B /* EditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D580538B27D2B56F0009EE2B /* EditView.swift */; };
 		D67277D8155DE049A430452D /* Pods_QuickScanSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9DA9DF5518C4734E912E9966 /* Pods_QuickScanSwift.framework */; };
 /* End PBXBuildFile section */
@@ -430,9 +427,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D580538A27D2B0340009EE2B /* logo6.png in Resources */,
-				D580538827D205140009EE2B /* Tragoedia.png in Resources */,
-				D580538727D2050E0009EE2B /* IMG_0646.MOV in Resources */,
 				30127DD724DE506500576F65 /* LaunchScreen.storyboard in Resources */,
 				073C365E27CF3BEB000CE6C2 /* art.scnassets in Resources */,
 				30127DDF24DE9F3400576F65 /* GoogleService-Info.plist in Resources */,
