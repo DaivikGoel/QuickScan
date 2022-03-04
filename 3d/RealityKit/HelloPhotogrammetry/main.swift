@@ -11,6 +11,8 @@ import os
 import RealityKit
 import Metal
 
+
+
 private let logger = Logger(subsystem: "com.apple.sample.photogrammetry",
                             category: "HelloPhotogrammetry")
 
