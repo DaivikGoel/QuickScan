@@ -7,10 +7,14 @@
   "dependencies": {
     "@ckeditor/ckeditor5-build-classic": "29.1.0",
     "@ckeditor/ckeditor5-react": "3.0.2",
+    "@google/model-viewer": "^1.10.1",
     "@material-ui/core": "^4.12.3",
     "@paljs/icons": "1.0.5",
     "@paljs/ui": "1.1.1",
+    "@react-three/drei": "^8.12.0",
+    "@react-three/fiber": "^7.0.26",
     "@tinymce/tinymce-react": "3.12.6",
+    "@types/three": "^0.138.0",
     "aws-sdk": "^2.1085.0",
     "gatsby": "3.13.1",
     "gatsby-image": "3.11.0",
@@ -27,8 +31,10 @@
     "normalize.css": "^8.0.1",
     "react": "17.0.2",
     "react-dom": "17.0.2",
-    "react-helmet": "6.1.0",
+    "react-helmet": "^6.1.0",
     "styled-components": "5.3.1",
+    "three": "^0.138.3",
+    "three-stdlib": "^2.8.8",
     "util": "^0.12.4"
   },
   "keywords": [
