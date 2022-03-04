@@ -200,7 +200,8 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, UI
     
     private func createURLForVideo(withName:String, completionHandler:@escaping (URL)->()) {
         // Clear the location for the temporary file.
-        let targetURL:URL = URL.init(fileURLWithPath: NSTemporaryDirectory(), isDirectory: true);
+        let temporaryDirectoryURL:URL = URL.init(fileURLWithPath: NSTemporaryDirectory(), isDirectory: true);
+        let targetURL:URL = temporaryDirectoryURL.appendingPathComponent("\(withName).mp4")
         // Delete the file, incase it exists.
         do {
             try FileManager.default.removeItem(at: targetURL);
@@ -283,7 +284,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, UI
         self.videoInput!.markAsFinished();
         self.assetWriter?.finishWriting(completionHandler: {
             print("output url : \(self.assetWriter?.outputURL)");
-            
+            /*
             PHPhotoLibrary.requestAuthorization({ (status) in
                 PHPhotoLibrary.shared().performChanges({
                     PHAssetChangeRequest.creationRequestForAssetFromVideo(atFileURL: (self.assetWriter?.outputURL)!)
@@ -301,6 +302,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, UI
 //                    FileManager.default.clearTempMemory();
                 }
             })
+            */
         })
     }
     

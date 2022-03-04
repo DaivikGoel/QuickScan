@@ -56,10 +56,10 @@ class UploadViewModel: ObservableObject {
 
     func uploadVideo(with resource: String,type: String){   //1
             
-            let key = "\(resource).\(type)"
+            let key = "\(resource)"
             //let resource = Bundle.main.path(forResource: resource, ofType: type)!
             //let Url = URL(fileURLWithPath: resource)
-            let Url = URL(fileURLWithPath: key)
+            let Url = URL(string: key)!
             if FileManager.default.fileExists(atPath: key){
                 print("some shit might be twerking")
                 //if let cert = NSData(contentsOfFile: Url.path) {
@@ -94,9 +94,9 @@ class UploadViewModel: ObservableObject {
                 }
             } as? AWSS3TransferUtilityUploadCompletionHandlerBlock
             
-            
+            let bucketFileName = Url.lastPathComponent
             //5
-            AWSS3TransferUtility.default().uploadFile(Url, bucket: bucketName, key: String(key), contentType: resource, expression: expression, completionHandler: self.completionHandler).continueWith(block: { (task:AWSTask) -> AnyObject? in
+            AWSS3TransferUtility.default().uploadFile(Url, bucket: bucketName, key: String(bucketFileName), contentType: resource, expression: expression, completionHandler: self.completionHandler).continueWith(block: { (task:AWSTask) -> AnyObject? in
                 if(task.error != nil){
                     print(task.error)
                     print("Error uploading file: \(String(describing: task.error?.localizedDescription))")
