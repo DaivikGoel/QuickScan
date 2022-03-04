@@ -2,12 +2,14 @@ import Foundation
 import Combine
 import AWSS3
 import FirebaseAuth
+import UIKit
 
 class UploadViewModel: ObservableObject {
     @Published var statusViewModel: StatusViewModel?
     @Published var state: AppState
     @Published var title: String = ""
     @Published var description: String = ""
+    @Published var showAlert = false
     
     private var userId = Auth.auth().currentUser?.uid
     private var cancellableBag = Set<AnyCancellable>()
@@ -18,6 +20,11 @@ class UploadViewModel: ObservableObject {
         self.authAPI = authAPI
         self.state = state
         self.url = url
+    }
+
+    func buttonTapped() {
+        //handle request and then set to true to show the alert
+        self.showAlert = true
     }
     
     func upload() {
@@ -145,6 +152,7 @@ class UploadViewModel: ObservableObject {
                 print("Upload Finished...")
               }
             }
+        
             
             expression.setValue("public-read-write", forRequestHeader: "x-amz-acl")   //4
             expression.setValue("public-read-write", forRequestParameter: "x-amz-acl")

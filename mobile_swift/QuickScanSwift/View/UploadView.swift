@@ -26,7 +26,10 @@ struct UploadView: View {
                 VStack(alignment: .center) {
                     customButton(title: "Upload Video",
                                  backgroundColor: UIColor(hexString: "#913FE7"),
-                                 action: self.viewModel.upload)
+                                 action: {
+                        self.viewModel.upload()
+                        self.viewModel.buttonTapped()
+                    })
                     .padding(.horizontal, 60)
                 }
                 VStack(alignment: .center) {
