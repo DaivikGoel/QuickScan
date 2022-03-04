@@ -14,22 +14,21 @@ struct WelcomeView: View {
                 }
                 .navigationBarHidden(true)
                 
-                VStack(spacing: 40) {
-                    Image("logo")
+                VStack(spacing: 25) {
+                    Image("logo6")
                         .resizable()
-                        .frame(width: 120, height: 120, alignment: .center)
+                        .frame(width: 240, height: 240, alignment: .center)
                         .colorMultiply(Color(UIConfiguration.tintColor))
-                        .padding(.top, 100)
-                    
-                    Text("Welcome to your app")
+                        .padding(.top, 120)
+                
+                    Text("QuickScan")
                         .modifier(TextModifier(font: UIConfiguration.titleFont,
                                                color: UIConfiguration.tintColor))
                     
-                    Text("Start your iOS app with this Firebase Swift Stater Kit")
+                    Text("Create 3D objects easily and quickly")
                         .modifier(TextModifier(font: UIConfiguration.subtitleFont))
                         .padding(.horizontal, 60)
-                    
-                    VStack(spacing: 25) {
+                    VStack(spacing: 10) {
                         Button(action: {
                             self.index = 1
                             self.pushActive = true
@@ -57,7 +56,7 @@ struct WelcomeView: View {
                 }
                 Spacer()
             }
-        }
+        }.navigationViewStyle(.stack)
     }
     
     private func destinationView() -> AnyView {

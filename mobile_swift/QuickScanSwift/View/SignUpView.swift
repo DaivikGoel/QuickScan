@@ -34,7 +34,7 @@ struct SignUpView: View {
                     
                     VStack(alignment: .center, spacing: 40) {
                         customButton(title: "Create Account",
-                                     backgroundColor: UIColor(hexString: "#334D92"),
+                                     backgroundColor: UIColor(hexString: "#913FE7"),
                                      action: self.viewModel.signUp)
                     }
                 }

@@ -1,11 +1,15 @@
 import Foundation
 import Combine
 import AWSS3
+import FirebaseAuth
 
 class UploadViewModel: ObservableObject {
     @Published var statusViewModel: StatusViewModel?
     @Published var state: AppState
+    @Published var title: String = ""
+    @Published var description: String = ""
     
+    private var userId = Auth.auth().currentUser?.uid
     private var cancellableBag = Set<AnyCancellable>()
     private let authAPI: AuthAPI
     private let url: String
@@ -19,8 +23,11 @@ class UploadViewModel: ObservableObject {
     func upload() {
         print("trying to upload")
         print(self.url)
+        let Url = URL(string: self.url)!
+        let uuid = Url.lastPathComponent
         //uploadFileOld(with: "Tragoedia", type: "png")
         uploadVideo(with: self.url, type: "mp4")
+        postRequest(uuid: uuid)
     }
     
     let bucketName = "quickscanvideoswift"
@@ -53,6 +60,73 @@ class UploadViewModel: ObservableObject {
         }
         
     }
+    
+    func postRequest(uuid: String) {
+      let userId = Auth.auth().currentUser?.uid
+      // declare the parameter as a dictionary that contains string as key and value combination. considering inputs are valid
+      
+        let parameters: [String: Any] = ["title": self.title, "description": self.description, "user_id": userId, "uuid": uuid]
+      
+      // create the url with URL
+      let url = URL(string: "http://ec2-3-98-130-154.ca-central-1.compute.amazonaws.com:3000/collection")! // change server url accordingly
+      
+      // create the session object
+      let session = URLSession.shared
+      
+      // now create the URLRequest object using the url object
+      var request = URLRequest(url: url)
+      request.httpMethod = "POST" //set http method as POST
+      
+      // add headers for the request
+      request.addValue("application/json", forHTTPHeaderField: "Content-Type") // change as per server requirements
+      request.addValue("application/json", forHTTPHeaderField: "Accept")
+      
+      do {
+        // convert parameters to Data and assign dictionary to httpBody of request
+        request.httpBody = try JSONSerialization.data(withJSONObject: parameters, options: .prettyPrinted)
+      } catch let error {
+        print(error)
+        return
+      }
+      
+      // create dataTask using the session object to send data to the server
+      let task = session.dataTask(with: request) { data, response, error in
+        
+        if let error = error {
+          print("Post Request Error: \(error)")
+          return
+        }
+        
+        // ensure there is valid response code returned from this HTTP response
+        guard let httpResponse = response as? HTTPURLResponse,
+              (200...299).contains(httpResponse.statusCode)
+        else {
+          print("Invalid Response received from the server")
+          return
+        }
+        
+        // ensure there is data returned
+        guard let responseData = data else {
+          print("nil Data received from the server")
+          return
+        }
+        
+        do {
+          // create json object from data or use JSONDecoder to convert to Model stuct
+          if let jsonResponse = try JSONSerialization.jsonObject(with: responseData, options: .mutableContainers) as? [String: Any] {
+            print(jsonResponse)
+            // handle json response
+          } else {
+            print("data maybe corrupted or in wrong format")
+            throw URLError(.badServerResponse)
+          }
+        } catch let error {
+          print(error.localizedDescription)
+        }
+      }
+      // perform the task
+      task.resume()
+    }
 
     func uploadVideo(with resource: String,type: String){   //1
             
@@ -60,15 +134,6 @@ class UploadViewModel: ObservableObject {
             //let resource = Bundle.main.path(forResource: resource, ofType: type)!
             //let Url = URL(fileURLWithPath: resource)
             let Url = URL(string: key)!
-            if FileManager.default.fileExists(atPath: key){
-                print("some shit might be twerking")
-                //if let cert = NSData(contentsOfFile: Url.path) {
-                    
-                //}
-            } else {
-                print("fukc this is gay")
-            }
-            print(Url)
             
             let expression  = AWSS3TransferUtilityUploadExpression()
             expression.progressBlock = { (task: AWSS3TransferUtilityTask,progress: Progress) -> Void in

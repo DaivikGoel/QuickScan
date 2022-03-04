@@ -18,17 +18,23 @@ struct UploadView: View {
                            isActive: self.$pushActive) {
               EmptyView()
             }.hidden()
-            VStack(alignment: .leading, spacing: 30) {
+            VStack(alignment: .center, spacing: 10) {
                 Text("Upload")
                     .modifier(TextModifier(font: UIConfiguration.titleFont,
                                            color: UIConfiguration.tintColor))
-                    .padding(.leading, 25)
-                    .padding(.bottom, 80)
-                VStack(alignment: .center, spacing: 40) {
-                    customButton(title: "Do some random shit",
-                                 backgroundColor: UIColor(hexString: "#334D92"),
+                    .padding(.horizontal, 60)
+                VStack(alignment: .center) {
+                    customButton(title: "Upload Video",
+                                 backgroundColor: UIColor(hexString: "#913FE7"),
                                  action: self.viewModel.upload)
+                    .padding(.horizontal, 60)
                 }
+                VStack(alignment: .center) {
+                    CustomTextField(placeHolderText: "Title",
+                                  text: $viewModel.title)
+                    CustomTextField(placeHolderText: "Description",
+                                  text: $viewModel.description)
+                }.padding(.horizontal, 25)
             }
             Spacer()
         }.alert(item: self.$viewModel.statusViewModel) { status in

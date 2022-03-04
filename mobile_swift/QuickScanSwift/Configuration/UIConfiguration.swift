@@ -9,8 +9,8 @@ class UIConfiguration {
     
     // Color
     static let backgroundColor: UIColor = .white
-    static let tintColor = UIColor(hexString: "#ff5a66")
+    static let tintColor = UIColor(hexString: "#913FE7")
     static let subtitleColor = UIColor(hexString: "#464646")
-    static let buttonColor = UIColor(hexString: "#414665")
-    static let buttonBorderColor = UIColor(hexString: "#B0B3C6")
+    static let buttonColor = UIColor(hexString: "#913FE7")
+    static let buttonBorderColor = UIColor(hexString: "#6F20C2v")
 }

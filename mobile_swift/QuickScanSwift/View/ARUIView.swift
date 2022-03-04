@@ -10,6 +10,7 @@ import Foundation
 struct ARUIView: View {
    @State var isRecording = false
    @State var pushActive = false
+   @ObservedObject var state: AppState
    let ar = ARView()
    var body: some View {
        NavigationView {

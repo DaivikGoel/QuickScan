@@ -7,14 +7,14 @@ struct SplashView: View {
     var body: some View {
         VStack {
             if self.isActive {
-                ARUIView()
+                WelcomeView(state: self.state)
             } else {
                 ZStack {
                     Color(UIConfiguration.tintColor)
                         .edgesIgnoringSafeArea(.all)
-                    Image("logo")
+                    Image("logo6")
                         .resizable()
-                        .frame(width: 120, height: 120, alignment: .center)
+                        .frame(width: 240, height: 240, alignment: .center)
                 }
             }
         }
