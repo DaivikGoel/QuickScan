@@ -28,12 +28,13 @@ def uploader(message):
         Uploaded = False
     else: 
         print("OBJECT DONE")
+        os.chdir('../')
         os.system('./ThumbnailGenerator')
+        os.chdir(output_directory)
         s3_client.upload_file('result.usdz','quick-scan-3d-objects',uuid + '.usdz')
         s3_client.upload_file('thumbnail.png','quickscanthumbnails',uuid + '.png')
         Uploaded = True
         print("OBJECT uploaded")
 
-    os.chdir('../')
     
     return Uploaded

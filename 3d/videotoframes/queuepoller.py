@@ -6,6 +6,8 @@ from objectuploader import uploader
 import requests
 import sys
 
+from imagedetect import imagedetect
+
 sqs = boto3.client('sqs')
 s3_client = boto3.client('s3', region_name='ca-central-1')
 output_directory = './frames'
@@ -32,7 +34,7 @@ def queuepolling():
                 'uuid'
             ],
             VisibilityTimeout=1000,
-            WaitTimeSeconds=20
+            WaitTimeSeconds=10
         )
 
 
@@ -73,6 +75,9 @@ def queuepolling():
         ReceiptHandle=receipt_handle
     )
     print('Received and deleted message: %s' % message)
+
+    imagedetect('./output_models/thumbnail.png')
+
 
 if __name__ == '__main__': 
 
