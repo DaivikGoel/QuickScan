@@ -12,42 +12,45 @@ struct ARUIView: View {
    @State var pushActive = false
    let ar = ARView()
    var body: some View {
-      VStack {
-          NavigationLink(destination: UploadView(state: AppState.init(), url: ar.getUrl()),
-                         isActive: self.$pushActive) {
-            EmptyView()
-          }.hidden()
-          ZStack {
-              ar
-             VStack {
-                Spacer()
-                Spacer()
-                ZStack {
-                   Circle()
-                   .frame(width: 60, height: 60)
-                   .opacity(0)
-                   .overlay(
-                    RoundedRectangle(cornerRadius: .infinity)
-                        .stroke(Color.white, lineWidth: 5)
-                   )
-                    Button(action: {
-                        if (isRecording) {
-                            isRecording = false
-                            ar.stopRecording()
-                            pushActive = true
-                        } else {
-                            isRecording = ar.startRecording()
+       NavigationView {
+            VStack {
+              NavigationLink(destination: UploadView(state: AppState.init(), url: ar.getUrl()),
+                             isActive: self.$pushActive) {
+                EmptyView()
+              }.hidden()
+              ZStack {
+                  ar
+                 VStack {
+                    Spacer()
+                    Spacer()
+                    ZStack {
+                       Circle()
+                       .frame(width: 60, height: 60)
+                       .opacity(0)
+                       .overlay(
+                        RoundedRectangle(cornerRadius: .infinity)
+                            .stroke(Color.white, lineWidth: 5)
+                       )
+                        Button(action: {
+                            if (isRecording) {
+                                isRecording = false
+                                ar.stopRecording()
+                                print(ar.getUrl())
+                                self.pushActive = true
+                            } else {
+                                isRecording = ar.startRecording()
+                            }
+                        }) {
+                            Text("")
+                                .padding()
+                                .frame(width: 40, height: 40)
+                                .background(RoundedRectangle(cornerRadius: .infinity)
+                                .foregroundColor(isRecording ? Color.red : Color.white))
                         }
-                    }) {
-                        Text("")
-                            .padding()
-                            .frame(width: 40, height: 40)
-                            .background(RoundedRectangle(cornerRadius: .infinity)
-                            .foregroundColor(isRecording ? Color.red : Color.white))
                     }
-                }
-             }
+                 }
+              }
           }
-      }
-   }
+       }.navigationViewStyle(.stack)
+    }
 }

@@ -18,15 +18,17 @@ class UploadViewModel: ObservableObject {
     
     func upload() {
         print("trying to upload")
-        uploadFileOld(with: "Tragoedia", type: "png")
-        //uploadVideo(with: "IMG_0646", type: "MOV")
+        print(self.url)
+        //uploadFileOld(with: "Tragoedia", type: "png")
+        uploadVideo(with: self.url, type: "mp4")
     }
     
-    let bucketName = "quickscanvideo"
+    let bucketName = "quickscanvideoswift"
     var completionHandler: AWSS3TransferUtilityUploadCompletionHandlerBlock?
     
     func uploadFileOld(with resource: String, type: String) {   //1
         let key = "\(resource).\(type)"
+        print(key)
         let localImagePath = Bundle.main.path(forResource: resource, ofType: type)!  //2
         let localImageUrl = URL(fileURLWithPath: localImagePath)
         
@@ -55,8 +57,18 @@ class UploadViewModel: ObservableObject {
     func uploadVideo(with resource: String,type: String){   //1
             
             let key = "\(resource).\(type)"
-            let resource = Bundle.main.path(forResource: resource, ofType: type)!
-            let Url = URL(fileURLWithPath: resource)
+            //let resource = Bundle.main.path(forResource: resource, ofType: type)!
+            //let Url = URL(fileURLWithPath: resource)
+            let Url = URL(fileURLWithPath: key)
+            if FileManager.default.fileExists(atPath: key){
+                print("some shit might be twerking")
+                //if let cert = NSData(contentsOfFile: Url.path) {
+                    
+                //}
+            } else {
+                print("fukc this is gay")
+            }
+            print(Url)
             
             let expression  = AWSS3TransferUtilityUploadExpression()
             expression.progressBlock = { (task: AWSS3TransferUtilityTask,progress: Progress) -> Void in

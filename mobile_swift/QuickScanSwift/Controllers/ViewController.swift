@@ -54,7 +54,8 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, UI
     var pixelBufferAdaptor:AVAssetWriterInputPixelBufferAdaptor?
     var videoInput:AVAssetWriterInput?;
     var assetWriter:AVAssetWriter?;
-    var outputUrl: String
+    
+    var outputUrl: String = "FUCK YOU"
     
     var viewController: ARSCNView {
         return self.view as! ARSCNView
@@ -190,7 +191,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, UI
 //                        self.finishVideoRecordingAndSave();
 //
 //                    });
-                    self.outputUrl = videoURL
+                    self.outputUrl = videoURL.absoluteString
                     self.isRecording = true
                 });
             }
@@ -199,8 +200,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, UI
     
     private func createURLForVideo(withName:String, completionHandler:@escaping (URL)->()) {
         // Clear the location for the temporary file.
-        let temporaryDirectoryURL:URL = URL.init(fileURLWithPath: NSTemporaryDirectory(), isDirectory: true);
-        let targetURL:URL = temporaryDirectoryURL.appendingPathComponent("\(withName).mp4")
+        let targetURL:URL = URL.init(fileURLWithPath: NSTemporaryDirectory(), isDirectory: true);
         // Delete the file, incase it exists.
         do {
             try FileManager.default.removeItem(at: targetURL);
