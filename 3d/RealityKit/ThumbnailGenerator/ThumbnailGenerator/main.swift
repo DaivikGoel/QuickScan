@@ -45,7 +45,7 @@ func run(for url: URL, size: CGSize, time: TimeInterval = 0) -> NSImage? {
 
     let image = renderer.snapshot(atTime: time, with: size, antialiasingMode: .multisampling4X)
     
-    savePNG(image: image, path: "./thumbnail.png")
+    savePNG(image: image, path: "./output_models/thumbnail.png")
     
     return image
 }
