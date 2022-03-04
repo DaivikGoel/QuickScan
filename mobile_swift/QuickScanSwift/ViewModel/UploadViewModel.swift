@@ -24,7 +24,7 @@ class UploadViewModel: ObservableObject {
         print("trying to upload")
         print(self.url)
         let Url = URL(string: self.url)!
-        let uuid = Url.lastPathComponent
+        var uuid = Url.lastPathComponent
         //uploadFileOld(with: "Tragoedia", type: "png")
         uploadVideo(with: self.url, type: "mov")
         postRequest(uuid: uuid)
@@ -64,8 +64,8 @@ class UploadViewModel: ObservableObject {
     func postRequest(uuid: String) {
       let userId = Auth.auth().currentUser?.uid
       // declare the parameter as a dictionary that contains string as key and value combination. considering inputs are valid
-      
-        let parameters: [String: Any] = ["name": self.title, "description": self.description, "user_id": userId ?? "69696969", "uuid": uuid]
+        let modifieduuid = uuid.replacingOccurrences(of: ".mov", with: "")
+        let parameters: [String: Any] = ["name": self.title, "description": self.description, "user_id": userId ?? "69696969", "uuid": modifieduuid]
       
       // create the url with URL
       let url = URL(string: "http://ec2-3-98-130-154.ca-central-1.compute.amazonaws.com:3000/collection")! // change server url accordingly
@@ -143,7 +143,6 @@ class UploadViewModel: ObservableObject {
                 }
               if progress.isFinished{           //3
                 print("Upload Finished...")
-                //do any task here.
               }
             }
             
@@ -171,7 +170,7 @@ class UploadViewModel: ObservableObject {
                 }
                 return nil
             })
-        }
+    }
       
 }
 
@@ -180,7 +179,7 @@ extension SignUpViewModel {
     private func resultMapper(with user: User?) -> StatusViewModel {
         if user != nil {
             state.currentUser = user
-            return StatusViewModel.signUpSuccessStatus
+            return StatusViewModel.uploadSuccessStatus
         } else {
             return StatusViewModel.errorStatus
         }
