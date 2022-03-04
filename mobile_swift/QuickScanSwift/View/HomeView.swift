@@ -15,7 +15,7 @@ struct HomeView: View {
                     })
             }
             VStack {
-                NavigationLink(destination: upload(),
+                NavigationLink(destination: ARUIView(),
                                isActive: self.$pushActive) {
                                 EmptyView()
                 }
@@ -42,7 +42,7 @@ struct HomeView: View {
             .navigationBarHidden(true)
     }
     
-    func upload() -> AnyView{
-        return AnyView(UploadView(state: state))
-    }
+//    func upload() -> AnyView{
+//        return AnyView(UploadView(state: state))
+//    }
 }

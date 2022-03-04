@@ -18,15 +18,17 @@ class UploadViewModel: ObservableObject {
     
     func upload() {
         print("trying to upload")
-        uploadFileOld(with: "Tragoedia", type: "png")
-        //uploadVideo(with: "IMG_0646", type: "MOV")
+        print(self.url)
+        //uploadFileOld(with: "Tragoedia", type: "png")
+        uploadVideo(with: self.url, type: "mp4")
     }
     
-    let bucketName = "quickscanvideo"
+    let bucketName = "quickscanvideoswift"
     var completionHandler: AWSS3TransferUtilityUploadCompletionHandlerBlock?
     
     func uploadFileOld(with resource: String, type: String) {   //1
         let key = "\(resource).\(type)"
+        print(key)
         let localImagePath = Bundle.main.path(forResource: resource, ofType: type)!  //2
         let localImageUrl = URL(fileURLWithPath: localImagePath)
         
@@ -54,9 +56,19 @@ class UploadViewModel: ObservableObject {
 
     func uploadVideo(with resource: String,type: String){   //1
             
-            let key = "\(resource).\(type)"
-            let resource = Bundle.main.path(forResource: resource, ofType: type)!
-            let Url = URL(fileURLWithPath: resource)
+            let key = "\(resource)"
+            //let resource = Bundle.main.path(forResource: resource, ofType: type)!
+            //let Url = URL(fileURLWithPath: resource)
+            let Url = URL(string: key)!
+            if FileManager.default.fileExists(atPath: key){
+                print("some shit might be twerking")
+                //if let cert = NSData(contentsOfFile: Url.path) {
+                    
+                //}
+            } else {
+                print("fukc this is gay")
+            }
+            print(Url)
             
             let expression  = AWSS3TransferUtilityUploadExpression()
             expression.progressBlock = { (task: AWSS3TransferUtilityTask,progress: Progress) -> Void in
@@ -82,9 +94,9 @@ class UploadViewModel: ObservableObject {
                 }
             } as? AWSS3TransferUtilityUploadCompletionHandlerBlock
             
-            
+            let bucketFileName = Url.lastPathComponent
             //5
-            AWSS3TransferUtility.default().uploadFile(Url, bucket: bucketName, key: String(key), contentType: resource, expression: expression, completionHandler: self.completionHandler).continueWith(block: { (task:AWSTask) -> AnyObject? in
+            AWSS3TransferUtility.default().uploadFile(Url, bucket: bucketName, key: String(bucketFileName), contentType: resource, expression: expression, completionHandler: self.completionHandler).continueWith(block: { (task:AWSTask) -> AnyObject? in
                 if(task.error != nil){
                     print(task.error)
                     print("Error uploading file: \(String(describing: task.error?.localizedDescription))")

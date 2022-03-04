@@ -54,7 +54,8 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, UI
     var pixelBufferAdaptor:AVAssetWriterInputPixelBufferAdaptor?
     var videoInput:AVAssetWriterInput?;
     var assetWriter:AVAssetWriter?;
-    var outputUrl: String
+    
+    var outputUrl: String = "FUCK YOU"
     
     var viewController: ARSCNView {
         return self.view as! ARSCNView
@@ -190,7 +191,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, UI
 //                        self.finishVideoRecordingAndSave();
 //
 //                    });
-                    self.outputUrl = videoURL
+                    self.outputUrl = videoURL.absoluteString
                     self.isRecording = true
                 });
             }
@@ -283,7 +284,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, UI
         self.videoInput!.markAsFinished();
         self.assetWriter?.finishWriting(completionHandler: {
             print("output url : \(self.assetWriter?.outputURL)");
-            
+            /*
             PHPhotoLibrary.requestAuthorization({ (status) in
                 PHPhotoLibrary.shared().performChanges({
                     PHAssetChangeRequest.creationRequestForAssetFromVideo(atFileURL: (self.assetWriter?.outputURL)!)
@@ -301,6 +302,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, UI
 //                    FileManager.default.clearTempMemory();
                 }
             })
+            */
         })
     }
     
