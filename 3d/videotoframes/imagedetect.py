@@ -19,9 +19,17 @@ def imagedetect():
     response = client.label_detection(image=image)
     labels = response.label_annotations
 
+    topical_labels = []
+
     print('Labels:')
     for label in labels:
-        print(label.description)
+        print(label.description + " score: " + str(label.score))
+
+        if label.score > 0.90:
+            topical_labels.append(label.description)
+
+    print("tags to be sent: " + str(topical_labels))
+
     os.chdir('../')
 
 # uncomment for testing:
