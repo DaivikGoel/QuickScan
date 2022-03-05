@@ -73,7 +73,7 @@ struct UploadView: View {
                 .font(.headline)
                 .padding()
             if #available(iOS 14.0, *) {
-                ProgressView("Uploading…", value: viewModel.downloadAmount, total: 100)
+                ProgressView("Uploading…", value: viewModel.downloadAmount, total: 100).scaleEffect(x: 0.8, y: 1, anchor: .center)
             } else {
                 // Fallback on earlier versions
             }
