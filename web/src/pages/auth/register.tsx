@@ -33,14 +33,14 @@ export default function Register() {
         <Input fullWidth>
           <input type="password" placeholder="Confirm Password" />
         </Input>
-        <Checkbox onChange={onCheckbox}>
+        {/* <Checkbox onChange={onCheckbox}>
           Agree to <Link to="/">Terms & Conditions</Link>
-        </Checkbox>
+        </Checkbox> */}
         <Button status="Success" type="button" shape="SemiRound" fullWidth>
           Register
         </Button>
       </form>
-      <Socials />
+      {/* <Socials /> */}
       <p>
         Already have an account? <Link to="/auth/login">Log In</Link>
       </p>

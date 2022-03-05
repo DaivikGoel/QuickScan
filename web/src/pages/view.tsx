@@ -1,11 +1,11 @@
-import React, { Suspense, useEffect } from 'react';
+import React, { Suspense, useEffect, useState } from 'react';
 import { Card, CardBody, CardFooter } from '@paljs/ui/Card';
 import { Button } from '@paljs/ui/Button';
 import { Link } from 'gatsby';
 import AWS from 'aws-sdk';
 import SEO from '../components/SEO';
 
-export default function View() {
+export default function View(props) {
   AWS.config.update({
     accessKeyId: 'AKIA4RGMXYINS5GS6JIA',
     secretAccessKey: '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',
@@ -41,18 +41,20 @@ export default function View() {
     // Remove link from body
     document.body.removeChild(link);
   }
+  console.log(props.location.state)
+  const { title, description, thumbnail } = props.location.state.cardProp;
   return (
     <>
       <SEO title="Detailed View" />
         <Card size="Giant">
           <CardBody>
             <a rel='ar' href = 'https://devimages-cdn.apple.com/ar/photogrammetry/AirForce.usdz'>
-              <img src={'https://upload.wikimedia.org/wikipedia/commons/a/a7/React-icon.svg'} />
+              <img src={thumbnail} />
             </a>
-            <p>Title</p>
-            {"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."}
+            <h4>{title}</h4>
+            <p>{description}</p>
             <Button onClick={handleDownload}>
-              Download from aws
+              Download
             </Button>
           </CardBody>
         </Card>

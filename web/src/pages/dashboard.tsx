@@ -10,16 +10,50 @@ import axios from 'axios';
 import { navigate } from 'gatsby';
 
 const Home = () => {
+  interface CardPropsType {
+    title: string,
+    description: string,
+    thumbnail: string,
+  }
+
+  const defaultCardProps: CardPropsType[] = [
+    {
+      title: 'Card 1',
+      description: 'Description',
+      thumbnail: 'https://upload.wikimedia.org/wikipedia/commons/a/a7/React-icon.svg',
+    },
+    {
+      title: 'Card 2',
+      description: 'Description',
+      thumbnail: 'https://upload.wikimedia.org/wikipedia/commons/a/a7/React-icon.svg',
+    },
+    {
+      title: 'Card 3',
+      description: 'Description',
+      thumbnail: 'https://upload.wikimedia.org/wikipedia/commons/a/a7/React-icon.svg',
+    },
+    {
+      title: 'Card 4',
+      description: 'Description',
+      thumbnail: 'https://upload.wikimedia.org/wikipedia/commons/a/a7/React-icon.svg',
+    },
+    {
+      title: 'Card 5',
+      description: 'Description',
+      thumbnail: 'https://upload.wikimedia.org/wikipedia/commons/a/a7/React-icon.svg',
+    },
+  ];
 
   const requestUrl = 'http://ec2-3-98-130-154.ca-central-1.compute.amazonaws.com:3000/collection'
-
+  const [cardProps, setCardProps] = useState<CardPropsType[]>(defaultCardProps);
   useEffect(() => {
     (async () => {
       try {
         const response = await axios.get(requestUrl)
         if (response) {
           const objects = response.data.data
-          const cardProps = objects.map((obj: any) => ({title: obj["name"], thumbnail: obj["thumbnail"]}))
+          const cardProps = objects.map((obj: any) => ({title: obj["name"], description: obj["description"], thumbnail: obj["thumbnail"]}))
+          setCardProps(cardProps)
         }
       } catch (error) {
         console.log(error)
@@ -36,42 +70,11 @@ const Home = () => {
     margin-bottom: 1rem;
   `;
 
-  const defaultCardProps = [
-    {
-      title: 'Card 1',
-      thumbnail: 'https://upload.wikimedia.org/wikipedia/commons/a/a7/React-icon.svg',
-    },
-    {
-      title: 'Card 2',
-      thumbnail: 'https://upload.wikimedia.org/wikipedia/commons/a/a7/React-icon.svg',
-    },
-    {
-      title: 'Card 3',
-      thumbnail: 'https://upload.wikimedia.org/wikipedia/commons/a/a7/React-icon.svg',
-    },
-    {
-      title: 'Card 4',
-      thumbnail: 'https://upload.wikimedia.org/wikipedia/commons/a/a7/React-icon.svg',
-    },
-    {
-      title: 'Card 5',
-      thumbnail: 'https://upload.wikimedia.org/wikipedia/commons/a/a7/React-icon.svg',
-    },
-  ];
-
   const tags = [
     { value: '3d', label: '3D' },
     { value: 'mouse', label: 'Mouse' },
     { value: 'nature', label: 'Nature' },
     { value: 'weather', label: 'Weather' },
-  ];
-
-  const rating = [
-    { value: 'any', label: 'Any' },
-    { value: '4star', label: '4+ Stars' },
-    { value: '3star', label: '3+ Stars' },
-    { value: '2star', label: '2+ Stars' },
-    { value: '1star', label: '1+ Stars' },
   ];
 
   const sort = [
@@ -84,19 +87,23 @@ const Home = () => {
   const NUM_OF_COL = 4;
 
   const cardLayout = [];
-  for (let i = 0; i < defaultCardProps.length; i = i + NUM_OF_COL) {
-    const cardProps = [];
+  for (let i = 0; i < cardProps.length; i = i + NUM_OF_COL) {
+    const cardPropsRow: CardPropsType[] = [];
     for (let k = 0; k < NUM_OF_COL; k++) {
-      if (i + k < defaultCardProps.length) {
-        cardProps.push(defaultCardProps[i + k]);
+      if (i + k < cardProps.length) {
+        cardPropsRow.push(cardProps[i + k]);
       }
     }
     cardLayout.push(
       <Row>
-        {cardProps.map((cardProp) => (
+        {cardPropsRow.map((cardProp) => (
           // Need to change the breakpoint when changing the num of cards per col
           <Col breakPoint={{ xs: 12, sm: 6, md: 3, lg: 3 }}>
-            <div onClick={() => navigate("/view")} >
+            <div onClick={() => navigate("/view", {
+              state: {
+                cardProp,
+              }
+            })} >
               <Card accent="Info">
                 <CardBody>
                   <img src={cardProp.thumbnail} />
@@ -118,22 +125,8 @@ const Home = () => {
         <Col breakPoint={{ xs: 12, sm: 8, md: 8, lg: 9 }}>
           <Card>
             <FilterStyle>
-              <Row>
-                <Col breakPoint={{ xs: 12, sm: 6, md: 6, lg: 6 }}>
-                  <Text>Tags</Text>
-                </Col>
-                <Col breakPoint={{ xs: 12, sm: 6, md: 6, lg: 6 }}>
-                  <Text>Rating</Text>
-                </Col>
-              </Row>
-              <Row>
-                <Col breakPoint={{ xs: 12, sm: 6, md: 6, lg: 6 }}>
-                  <Select options={tags} isMulti multiple placeholder="Select Tags" />
-                </Col>
-                <Col breakPoint={{ xs: 12, sm: 6, md: 6, lg: 6 }}>
-                  <Select options={rating} placeholder="Select a rating" />
-                </Col>
-              </Row>
+              <Text>Tags</Text>
+              <Select options={tags} isMulti multiple placeholder="Select Tags" />
             </FilterStyle>
           </Card>
         </Col>

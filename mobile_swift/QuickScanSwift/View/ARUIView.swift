@@ -53,6 +53,6 @@ struct ARUIView: View {
                  }
               }
           }
-       }.navigationViewStyle(.stack)
+       }.navigationViewStyle(StackNavigationViewStyle())
     }
 }

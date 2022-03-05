@@ -4,7 +4,7 @@ import styled, { DefaultTheme } from 'styled-components';
 import Select from '@paljs/ui/Select';
 import { LayoutHeader } from '@paljs/ui/Layout';
 import { EvaIcon, Icon } from '@paljs/ui/Icon';
-import { Button } from '@paljs/ui/Button';
+import { Search } from '@paljs/ui/Search';
 import { Actions } from '@paljs/ui/Actions';
 import { InputGroup } from '@paljs/ui/Input';
 import ContextMenu from '@paljs/ui/ContextMenu';
@@ -105,6 +105,10 @@ const Header: React.FC<HeaderProps> = (props) => {
       selected: true,
     },
   ];
+
+  const submitHandle = (e) => {
+    console.log("Search submit")
+  }
   return (
     <LayoutHeader fixed>
       <HeaderStyle>
@@ -124,26 +128,21 @@ const Header: React.FC<HeaderProps> = (props) => {
                 </Link>
               ),
             },
+            // {
+            //   content: (
+            //     <SelectStyled
+            //       isSearchable={false}
+            //       shape="SemiRound"
+            //       placeholder="Themes"
+            //       value={themeOptions.find((item) => item.value === props.theme.value)}
+            //       options={themeOptions}
+            //       onChange={({ value }: { value: DefaultTheme['name'] }) => props.theme.set(value)}
+            //     />
+            //   ),
+            // },
             {
               content: (
-                <SelectStyled
-                  isSearchable={false}
-                  shape="SemiRound"
-                  placeholder="Themes"
-                  value={themeOptions.find((item) => item.value === props.theme.value)}
-                  options={themeOptions}
-                  onChange={({ value }: { value: DefaultTheme['name'] }) => props.theme.set(value)}
-                />
-              ),
-            },
-            {
-              content: (
-                <Input fullWidth shape="Round">
-                  <Label>
-                    <Icon name="search-outline" />
-                  </Label>
-                  <input type="text" placeholder="Search Here" />
-                </Input>
+                <Search submit={(v) => submitHandle(v)} type={'curtain'} placeholder="Search..." hint="Hit Enter to search" />
               ),
             },
           ]}
