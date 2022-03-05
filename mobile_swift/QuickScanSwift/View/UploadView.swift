@@ -7,19 +7,23 @@ import FirebaseAuth
 struct UploadView: View {
     @State var pushActive = false
     @ObservedObject private var viewModel: UploadViewModel
+    @State private var showingPopover = false
     
     init(state: AppState, url: String) {
         self.viewModel = UploadViewModel(authAPI: AuthService(), state: state, url: url)
     }
     
+    func thing() {
+        self.showingPopover = true
+    }
     var body: some View {
         VStack {
-            
+            /*
             NavigationLink(destination: HomeView(state: viewModel.state),
                            isActive: self.$pushActive) {
               EmptyView()
             }.hidden()
-             
+             */
             VStack(alignment: .center, spacing: 10) {
                 Text("Upload")
                     .modifier(TextModifier(font: UIConfiguration.titleFont,
@@ -31,6 +35,7 @@ struct UploadView: View {
                                  action: {
                         self.viewModel.upload()
                         self.pushActive = true
+                        self.showingPopover = true
                     })
                     .padding(.horizontal, 60)
                 }
@@ -40,11 +45,6 @@ struct UploadView: View {
                     CustomTextField(placeHolderText: "Description",
                                   text: $viewModel.description)
                 }.padding(.horizontal, 25)
-                if #available(iOS 14.0, *) {
-                    ProgressView("Uploading…", value: $viewModel.downloadAmount, total: 100.0)
-                } else {
-                    // Fallback on earlier versions
-                }
             }
             Spacer()
         }.alert(item: self.$viewModel.statusViewModel) { status in
@@ -68,6 +68,28 @@ struct UploadView: View {
                                          textColor: .white,
                                          width: 275,
                                          height: 55))
+        }.popover(isPresented: $showingPopover) {
+            Text("Progress")
+                .font(.headline)
+                .padding()
+            if #available(iOS 14.0, *) {
+                ProgressView("Uploading…", value: viewModel.downloadAmount, total: 100).scaleEffect(x: 0.8, y: 1, anchor: .center)
+            } else {
+                // Fallback on earlier versions
+            }
+            if (viewModel.downloadAmount == 100) {
+                Button(action: {
+                    self.showingPopover = false
+                    viewModel.downloadAmount = 0
+                }) {
+                    Text("Ok")
+                        .modifier(ButtonModifier(font: UIConfiguration.buttonFont,
+                                                 color: UIConfiguration.tintColor,
+                                                 textColor: .white,
+                                                 width: 275,
+                                                 height: 55))
+                }
+            }
         }
     }
 }
