@@ -56,6 +56,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, UI
     var assetWriter:AVAssetWriter?;
     
     var outputUrl: String = "FUCK YOU"
+    var screenResolution: CGSize = CGSize(width: 1920, height: 1080)
     
     var viewController: ARSCNView {
         return self.view as! ARSCNView
@@ -163,7 +164,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, UI
     
     func startRecording() {
         self.lastTime = 0;
-        self.initVideo(withName: UUID().uuidString, imageArray: self.snapshotArray, fps: 15, size: CGSize(width: UIScreen.main.bounds.size.width, height: UIScreen.main.bounds.size.height));
+        self.initVideo(withName: UUID().uuidString, imageArray: self.snapshotArray, size: self.screenResolution);
     }
         
     func stopRecording() {
@@ -171,7 +172,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, UI
         self.finishVideoRecordingAndSave();
     }
     
-    public func initVideo(withName:String, imageArray:[[String:Any]], fps:Int, size:CGSize) {
+    public func initVideo(withName:String, imageArray:[[String:Any]], size:CGSize) {
             self.createURLForVideo(withName: withName) { (videoURL) in
                 self.prepareWriterAndInput(imageArray:imageArray, size:size, videoURL: videoURL, completionHandler: { (error) in
                     
@@ -652,6 +653,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, UI
         guard let frame = viewController.session.currentFrame else { return }
         scan?.updateOnEveryFrame(frame)
         testRun?.updateOnEveryFrame()
+        self.screenResolution = frame.camera.imageResolution
         let image = frame.capturedImage.copy()
         didUpdateAtTime(time: time, snapshot: image)
     }
