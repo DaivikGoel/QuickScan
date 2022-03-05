@@ -6,9 +6,8 @@ def imagedetect():
     credential_path = "/solar-icon-319404-c5165d8e60d1.json"
     os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = os.getcwd() + credential_path
     
-    # The name of the image file to annotate
     #os.chdir('./output_models')
-    # Loads the image into memory
+
     files=os.listdir('./frames')
     d=random.choice(files)
     os.chdir('./frames')
@@ -31,7 +30,7 @@ def imagedetect():
         if label.score > 0.90:
             topical_labels.append(label.description)
 
-    print("tags to be sent: " + str(topical_labels))
+    print("Tags to be sent: " + str(topical_labels))
 
     os.chdir('../')
     return topical_labels
