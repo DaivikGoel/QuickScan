@@ -10,7 +10,7 @@ class UploadViewModel: ObservableObject {
     @Published var title: String = ""
     @Published var description: String = ""
     @Published var showAlert = false
-    @Published var downloadAmount = 0.0
+    @Published var downloadAmount: Double = 0.0
     
     private var userId = Auth.auth().currentUser?.uid
     private var cancellableBag = Set<AnyCancellable>()
@@ -144,7 +144,7 @@ class UploadViewModel: ObservableObject {
             let expression  = AWSS3TransferUtilityUploadExpression()
             expression.progressBlock = { (task: AWSS3TransferUtilityTask,progress: Progress) -> Void in
               print(progress.fractionCompleted)
-                self.downloadAmount = progress.fractionCompleted
+                self.downloadAmount = progress.fractionCompleted * 100
                 if progress.isCancelled || progress.isPaused{
                     print("cancelled for some reason")
                 }
