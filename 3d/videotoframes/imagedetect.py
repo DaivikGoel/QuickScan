@@ -33,6 +33,7 @@ def imagedetect():
 
     print("tags to be sent: " + str(topical_labels))
 
+    os.chdir('../')
     return topical_labels
 
 # uncomment for testing:
