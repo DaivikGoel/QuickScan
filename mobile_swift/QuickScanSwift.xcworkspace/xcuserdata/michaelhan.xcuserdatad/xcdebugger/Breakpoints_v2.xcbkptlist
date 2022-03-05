@@ -14,8 +14,8 @@
             filePath = "QuickScanSwift/ViewModel/UploadViewModel.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "61"
-            endingLineNumber = "61"
+            startingLineNumber = "142"
+            endingLineNumber = "142"
             landmarkName = "uploadVideo(with:type:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -30,8 +30,8 @@
             filePath = "QuickScanSwift/ViewModel/UploadViewModel.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "60"
-            endingLineNumber = "60"
+            startingLineNumber = "141"
+            endingLineNumber = "141"
             landmarkName = "uploadVideo(with:type:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -46,8 +46,8 @@
             filePath = "QuickScanSwift/ViewModel/UploadViewModel.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "86"
-            endingLineNumber = "86"
+            startingLineNumber = "158"
+            endingLineNumber = "158"
             landmarkName = "uploadVideo(with:type:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -62,8 +62,8 @@
             filePath = "QuickScanSwift/ViewModel/UploadViewModel.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "82"
-            endingLineNumber = "82"
+            startingLineNumber = "153"
+            endingLineNumber = "153"
             landmarkName = "uploadVideo(with:type:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -78,8 +78,8 @@
             filePath = "QuickScanSwift/ViewModel/UploadViewModel.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "95"
-            endingLineNumber = "95"
+            startingLineNumber = "167"
+            endingLineNumber = "167"
             landmarkName = "uploadVideo(with:type:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -94,8 +94,8 @@
             filePath = "QuickScanSwift/ViewModel/UploadViewModel.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "105"
-            endingLineNumber = "105"
+            startingLineNumber = "177"
+            endingLineNumber = "177"
             landmarkName = "uploadVideo(with:type:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -110,8 +110,8 @@
             filePath = "QuickScanSwift/ViewModel/UploadViewModel.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "109"
-            endingLineNumber = "109"
+            startingLineNumber = "181"
+            endingLineNumber = "181"
             landmarkName = "uploadVideo(with:type:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -126,8 +126,8 @@
             filePath = "QuickScanSwift/ViewModel/UploadViewModel.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "73"
-            endingLineNumber = "73"
+            startingLineNumber = "145"
+            endingLineNumber = "145"
             landmarkName = "uploadVideo(with:type:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -142,8 +142,8 @@
             filePath = "QuickScanSwift/ViewModel/UploadViewModel.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "88"
-            endingLineNumber = "88"
+            startingLineNumber = "160"
+            endingLineNumber = "160"
             landmarkName = "uploadVideo(with:type:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -158,8 +158,8 @@
             filePath = "QuickScanSwift/ViewModel/UploadViewModel.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "91"
-            endingLineNumber = "91"
+            startingLineNumber = "163"
+            endingLineNumber = "163"
             landmarkName = "uploadVideo(with:type:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -174,8 +174,8 @@
             filePath = "QuickScanSwift/ViewModel/UploadViewModel.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "72"
-            endingLineNumber = "72"
+            startingLineNumber = "144"
+            endingLineNumber = "144"
             landmarkName = "uploadVideo(with:type:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -190,8 +190,8 @@
             filePath = "QuickScanSwift/ViewModel/UploadViewModel.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "74"
-            endingLineNumber = "74"
+            startingLineNumber = "146"
+            endingLineNumber = "146"
             landmarkName = "uploadVideo(with:type:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -206,8 +206,8 @@
             filePath = "QuickScanSwift/ViewModel/UploadViewModel.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "75"
-            endingLineNumber = "75"
+            startingLineNumber = "147"
+            endingLineNumber = "147"
             landmarkName = "uploadVideo(with:type:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -222,8 +222,8 @@
             filePath = "QuickScanSwift/ViewModel/UploadViewModel.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "77"
-            endingLineNumber = "77"
+            startingLineNumber = "149"
+            endingLineNumber = "149"
             landmarkName = "uploadVideo(with:type:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -238,8 +238,8 @@
             filePath = "QuickScanSwift/ViewModel/UploadViewModel.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "78"
-            endingLineNumber = "78"
+            startingLineNumber = "150"
+            endingLineNumber = "150"
             landmarkName = "uploadVideo(with:type:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -254,8 +254,8 @@
             filePath = "QuickScanSwift/ViewModel/UploadViewModel.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "27"
-            endingLineNumber = "27"
+            startingLineNumber = "41"
+            endingLineNumber = "41"
             landmarkName = "UploadViewModel"
             landmarkType = "3">
          </BreakpointContent>
@@ -270,8 +270,8 @@
             filePath = "QuickScanSwift/ViewModel/UploadViewModel.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "37"
-            endingLineNumber = "37"
+            startingLineNumber = "51"
+            endingLineNumber = "51"
             landmarkName = "uploadFileOld(with:type:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -286,9 +286,25 @@
             filePath = "QuickScanSwift/ViewModel/UploadViewModel.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "83"
-            endingLineNumber = "83"
+            startingLineNumber = "154"
+            endingLineNumber = "154"
             landmarkName = "uploadVideo(with:type:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "506ABB33-5CD7-46DF-8210-CA4359DAF812"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "QuickScanSwift/ViewModel/UploadViewModel.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "98"
+            endingLineNumber = "98"
+            landmarkName = "postRequest(uuid:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

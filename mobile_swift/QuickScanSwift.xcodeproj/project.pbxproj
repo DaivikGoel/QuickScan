@@ -62,8 +62,7 @@
 		30F0AF9B24E989020084CE6E /* CustomTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30F0AF9A24E989020084CE6E /* CustomTextField.swift */; };
 		D539E1BB27BEFBD0004E3C9E /* UploadView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D539E1BA27BEFBD0004E3C9E /* UploadView.swift */; };
 		D539E1BD27BEFC36004E3C9E /* UploadViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D539E1BC27BEFC36004E3C9E /* UploadViewModel.swift */; };
-		D580538727D2050E0009EE2B /* IMG_0646.MOV in Resources */ = {isa = PBXBuildFile; fileRef = D52D27EA27C46D4A003284D8 /* IMG_0646.MOV */; };
-		D580538827D205140009EE2B /* Tragoedia.png in Resources */ = {isa = PBXBuildFile; fileRef = D52D27EE27C4A2BA003284D8 /* Tragoedia.png */; };
+		D580538C27D2B56F0009EE2B /* EditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D580538B27D2B56F0009EE2B /* EditView.swift */; };
 		D67277D8155DE049A430452D /* Pods_QuickScanSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9DA9DF5518C4734E912E9966 /* Pods_QuickScanSwift.framework */; };
 /* End PBXBuildFile section */
 
@@ -97,7 +96,7 @@
 		073C367427CF450C000CE6C2 /* ARView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARView.swift; sourceTree = "<group>"; };
 		073C367D27CFE444000CE6C2 /* TestRun.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestRun.swift; sourceTree = "<group>"; };
 		073C367F27CFE79A000CE6C2 /* DetectedObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetectedObject.swift; sourceTree = "<group>"; };
-		073C368127CFEA30000CE6C2 /* ARUIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARUIView.swift; sourceTree = "<group>"; };
+		073C368127CFEA30000CE6C2 /* ARUIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARUIView.swift; sourceTree = "<group>"; usesTabs = 0; };
 		0B8AE8CB2A252EC929D1448D /* Pods-FirebaseStarterSwiftUIApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FirebaseStarterSwiftUIApp.release.xcconfig"; path = "Target Support Files/Pods-FirebaseStarterSwiftUIApp/Pods-FirebaseStarterSwiftUIApp.release.xcconfig"; sourceTree = "<group>"; };
 		29C8AC219E5BF9499AB43332 /* Pods-QuickScanSwift.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-QuickScanSwift.debug.xcconfig"; path = "Target Support Files/Pods-QuickScanSwift/Pods-QuickScanSwift.debug.xcconfig"; sourceTree = "<group>"; };
 		30127DC724DE506300576F65 /* QuickScanSwift.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = QuickScanSwift.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -134,6 +133,8 @@
 		D52D27EE27C4A2BA003284D8 /* Tragoedia.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Tragoedia.png; path = ../../../../Tragoedia.png; sourceTree = "<group>"; };
 		D539E1BA27BEFBD0004E3C9E /* UploadView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadView.swift; sourceTree = "<group>"; };
 		D539E1BC27BEFC36004E3C9E /* UploadViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadViewModel.swift; sourceTree = "<group>"; };
+		D580538927D2B0340009EE2B /* logo6.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = logo6.png; path = QuickScanSwift/resources/logo6.png; sourceTree = "<group>"; };
+		D580538B27D2B56F0009EE2B /* EditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -213,6 +214,7 @@
 		30127DBE24DE506300576F65 = {
 			isa = PBXGroup;
 			children = (
+				D580538927D2B0340009EE2B /* logo6.png */,
 				30127DC924DE506300576F65 /* QuickScanSwift */,
 				30127DC824DE506300576F65 /* Products */,
 				8BB326AC4AD1A45FA13BD7DE /* Pods */,
@@ -285,6 +287,7 @@
 				D539E1BA27BEFBD0004E3C9E /* UploadView.swift */,
 				073C367427CF450C000CE6C2 /* ARView.swift */,
 				073C368127CFEA30000CE6C2 /* ARUIView.swift */,
+				D580538B27D2B56F0009EE2B /* EditView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -424,8 +427,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D580538827D205140009EE2B /* Tragoedia.png in Resources */,
-				D580538727D2050E0009EE2B /* IMG_0646.MOV in Resources */,
 				30127DD724DE506500576F65 /* LaunchScreen.storyboard in Resources */,
 				073C365E27CF3BEB000CE6C2 /* art.scnassets in Resources */,
 				30127DDF24DE9F3400576F65 /* GoogleService-Info.plist in Resources */,
@@ -518,6 +519,7 @@
 				073C363E27CF3BC7000CE6C2 /* BoundingBox.swift in Sources */,
 				073C364527CF3BC7000CE6C2 /* DetectedBoundingBox.swift in Sources */,
 				073C366827CF3BEB000CE6C2 /* ViewController+Gestures.swift in Sources */,
+				D580538C27D2B56F0009EE2B /* EditView.swift in Sources */,
 				30A39BED24DF999900EE7E2E /* SignUpViewModel.swift in Sources */,
 				30F0AF9024E967920084CE6E /* StatusViewModel.swift in Sources */,
 				073C366C27CF3BEB000CE6C2 /* ThresholdPinchGestureRecognizer.swift in Sources */,

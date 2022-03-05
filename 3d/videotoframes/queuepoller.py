@@ -6,10 +6,12 @@ from objectuploader import uploader
 import requests
 import sys
 
+from imagedetect import imagedetect
+
 sqs = boto3.client('sqs')
 s3_client = boto3.client('s3', region_name='ca-central-1')
 output_directory = './frames'
-queue_url = 'https://sqs.ca-central-1.amazonaws.com/861570318875/3DObjectQueue.fifo'
+queue_url = 'https://sqs.ca-central-1.amazonaws.com/861570318875/3DObject'
 api_url = 'http://ec2-3-98-130-154.ca-central-1.compute.amazonaws.com:3000/finalobject'
 
 # Send message to SQS queue
@@ -32,7 +34,7 @@ def queuepolling():
                 'uuid'
             ],
             VisibilityTimeout=1000,
-            WaitTimeSeconds=20
+            WaitTimeSeconds=10
         )
 
 
@@ -73,6 +75,9 @@ def queuepolling():
         ReceiptHandle=receipt_handle
     )
     print('Received and deleted message: %s' % message)
+
+    imagedetect('./output_models/thumbnail.png')
+
 
 if __name__ == '__main__': 
 

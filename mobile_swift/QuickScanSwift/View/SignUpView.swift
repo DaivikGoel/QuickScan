@@ -14,7 +14,7 @@ struct SignUpView: View {
                            isActive: self.$pushActive) {
               EmptyView()
             }.hidden()
-            VStack(alignment: .leading, spacing: 30) {
+            VStack(alignment: .center, spacing: 30) {
                 Text("Sign Up")
                     .modifier(TextModifier(font: UIConfiguration.titleFont,
                                            color: UIConfiguration.tintColor))
@@ -34,7 +34,7 @@ struct SignUpView: View {
                     
                     VStack(alignment: .center, spacing: 40) {
                         customButton(title: "Create Account",
-                                     backgroundColor: UIColor(hexString: "#334D92"),
+                                     backgroundColor: UIColor(hexString: "#913FE7"),
                                      action: self.viewModel.signUp)
                     }
                 }

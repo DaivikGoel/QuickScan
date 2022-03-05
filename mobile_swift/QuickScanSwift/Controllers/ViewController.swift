@@ -201,7 +201,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, UI
     private func createURLForVideo(withName:String, completionHandler:@escaping (URL)->()) {
         // Clear the location for the temporary file.
         let temporaryDirectoryURL:URL = URL.init(fileURLWithPath: NSTemporaryDirectory(), isDirectory: true);
-        let targetURL:URL = temporaryDirectoryURL.appendingPathComponent("\(withName).mp4")
+        let targetURL:URL = temporaryDirectoryURL.appendingPathComponent("\(withName).mov")
         // Delete the file, incase it exists.
         do {
             try FileManager.default.removeItem(at: targetURL);
@@ -215,7 +215,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, UI
     
     private func prepareWriterAndInput(imageArray:[[String:Any]], size:CGSize, videoURL:URL, completionHandler:@escaping(Error?)->()) {
             do {
-                self.assetWriter = try AVAssetWriter(outputURL: videoURL, fileType: AVFileType.mp4)
+                self.assetWriter = try AVAssetWriter(outputURL: videoURL, fileType: AVFileType.mov)
                 
                 let videoOutputSettings: Dictionary<String, Any> = [
                     AVVideoCodecKey : AVVideoCodecType.h264,

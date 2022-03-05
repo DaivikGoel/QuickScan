@@ -14,15 +14,16 @@ struct SignInView: View {
     
     var body: some View {
         VStack {
-            NavigationLink(destination: HomeView(state: viewModel.state),
+            NavigationLink(destination: ARUIView(state: viewModel.state),
                            isActive: self.$pushActive) {
               EmptyView()
             }.hidden()
-            VStack(alignment: .leading, spacing: 30) {
+            VStack(alignment: .center, spacing: 35) {
                 Text("Log in")
                     .modifier(TextModifier(font: UIConfiguration.titleFont,
                                            color: UIConfiguration.tintColor))
                     .padding(.leading, 25)
+                    .padding(.horizontal, 60)
                 VStack(alignment: .center, spacing: 30) {
                     VStack(alignment: .center, spacing: 25) {
                         CustomTextField(placeHolderText: "E-mail",
@@ -30,10 +31,10 @@ struct SignInView: View {
                         CustomTextField(placeHolderText: "Password",
                                       text: $viewModel.password,
                                       isPasswordType: true)
-                    }.padding(.horizontal, 25)
+                    }.padding(.horizontal, 25).padding(.vertical, 50)
                     VStack(alignment: .center, spacing: 40) {
-                        customButton(title: "login",
-                                     backgroundColor: UIColor(hexString: "#334D92"),
+                        customButton(title: "Login",
+                                     backgroundColor: UIColor(hexString: "#913FE7"),
                                      action: self.viewModel.login)
                     }
                 }

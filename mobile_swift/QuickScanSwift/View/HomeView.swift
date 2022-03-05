@@ -15,12 +15,6 @@ struct HomeView: View {
                     })
             }
             VStack {
-                NavigationLink(destination: ARUIView(),
-                               isActive: self.$pushActive) {
-                                EmptyView()
-                }
-                .navigationBarHidden(true)
-                
                 VStack(spacing: 40) {
                     VStack(spacing: 25) {
                         Button(action: {
