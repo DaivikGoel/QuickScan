@@ -3,8 +3,6 @@ import os
 from google.cloud import vision
 
 def imagedetect():
-    google_credential_file = "solar-icon-319404-c5165d8e60d1.json"
-
     credential_path = "/solar-icon-319404-c5165d8e60d1.json"
     os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = os.getcwd() + credential_path
 
