@@ -32,5 +32,7 @@ def imagedetect():
 
     os.chdir('../')
 
+    return topical_labels
+
 # uncomment for testing:
-# imagedetect()
+#imagedetect()

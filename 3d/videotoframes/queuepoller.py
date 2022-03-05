@@ -51,11 +51,13 @@ def queuepolling():
 
     Uploaded = uploader(message)
 
-
+    tagarray = imagedetect()
+    
     objectinfo = {
         "uuid": message['MessageAttributes']['uuid']['StringValue'],
         "collection_id": message['MessageAttributes']['collection_id']['StringValue'],
         "Uploaded": Uploaded,
+        "tag_array": tagarray
     }
     x = requests.post(api_url, data=objectinfo)  
         
@@ -76,7 +78,7 @@ def queuepolling():
     )
     print('Received and deleted message: %s' % message)
 
-    imagedetect('./output_models/thumbnail.png')
+
 
 
 if __name__ == '__main__': 
