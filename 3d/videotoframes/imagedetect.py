@@ -1,21 +1,21 @@
 import io
 import os
-
-# Imports the Google Cloud client library
 from google.cloud import vision
 
-# Instantiates a client
-client = vision.ImageAnnotatorClient()
+def imagedetect():
+    google_credential_file = "solar-icon-319404-c5165d8e60d1.json"
 
-def imagedetect(thumbnailpath):
-# The name of the image file to annotate
-    file_name = os.path.abspath(thumbnailpath)
+    credential_path = "/solar-icon-319404-c5165d8e60d1.json"
+    os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = os.getcwd() + credential_path
 
+    # The name of the image file to annotate
+    os.chdir('./output_models')
     # Loads the image into memory
-    with io.open(file_name, 'rb') as image_file:
+    with io.open('thumbnail.png', 'rb') as image_file:
         content = image_file.read()
 
     image = vision.Image(content=content)
+    client = vision.ImageAnnotatorClient()
 
     # Performs label detection on the image file
     response = client.label_detection(image=image)
@@ -24,3 +24,7 @@ def imagedetect(thumbnailpath):
     print('Labels:')
     for label in labels:
         print(label.description)
+    os.chdir('../')
+
+# uncomment for testing:
+# imagedetect()
