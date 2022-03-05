@@ -2,12 +2,14 @@ import Foundation
 import Combine
 import AWSS3
 import FirebaseAuth
+import UIKit
 
 class UploadViewModel: ObservableObject {
     @Published var statusViewModel: StatusViewModel?
     @Published var state: AppState
     @Published var title: String = ""
     @Published var description: String = ""
+    @Published var showAlert = false
     
     private var userId = Auth.auth().currentUser?.uid
     private var cancellableBag = Set<AnyCancellable>()
@@ -19,12 +21,17 @@ class UploadViewModel: ObservableObject {
         self.state = state
         self.url = url
     }
+
+    func buttonTapped() {
+        //handle request and then set to true to show the alert
+        self.showAlert = true
+    }
     
     func upload() {
         print("trying to upload")
         print(self.url)
         let Url = URL(string: self.url)!
-        let uuid = Url.lastPathComponent
+        var uuid = Url.lastPathComponent
         //uploadFileOld(with: "Tragoedia", type: "png")
         uploadVideo(with: self.url, type: "mov")
         postRequest(uuid: uuid)
@@ -64,8 +71,8 @@ class UploadViewModel: ObservableObject {
     func postRequest(uuid: String) {
       let userId = Auth.auth().currentUser?.uid
       // declare the parameter as a dictionary that contains string as key and value combination. considering inputs are valid
-      
-        let parameters: [String: Any] = ["name": self.title, "description": self.description, "user_id": userId ?? "69696969", "uuid": uuid]
+        let modifieduuid = uuid.replacingOccurrences(of: ".mov", with: "")
+        let parameters: [String: Any] = ["name": self.title, "description": self.description, "user_id": userId ?? "69696969", "uuid": modifieduuid]
       
       // create the url with URL
       let url = URL(string: "http://ec2-3-98-130-154.ca-central-1.compute.amazonaws.com:3000/collection")! // change server url accordingly
@@ -143,9 +150,9 @@ class UploadViewModel: ObservableObject {
                 }
               if progress.isFinished{           //3
                 print("Upload Finished...")
-                //do any task here.
               }
             }
+        
             
             expression.setValue("public-read-write", forRequestHeader: "x-amz-acl")   //4
             expression.setValue("public-read-write", forRequestParameter: "x-amz-acl")
@@ -171,7 +178,7 @@ class UploadViewModel: ObservableObject {
                 }
                 return nil
             })
-        }
+    }
       
 }
 
@@ -180,7 +187,7 @@ extension SignUpViewModel {
     private func resultMapper(with user: User?) -> StatusViewModel {
         if user != nil {
             state.currentUser = user
-            return StatusViewModel.signUpSuccessStatus
+            return StatusViewModel.uploadSuccessStatus
         } else {
             return StatusViewModel.errorStatus
         }

@@ -14,6 +14,10 @@ class StatusViewModel: Identifiable, ObservableObject {
         return StatusViewModel(title: "Successful", message: "Your account has been created successfully")
     }
     
+    static var uploadSuccessStatus: StatusViewModel {
+        return StatusViewModel(title: "Successful", message: "Your account has been created successfully")
+    }
+    
     static var logInSuccessStatus: StatusViewModel {
         return StatusViewModel(title: "Successful", message: "Your account has been logged in successfully")
     }
