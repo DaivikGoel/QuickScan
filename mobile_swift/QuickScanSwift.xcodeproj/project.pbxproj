@@ -62,7 +62,6 @@
 		30F0AF9B24E989020084CE6E /* CustomTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30F0AF9A24E989020084CE6E /* CustomTextField.swift */; };
 		D539E1BB27BEFBD0004E3C9E /* UploadView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D539E1BA27BEFBD0004E3C9E /* UploadView.swift */; };
 		D539E1BD27BEFC36004E3C9E /* UploadViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D539E1BC27BEFC36004E3C9E /* UploadViewModel.swift */; };
-		D580538C27D2B56F0009EE2B /* EditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D580538B27D2B56F0009EE2B /* EditView.swift */; };
 		D67277D8155DE049A430452D /* Pods_QuickScanSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9DA9DF5518C4734E912E9966 /* Pods_QuickScanSwift.framework */; };
 /* End PBXBuildFile section */
 
@@ -134,7 +133,6 @@
 		D539E1BA27BEFBD0004E3C9E /* UploadView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadView.swift; sourceTree = "<group>"; };
 		D539E1BC27BEFC36004E3C9E /* UploadViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadViewModel.swift; sourceTree = "<group>"; };
 		D580538927D2B0340009EE2B /* logo6.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = logo6.png; path = QuickScanSwift/resources/logo6.png; sourceTree = "<group>"; };
-		D580538B27D2B56F0009EE2B /* EditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -287,7 +285,6 @@
 				D539E1BA27BEFBD0004E3C9E /* UploadView.swift */,
 				073C367427CF450C000CE6C2 /* ARView.swift */,
 				073C368127CFEA30000CE6C2 /* ARUIView.swift */,
-				D580538B27D2B56F0009EE2B /* EditView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -519,7 +516,6 @@
 				073C363E27CF3BC7000CE6C2 /* BoundingBox.swift in Sources */,
 				073C364527CF3BC7000CE6C2 /* DetectedBoundingBox.swift in Sources */,
 				073C366827CF3BEB000CE6C2 /* ViewController+Gestures.swift in Sources */,
-				D580538C27D2B56F0009EE2B /* EditView.swift in Sources */,
 				30A39BED24DF999900EE7E2E /* SignUpViewModel.swift in Sources */,
 				30F0AF9024E967920084CE6E /* StatusViewModel.swift in Sources */,
 				073C366C27CF3BEB000CE6C2 /* ThresholdPinchGestureRecognizer.swift in Sources */,

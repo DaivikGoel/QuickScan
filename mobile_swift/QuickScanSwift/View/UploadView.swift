@@ -14,10 +14,12 @@ struct UploadView: View {
     
     var body: some View {
         VStack {
+            
             NavigationLink(destination: HomeView(state: viewModel.state),
                            isActive: self.$pushActive) {
               EmptyView()
             }.hidden()
+             
             VStack(alignment: .center, spacing: 10) {
                 Text("Upload")
                     .modifier(TextModifier(font: UIConfiguration.titleFont,
@@ -28,7 +30,7 @@ struct UploadView: View {
                                  backgroundColor: UIColor(hexString: "#913FE7"),
                                  action: {
                         self.viewModel.upload()
-                        self.viewModel.buttonTapped()
+                        self.pushActive = true
                     })
                     .padding(.horizontal, 60)
                 }
@@ -38,6 +40,11 @@ struct UploadView: View {
                     CustomTextField(placeHolderText: "Description",
                                   text: $viewModel.description)
                 }.padding(.horizontal, 25)
+                if #available(iOS 14.0, *) {
+                    ProgressView("Uploading…", value: $viewModel.downloadAmount, total: 100.0)
+                } else {
+                    // Fallback on earlier versions
+                }
             }
             Spacer()
         }.alert(item: self.$viewModel.statusViewModel) { status in

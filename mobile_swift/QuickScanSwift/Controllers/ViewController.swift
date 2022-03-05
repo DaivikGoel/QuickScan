@@ -55,7 +55,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, UI
     var videoInput:AVAssetWriterInput?;
     var assetWriter:AVAssetWriter?;
     
-    var outputUrl: String = "FUCK YOU"
+    var outputUrl: String = ""
     
     var viewController: ARSCNView {
         return self.view as! ARSCNView
