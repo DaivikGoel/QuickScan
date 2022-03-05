@@ -35,6 +35,7 @@ def uploader(message):
         s3_client.upload_file('thumbnail.png','quickscanthumbnails',uuid + '.png')
         Uploaded = True
         print("OBJECT uploaded")
+        os.chdir('../')
 
     
     return Uploaded
