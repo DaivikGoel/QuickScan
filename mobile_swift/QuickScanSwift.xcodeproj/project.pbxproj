@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 51;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -62,6 +62,7 @@
 		30F0AF9B24E989020084CE6E /* CustomTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30F0AF9A24E989020084CE6E /* CustomTextField.swift */; };
 		D539E1BB27BEFBD0004E3C9E /* UploadView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D539E1BA27BEFBD0004E3C9E /* UploadView.swift */; };
 		D539E1BD27BEFC36004E3C9E /* UploadViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D539E1BC27BEFC36004E3C9E /* UploadViewModel.swift */; };
+		D5A224F227D576530051104C /* GoogleSignIn in Frameworks */ = {isa = PBXBuildFile; productRef = D5A224F127D576530051104C /* GoogleSignIn */; };
 		D67277D8155DE049A430452D /* Pods_QuickScanSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9DA9DF5518C4734E912E9966 /* Pods_QuickScanSwift.framework */; };
 /* End PBXBuildFile section */
 
@@ -141,6 +142,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				D67277D8155DE049A430452D /* Pods_QuickScanSwift.framework in Frameworks */,
+				D5A224F227D576530051104C /* GoogleSignIn in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -382,6 +384,9 @@
 			dependencies = (
 			);
 			name = QuickScanSwift;
+			packageProductDependencies = (
+				D5A224F127D576530051104C /* GoogleSignIn */,
+			);
 			productName = SwiftUIChatAppKit;
 			productReference = 30127DC724DE506300576F65 /* QuickScanSwift.app */;
 			productType = "com.apple.product-type.application";
@@ -410,6 +415,9 @@
 				Base,
 			);
 			mainGroup = 30127DBE24DE506300576F65;
+			packageReferences = (
+				D5A224F027D576530051104C /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */,
+			);
 			productRefGroup = 30127DC824DE506300576F65 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -676,7 +684,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.quickscan.swift.mobile5;
+				PRODUCT_BUNDLE_IDENTIFIER = com.quickscan.swift.mobile.5;
 				PRODUCT_NAME = QuickScanSwift;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -697,7 +705,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.quickscan.swift.mobile5;
+				PRODUCT_BUNDLE_IDENTIFIER = com.quickscan.swift.mobile.5;
 				PRODUCT_NAME = QuickScanSwift;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -726,6 +734,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		D5A224F027D576530051104C /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/google/GoogleSignIn-iOS";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 6.0.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		D5A224F127D576530051104C /* GoogleSignIn */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = D5A224F027D576530051104C /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */;
+			productName = GoogleSignIn;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 30127DBF24DE506300576F65 /* Project object */;
 }

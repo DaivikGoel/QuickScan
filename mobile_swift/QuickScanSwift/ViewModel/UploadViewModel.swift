@@ -11,6 +11,7 @@ class UploadViewModel: ObservableObject {
     @Published var description: String = ""
     @Published var showAlert = false
     @Published var downloadAmount: Double = 0.0
+    @Published var uploadText: String = "Uploading..."
     
     private var userId = Auth.auth().currentUser?.uid
     private var cancellableBag = Set<AnyCancellable>()
@@ -33,7 +34,6 @@ class UploadViewModel: ObservableObject {
         var uuid = Url.lastPathComponent
         //uploadFileOld(with: "Tragoedia", type: "png")
         uploadVideo(with: self.url, type: "mov")
-        postRequest(uuid: uuid)
     }
     
     let bucketName = "quickscanvideoswift"
@@ -145,10 +145,19 @@ class UploadViewModel: ObservableObject {
             expression.progressBlock = { (task: AWSS3TransferUtilityTask,progress: Progress) -> Void in
               print(progress.fractionCompleted)
                 self.downloadAmount = progress.fractionCompleted * 100
+                //self.uploadText = "Uploading..."
+//                if self.uploadText == "Uploading..." {
+//                   self.uploadText = "Uploading....."
+//                } else if (self.uploadText == "Uploading.....") {
+//                    self.uploadText = "Uploading..."
+//                }
                 if progress.isCancelled || progress.isPaused{
                     print("cancelled for some reason")
                 }
-              if progress.isFinished{           //3
+              if progress.isFinished{
+                self.uploadText = "Uploaded Succesfully!"//3
+                let uuid = Url.lastPathComponent
+                self.postRequest(uuid: uuid)
                 print("Upload Finished...")
               }
             }

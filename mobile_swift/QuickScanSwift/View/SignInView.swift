@@ -3,6 +3,7 @@ import Combine
 import FBSDKCoreKit
 import FBSDKLoginKit
 import FirebaseAuth
+import GoogleSignIn
 
 struct SignInView: View {
     @State var pushActive = false

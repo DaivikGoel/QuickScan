@@ -102,7 +102,7 @@ extension ViewController {
                     self.scan?.state = .ready
                 }
                 
-                startMaxScanTimeTimer()
+//                startMaxScanTimeTimer()
             case .testing:
                 print("State: Testing")
 //                self.setNavigationBarTitle("Test")
