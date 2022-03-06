@@ -12,4 +12,5 @@ target 'QuickScanSwift' do
 	pod 'AWSS3'
 	pod 'AWSCognito'
 	pod 'AWSCore'
+	pod 'GoogleSignIn'
 end

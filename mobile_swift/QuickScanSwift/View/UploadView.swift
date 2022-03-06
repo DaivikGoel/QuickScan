@@ -73,7 +73,7 @@ struct UploadView: View {
                 .font(.headline)
                 .padding()
             if #available(iOS 14.0, *) {
-                ProgressView("Uploading…", value: viewModel.downloadAmount, total: 100).scaleEffect(x: 0.8, y: 1, anchor: .center)
+                ProgressView(viewModel.uploadText, value: viewModel.downloadAmount, total: 100).scaleEffect(x: 0.8, y: 1, anchor: .center)
             } else {
                 // Fallback on earlier versions
             }
@@ -81,6 +81,7 @@ struct UploadView: View {
                 Button(action: {
                     self.showingPopover = false
                     viewModel.downloadAmount = 0
+                    viewModel.uploadText = "Uploading..."
                 }) {
                     Text("Ok")
                         .modifier(ButtonModifier(font: UIConfiguration.buttonFont,
