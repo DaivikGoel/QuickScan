@@ -43,7 +43,7 @@
     "build": "gatsby build",
     "dev": "gatsby develop",
     "start": "http-server ./public --port ${PORT-8000}",
-    "test": "echo \"Write tests! -> https://gatsby.app/unit-testing\"",
+    "test": "echo \"Write tests! -> https://gatsby.app/unit-testing\""
   },
   "repository": {
     "type": "git",
