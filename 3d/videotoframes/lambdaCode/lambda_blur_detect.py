@@ -1,4 +1,3 @@
-import argparse
 from imutils import paths
 import cv2
 
