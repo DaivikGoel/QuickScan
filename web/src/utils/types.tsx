@@ -5,5 +5,11 @@ export interface CardPropsType {
   description: string,
   thumbnail: string,
   three_dimen_object_blob_storage: string,
-  objectname: string
+  objectname: string,
+  tags: string[]
+}
+
+export interface TagType {
+  value: string,
+  label: string
 }
