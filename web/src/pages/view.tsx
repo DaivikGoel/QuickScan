@@ -1,31 +1,43 @@
-import React, { Suspense, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Card, CardBody, CardFooter } from '@paljs/ui/Card';
 import { Button } from '@paljs/ui/Button';
-import { Link } from 'gatsby';
+import { InputGroup } from '@paljs/ui/Input';
 import AWS from 'aws-sdk';
 import SEO from '../components/SEO';
+import styled from 'styled-components';
 
-export default function View(props) {
+export default function View(props: Any) {
   AWS.config.update({
     accessKeyId: 'AKIA4RGMXYINS5GS6JIA',
     secretAccessKey: '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',
     region: 'ca-central-1'
   });
 
-  const handleDownload = () => {
-    const fileName = '1215.usdz'
+  const [newTitle, setTitle] = useState<string>("");
+  const [newDescription, setDescription] = useState<string>("");
+  const [hasChanged, setHasChanged] = useState(false);
+
+  const { isEditable, cardProp } = props.location.state
+  const { title, description, thumbnail, three_dimen_object_blob_storage, objectname } = cardProp;
+
+  useEffect(() => {
+    setTitle(title);
+    setDescription(description);
+  }, [title, description])
+
+  const handleDownload = (usdzFile: string) => {
     const s3 = new AWS.S3();
 
     const params = {
       Bucket: 'quick-scan-3d-objects',
-      Key: fileName,
+      Key: usdzFile,
     };
 
     const signedUrl = s3.getSignedUrl('getObject', params)
     const link = document.createElement('a');
     // Set link's href to point to the Blob URL
     link.href = signedUrl;
-    link.download = fileName;
+    link.download = usdzFile;
     // Append link to the body
     document.body.appendChild(link);
     // Dispatch click event on the link
@@ -41,21 +53,64 @@ export default function View(props) {
     // Remove link from body
     document.body.removeChild(link);
   }
-  console.log(props.location.state)
-  const { title, description, thumbnail } = props.location.state.cardProp;
+
+  const handleTitleChange = (e) => {
+    setTitle(e.target.value)
+    setHasChanged(true)
+  }
+
+  const handleDescriptionChange = (e) => {
+    setDescription(e.target.value)
+    setHasChanged(true)
+  }
+
+  const submitChanges = () => {
+    if (hasChanged) {
+
+    }
+  }
+
+  const Input = styled(InputGroup)`
+    margin-bottom: 10px;
+  `;
+  
+  let body
+  if (isEditable) {
+    body = (
+      <>
+        <Input fullWidth size="Large">
+          <input value={newTitle} onChange={handleTitleChange} type="text" placeholder="Title" />
+        </Input>
+        <Input fullWidth size="Large">
+          <input value={newDescription} onChange={handleDescriptionChange} type="text" placeholder="Title" />
+        </Input>
+        <Button disabled={hasChanged} onClick={submitChanges}>
+          Submit
+        </Button>
+      </>
+    )
+  } else {
+    body = (
+      <>
+        <h4>{title}</h4>
+        <p>{description}</p>
+        <Button onClick={() => handleDownload(objectname)}>
+          Download
+        </Button>
+      </>
+    )
+  }
+  console.log(cardProp)
   return (
     <>
       <SEO title="Detailed View" />
         <Card size="Giant">
           <CardBody>
-            <a rel='ar' href = 'https://devimages-cdn.apple.com/ar/photogrammetry/AirForce.usdz'>
+            <a rel='ar' href = {three_dimen_object_blob_storage}>
               <img src={thumbnail} />
             </a>
-            <h4>{title}</h4>
-            <p>{description}</p>
-            <Button onClick={handleDownload}>
-              Download
-            </Button>
+            {body}
+            
           </CardBody>
         </Card>
     </>

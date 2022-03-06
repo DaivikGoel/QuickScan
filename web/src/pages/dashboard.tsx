@@ -8,39 +8,39 @@ import { Card, CardBody, CardFooter } from '@paljs/ui/Card';
 import { Button } from '@paljs/ui/Button';
 import axios from 'axios';
 import { navigate } from 'gatsby';
+import { CardPropsType } from '../utils/types';
 
 const Home = () => {
-  interface CardPropsType {
-    title: string,
-    description: string,
-    thumbnail: string,
-  }
-
   const defaultCardProps: CardPropsType[] = [
     {
       title: 'Card 1',
       description: 'Description',
       thumbnail: 'https://upload.wikimedia.org/wikipedia/commons/a/a7/React-icon.svg',
+      three_dimen_object_blob_storage: 'https://upload.wikimedia.org/wikipedia/commons/a/a7/React-icon.svg'
     },
     {
       title: 'Card 2',
       description: 'Description',
       thumbnail: 'https://upload.wikimedia.org/wikipedia/commons/a/a7/React-icon.svg',
+      three_dimen_object_blob_storage: 'https://upload.wikimedia.org/wikipedia/commons/a/a7/React-icon.svg'
     },
     {
       title: 'Card 3',
       description: 'Description',
       thumbnail: 'https://upload.wikimedia.org/wikipedia/commons/a/a7/React-icon.svg',
+      three_dimen_object_blob_storage: 'https://upload.wikimedia.org/wikipedia/commons/a/a7/React-icon.svg'
     },
     {
       title: 'Card 4',
       description: 'Description',
       thumbnail: 'https://upload.wikimedia.org/wikipedia/commons/a/a7/React-icon.svg',
+      three_dimen_object_blob_storage: 'https://upload.wikimedia.org/wikipedia/commons/a/a7/React-icon.svg'
     },
     {
       title: 'Card 5',
       description: 'Description',
       thumbnail: 'https://upload.wikimedia.org/wikipedia/commons/a/a7/React-icon.svg',
+      three_dimen_object_blob_storage: 'https://upload.wikimedia.org/wikipedia/commons/a/a7/React-icon.svg'
     },
   ];
 
@@ -52,7 +52,13 @@ const Home = () => {
         const response = await axios.get(requestUrl)
         if (response) {
           const objects = response.data.data
-          const cardProps = objects.map((obj: any) => ({title: obj["name"], description: obj["description"], thumbnail: obj["thumbnail"]}))
+          const cardProps = objects.map((obj: any) => ({
+            title: obj["name"],
+            description: obj["description"],
+            thumbnail: `https://quickscanthumbnails.s3.ca-central-1.amazonaws.com/${obj["thumbnail"]}`,
+            three_dimen_object_blob_storage: `https://quick-scan-3d-objects.s3.ca-central-1.amazonaws.com/${obj["three_dimen_object_blob_storage"]}`,
+            objectname: obj["three_dimen_object_blob_storage"]
+          }))
           setCardProps(cardProps)
         }
       } catch (error) {
@@ -101,6 +107,7 @@ const Home = () => {
           <Col breakPoint={{ xs: 12, sm: 6, md: 3, lg: 3 }}>
             <div onClick={() => navigate("/view", {
               state: {
+                isEditable: false,
                 cardProp,
               }
             })} >

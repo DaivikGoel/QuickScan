@@ -165,8 +165,8 @@ class BoundingBoxSide: SCNNode {
         isBusyUpdatingTiles = true
         
         // Determine number of rows and colums
-        let numRows = 1
-        let numColumns = 1
+        let numRows = min(self.maxTileCount, Int(ceil(self.size.height / self.maxTileSize)))
+        let numColumns = min(self.maxTileCount, Int(ceil(self.size.width / self.maxTileSize)))
         
         var newTiles = [Tile]()
         

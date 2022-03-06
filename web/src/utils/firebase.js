@@ -19,6 +19,15 @@ const db = getFirestore(app);
 const auth = getAuth();
 
 const isLoggedIn = () => {
-    return auth.currentUser ? true : false
+  return auth.currentUser ? true : false
 }
-export {auth, db, isLoggedIn}
+
+const getUserId = () => {
+  if (isLoggedIn()) {
+    return auth.currentUser.uid
+  } else {
+    return false
+  }
+}
+
+export {auth, db, isLoggedIn, getUserId}
