@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import SEO from '../components/SEO';
 import Row from '@paljs/ui/Row';
 import Select from '@paljs/ui/Select';
@@ -9,8 +9,9 @@ import { Button } from '@paljs/ui/Button';
 import axios from 'axios';
 import { navigate } from 'gatsby';
 import { CardPropsType } from '../utils/types';
+import { Toastr, ToastrRef } from '@paljs/ui/Toastr';
 
-const Home = () => {
+const Home = (props) => {
   const defaultCardProps: CardPropsType[] = [
     {
       title: 'Card 1',
@@ -46,6 +47,8 @@ const Home = () => {
 
   const requestUrl = 'http://ec2-3-98-130-154.ca-central-1.compute.amazonaws.com:3000/collection'
   const [cardProps, setCardProps] = useState<CardPropsType[]>(defaultCardProps);
+  const toastRef = useRef<ToastrRef>(null)
+
   useEffect(() => {
     (async () => {
       try {
@@ -127,6 +130,7 @@ const Home = () => {
   }
   return (
     <>
+      <Toastr hasIcon={false} ref={toastRef} />
       <SEO title="Home" />
       <Row>
         <Col breakPoint={{ xs: 12, sm: 8, md: 8, lg: 9 }}>

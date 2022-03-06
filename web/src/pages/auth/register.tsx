@@ -1,42 +1,56 @@
 import { Button } from '@paljs/ui/Button';
 import { InputGroup } from '@paljs/ui/Input';
 import { Checkbox } from '@paljs/ui/Checkbox';
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import { Link } from 'gatsby';
-
+import { createUserWithEmailAndPassword } from "firebase/auth";
+import { auth, db } from '../../utils/firebase'
 import Auth from '../../components/Auth';
 import SEO from '../../components/SEO';
-import Socials from '../../components/Auth/Socials';
+import { emailValidator } from '../../utils/emailValidator'
+import { passwordValidator } from '../../utils/passwordValidator'
+import { navigate } from 'gatsby';
 
 const Input = styled(InputGroup)`
   margin-bottom: 2rem;
 `;
 
 export default function Register() {
-  const onCheckbox = () => {
-    // v will be true or false
-  };
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+  const [confirmPassword, setConfirmPassword] = useState('')
+
+  const submit = async () => {
+    try {
+      if (emailValidator(email) && passwordValidator(password)) {
+        let userCredential = await createUserWithEmailAndPassword(auth, email, password);
+        navigate("/dashboard")
+      } else {
+        return null
+      }
+    } catch {
+      console.log("Couldn't create a new user.")
+      return null
+    }
+  }
   return (
     <Auth title="Create new account">
       <SEO title="Register" />
       <form>
         <Input fullWidth>
-          <input type="text" placeholder="Username" />
+          <input value={email} onChange={e => setEmail(e.target.value)} type="email" placeholder="Email Address" />
         </Input>
         <Input fullWidth>
-          <input type="email" placeholder="Email Address" />
+          <input value={password} onChange={e => setPassword(e.target.value)} type="password" placeholder="Password" />
         </Input>
         <Input fullWidth>
-          <input type="password" placeholder="Password" />
-        </Input>
-        <Input fullWidth>
-          <input type="password" placeholder="Confirm Password" />
+          <input value={confirmPassword} onChange={e => setConfirmPassword(e.target.value)} type="password" placeholder="Confirm Password" />
         </Input>
         {/* <Checkbox onChange={onCheckbox}>
           Agree to <Link to="/">Terms & Conditions</Link>
         </Checkbox> */}
-        <Button status="Success" type="button" shape="SemiRound" fullWidth>
+        <Button onClick={submit} status="Success" type="button" shape="SemiRound" fullWidth>
           Register
         </Button>
       </form>

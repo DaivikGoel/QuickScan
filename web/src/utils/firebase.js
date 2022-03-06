@@ -1,6 +1,6 @@
 import { getFirestore, collection, getDocs } from 'firebase/firestore/lite';
 import { initializeApp } from 'firebase/app';
-import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
+import { getAuth } from "firebase/auth";
 
 // TODO: Replace the following with your app's Firebase project configuration
 const firebaseConfig = {
