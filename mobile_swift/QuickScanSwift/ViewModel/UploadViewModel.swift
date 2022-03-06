@@ -10,6 +10,7 @@ class UploadViewModel: ObservableObject {
     @Published var title: String = ""
     @Published var description: String = ""
     @Published var showAlert = false
+    @Published var downloadAmount: Double = 0.0
     
     private var userId = Auth.auth().currentUser?.uid
     private var cancellableBag = Set<AnyCancellable>()
@@ -28,8 +29,6 @@ class UploadViewModel: ObservableObject {
     }
     
     func upload() {
-        print("trying to upload")
-        print(self.url)
         let Url = URL(string: self.url)!
         var uuid = Url.lastPathComponent
         //uploadFileOld(with: "Tragoedia", type: "png")
@@ -144,7 +143,8 @@ class UploadViewModel: ObservableObject {
             
             let expression  = AWSS3TransferUtilityUploadExpression()
             expression.progressBlock = { (task: AWSS3TransferUtilityTask,progress: Progress) -> Void in
-              print(progress.fractionCompleted)   //2
+              print(progress.fractionCompleted)
+                self.downloadAmount = progress.fractionCompleted * 100
                 if progress.isCancelled || progress.isPaused{
                     print("cancelled for some reason")
                 }
@@ -183,7 +183,7 @@ class UploadViewModel: ObservableObject {
 }
 
 // MARK: - Private helper function
-extension SignUpViewModel {
+extension UploadViewModel {
     private func resultMapper(with user: User?) -> StatusViewModel {
         if user != nil {
             state.currentUser = user

@@ -55,7 +55,8 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, UI
     var videoInput:AVAssetWriterInput?;
     var assetWriter:AVAssetWriter?;
     
-    var outputUrl: String = "FUCK YOU"
+
+    var outputUrl: String = ""
     var screenResolution: CGSize = CGSize(width: 1920, height: 1080)
     
     var viewController: ARSCNView {
