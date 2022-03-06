@@ -10,11 +10,13 @@ import tempfile
 import logging
 import json
 
+
 logger = logging.getLogger()
 logger.setLevel(logging.INFO)
 
+bucket_name = 'quickscanvideoswift'
 sqs = boto3.client('sqs')
-queue_url = 'https://sqs.ca-central-1.amazonaws.com/861570318875/3DObjectQueue.fifo'
+queue_url = 'https://sqs.ca-central-1.amazonaws.com/861570318875/3DObject'
 s3_client = boto3.client('s3', region_name='ca-central-1')
 
 def push_to_sqs(event, number_of_images, linkarray):
@@ -22,26 +24,24 @@ def push_to_sqs(event, number_of_images, linkarray):
     response = sqs.send_message(
     QueueUrl=queue_url,
     DelaySeconds=0,
-    MessageGroupId="0",
     MessageAttributes={
         'uuid': {
             'DataType': 'String',
-            'StringValue': str(event["body"]["uuid"])
+            'StringValue': event["uuid"]
         },
         'collection_id': {
             'DataType': 'String',
-            'StringValue': str(event["body"]["collection_id"])
+            'StringValue': str(event["collection_id"])
         },
         'number_of_images': {
             'DataType': 'Number',
             'StringValue': str(number_of_images)
         },
-        # TODO: send array of links, of the images that got uploaded 
+        # send array of links, of the images that got uploaded 
         's3_bucket_links' : {
             
             'DataType': 'Binary.array',
             'BinaryValue': json.dumps(linkarray)
-            
             
         }
     },
@@ -52,11 +52,12 @@ def push_to_sqs(event, number_of_images, linkarray):
 
 def upload_frames_to_s3(uuid, output_directory):
     linkarray = []
-    print("UUID", uuid, "OUUPUT", output_directory)
+
+    #logger.info("uploaded to S3 with UUID: ", uuid, "OUTPUT", output_directory)
     for image_path in os.listdir(output_directory):
         logger.info(f'Got Image Path: {image_path}')
         # img = Image.open(os.path.join(output_directory, image_path))
-        frame_name = str(uuid) + str(image_path)
+        frame_name = uuid + str(image_path)
         logger.info(f'Frame Name: {frame_name}')
         uploaded = s3_client.upload_file(os.path.join(output_directory, image_path),'quickscanimages',frame_name)
     
@@ -69,15 +70,16 @@ def upload_frames_to_s3(uuid, output_directory):
 def lambda_handler(event, context):
     logger.info('lambda fn invoked')
     output_directory = '/tmp'
+    event = json.loads(event["body"])
     
     # comment this out for not testing 
     # push_to_sqs(event, 30)
 
-    #logger.info('This is a short test run to enqueue request to SQS')
+    # logger.info('This is a short test run to enqueue request to SQS')
     # return {
     #     'message': "this is a short test run: " + event["body"]["uuid"]
     # }
-
+    
 
     for filename in os.listdir(output_directory):
         file_path = os.path.join(output_directory, filename)
@@ -90,11 +92,14 @@ def lambda_handler(event, context):
             print('Failed to delete %s. Reason: %s' % (file_path, e))
             logger.error('Failed to delete %s. Reason: %s' % (file_path, e))
 
-        
-    
-    url = s3_client.generate_presigned_url( ClientMethod='get_object', Params={ 'Bucket': "quickscans3", 'Key': "meat.MOV" } )
-    vidcap = cv2.VideoCapture(url)
+    # url = s3_client.generate_presigned_url( ClientMethod='get_object', Params={ 'Bucket': bucket_name, 'Key': str(event["uuid"]) + '.mov' } )
+    os.chdir('/tmp')
+    logger.info(type(event["uuid"]))
+    s3_client.download_file(bucket_name,event["uuid"] + '.mov' ,event["uuid"] + '.mov')
+    os.chdir('../')
+    vidcap = cv2.VideoCapture(output_directory + '/' + event["uuid"] + '.mov')
     success,image = vidcap.read()
+    os.remove(output_directory + '/' + event["uuid"] + '.mov')
     count = 0
     
     print(vidcap)
@@ -120,7 +125,6 @@ def lambda_handler(event, context):
             count += 1
 
         else:
-            # print ("blurry frame was deleted")
             continue
             
     print("NUMBER OF FRAMES in dir /tmp after blur detection ", len(os.listdir(output_directory)))
@@ -133,9 +137,10 @@ def lambda_handler(event, context):
     
     logger.info(f'number OF frames left after RMS and SIFT {len(os.listdir(output_directory))}')
     logger.info('completed video to frame processing, generating model now...')
+    # logger.info('UUID', event["uuid"])
 
-    # TODO: enqueue the event and contexts
-    linkarray = upload_frames_to_s3(event["body"]["uuid"], output_directory)
+    # enqueue the event and contexts
+    linkarray = upload_frames_to_s3(event["uuid"], output_directory)
     print("LINK ARRAY", linkarray)
     push_to_sqs(event, len(linkarray), linkarray)
     # os.system('./HelloPhotogrammetry {} ./output_models/result.usdz -d medium '.format(output_directory))
