@@ -5,8 +5,8 @@ import React, { useState, useRef } from 'react';
 import { Link } from 'gatsby';
 import { emailValidator } from '../../utils/emailValidator'
 import { passwordValidator } from '../../utils/passwordValidator'
-import { signInWithEmailAndPassword } from "firebase/auth";
-import { auth, db } from '../../utils/firebase'
+import { signInWithEmailAndPassword, signInWithRedirect } from "firebase/auth";
+import { auth, provider } from '../../utils/firebase'
 import { navigate } from 'gatsby';
 import Auth, { Group } from '../../components/Auth';
 import Socials from '../../components/Auth/Socials';
@@ -37,6 +37,20 @@ export default function Login() {
       return null
     }
   }
+
+  const googleLogin = async () => {
+    try {
+      const result = await signInWithRedirect(auth, provider);
+      navigate("/dashboard", {
+        state: {
+          justSignedIn: true
+        }
+      })
+    } catch {
+      console.log("Google Login failed.")
+      return null
+    }
+  }
   
   return (
     <Auth title="Login" subTitle="Hello! Login with your email">
@@ -56,7 +70,7 @@ export default function Login() {
           Login
         </Button>
       </form>
-      {/* <Socials /> */}
+      <Socials googleLogin={googleLogin} />
       <p>
         Don&apos;t have account? <Link to="/auth/register">Register</Link>
       </p>

@@ -16,20 +16,13 @@ const SocialsStyle = styled.section`
   }
 `;
 
-export default function Socials() {
+export default function Socials(props) {
+  const { googleLogin } = props
   return (
     <SocialsStyle>
       <p>or enter with:</p>
-      <div className="links">
-        <a href="https://github.com/AhmedElywa">
-          <EvaIcon name="github" />
-        </a>
-        <a href="https://www.facebook.com/AhmedElywa">
-          <EvaIcon name="facebook" />
-        </a>
-        <a href="https://twitter.com/AhmedElywh">
-          <EvaIcon name="twitter" />
-        </a>
+      <div onClick={googleLogin} className="links">
+        <EvaIcon name="google" />
       </div>
     </SocialsStyle>
   );
