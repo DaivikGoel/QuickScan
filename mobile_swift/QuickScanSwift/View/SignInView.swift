@@ -8,9 +8,27 @@ import GoogleSignIn
 struct SignInView: View {
     @State var pushActive = false
     @ObservedObject private var viewModel: SignInViewModel
+    @ObservedObject var vm: UserAuthModel
     
     init(state: AppState) {
         self.viewModel = SignInViewModel(authAPI: AuthService(), state: state)
+        self.vm = UserAuthModel()
+    }
+    
+    fileprivate func SignOutButton() -> Button<Text> {
+        Button(action: {
+            vm.signOut()
+        }) {
+            Text("Sign Out")
+        }
+    }
+    
+    fileprivate func SignInButton() -> Button<Text> {
+        Button(action: {
+            vm.signIn()
+        }) {
+            Text("Google Sign-in")
+        }
     }
     
     var body: some View {
@@ -19,6 +37,9 @@ struct SignInView: View {
                            isActive: self.$pushActive) {
               EmptyView()
             }.hidden()
+            .onReceive(self.vm.$isLoggedInFirebase) { newVal in // << here !!
+                                self.pushActive = newVal
+                            }
             VStack(alignment: .center, spacing: 35) {
                 Text("Log in")
                     .modifier(TextModifier(font: UIConfiguration.titleFont,
@@ -41,6 +62,17 @@ struct SignInView: View {
                 }
             }
             Spacer()
+            if #available(iOS 14.0, *) {
+                VStack{
+                    if(vm.isLoggedIn){
+                        SignOutButton()
+                    }else{
+                        SignInButton()
+                    }
+                }.navigationTitle("Login")
+            } else {
+                // Fallback on earlier versions
+            }
         }.alert(item: self.$viewModel.statusViewModel) { status in
             Alert(title: Text(status.title),
                   message: Text(status.message),

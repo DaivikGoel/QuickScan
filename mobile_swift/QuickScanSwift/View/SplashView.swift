@@ -7,7 +7,7 @@ struct SplashView: View {
     var body: some View {
         VStack {
             if self.isActive {
-                ARUIView(state: state)
+                WelcomeView(state: state)
 //                WelcomeView(state: self.state)
             } else {
                 ZStack {
