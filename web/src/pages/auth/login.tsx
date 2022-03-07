@@ -5,8 +5,7 @@ import React, { useState, useRef } from 'react';
 import { Link } from 'gatsby';
 import { emailValidator } from '../../utils/emailValidator'
 import { passwordValidator } from '../../utils/passwordValidator'
-import { signInWithEmailAndPassword, signInWithRedirect } from "firebase/auth";
-import { auth, provider } from '../../utils/firebase'
+// import { auth, provider, signInWithEmailAndPassword, signInWithRedirect } from '../../utils/firebase'
 import { navigate } from 'gatsby';
 import Auth, { Group } from '../../components/Auth';
 import Socials from '../../components/Auth/Socials';
@@ -23,7 +22,7 @@ export default function Login() {
   const submit = async () => {
     try {
       if (!emailValidator(email) && !passwordValidator(password)) {
-        let userCredential = await signInWithEmailAndPassword(auth, email, password);
+        // let userCredential = await signInWithEmailAndPassword(auth, email, password);
         navigate("/dashboard", {
           state: {
             justSignedIn: true
@@ -40,7 +39,7 @@ export default function Login() {
 
   const googleLogin = async () => {
     try {
-      const result = await signInWithRedirect(auth, provider);
+      // const result = await signInWithRedirect(auth, provider);
       navigate("/dashboard", {
         state: {
           justSignedIn: true

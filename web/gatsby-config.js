@@ -42,6 +42,6 @@ module.exports = {
       options: {
         trackingId: 'UA-171177495-3',
       },
-    },
+    }
   ],
 };
