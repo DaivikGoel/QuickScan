@@ -27,8 +27,12 @@ def imagedetect():
     for label in labels:
         print(label.description + " score: " + str(label.score))
 
-        if label.score > 0.80:
+        if label.score > 0.85:
             topical_labels.append(label.description)
+
+    if not topical_labels:
+        for index in range(min(3, len(labels))):
+            topical_labels.append(labels[index].description)
 
     print("Tags to be sent: " + str(topical_labels))
 
