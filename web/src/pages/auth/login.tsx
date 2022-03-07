@@ -11,22 +11,25 @@ import Socials from '../../components/Auth/Socials';
 import SEO from '../../components/SEO';
 import { requestUrl } from '../../utils/requestUrl';
 import axios from 'axios';
+import useFirebase from '../../utils/useFirebase';
 
 export default function Login() {
   const [checked, setChecked] = useState(false)
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [badLogin, setBadLogin] = useState(false)
+  const firebase = useFirebase();
   const onCheckbox = (v) => {
     setChecked(v)
   };
   const submit = async () => {
     try {
-      if (!emailValidator(email) && !passwordValidator(password)) {
-        let userCredential = await axios.post(`${requestUrl}/authuser`, {
-          email,
-          password
-        })
+      if (!emailValidator(email) && !passwordValidator(password) && firebase) {
+        const userCredential = firebase.auth().signInWithEmailAndPassword(email, password);
+        // let userCredential = await axios.post(`${requestUrl}/authuser`, {
+        //   email,
+        //   password
+        // })
         navigate("/dashboard", {
           state: {
             justSignedIn: true

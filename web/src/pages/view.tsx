@@ -16,7 +16,13 @@ export default function View({ location }) {
   const [newTitle, setTitle] = useState<string>("");
   const [newDescription, setDescription] = useState<string>("");
   const [hasChanged, setHasChanged] = useState(false);
-  const { isEditable = false, cardProp = {} } = location.state
+  const isEditable = false
+  const cardProp = {title : '',
+  description : '',
+  thumbnail : '',
+  three_dimen_object_blob_storage : '',
+  objectname : ''}
+  // const { isEditable = false, cardProp = {} } = location.state
   const {
     title = '',
     description = '',

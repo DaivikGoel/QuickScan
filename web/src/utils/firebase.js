@@ -1,27 +1,32 @@
-// import firebase from 'gatsby-plugin-firebase';
-// // import { initializeApp } from 'gatsby-plugin-firebase/app';
-// // import { getAuth, GoogleAuthProvider } from "gatsby-plugin-firebase/auth";
+import firebase from 'firebase/app';
+import 'firebase/auth';
+// import { getAuth, GoogleAuthProvider } from "firebase/auth";
 
-// // TODO: Replace the following with your app's Firebase project configuration
+const firebaseConfig = {
+  apiKey: "AIzaSyAidQ4LnvFBCBU6Q1VbTPVivfJZ_E6APbQ",
+  authDomain: "quickscan-2f853.firebaseapp.com",
+  projectId: "quickscan-2f853",
+  storageBucket: "quickscan-2f853.appspot.com",
+  messagingSenderId: "361465475773",
+  appId: "1:361465475773:web:45dc4aace1a0962ffbbdd4",
+  measurementId: "G-V91KRP3H7K"
+};
 
-// const getFirebase = () => {
-//   if (typeof window !== 'undefined') {
-//     if (instance) return instance;
-//     instance = firebase.initializeApp(firebaseConfig);
-//     return instance;
-//   }
+let instance = null;
 
-//   return null;
-// }
+export default function getFirebase() {
+  if (typeof window !== 'undefined') {
+    if (instance) return instance;
+    instance = firebase.initializeApp(config);
+    return instance;
+  }
 
-// const app = getFirebase();
+  return null;
+}
 
-// const auth = app.auth.getAuth();
-// const provider = new app.auth.GoogleAuthProvider();
+// const auth = getAuth();
+// const provider = new GoogleAuthProvider();
 // provider.addScope('https://www.googleapis.com/auth/contacts.readonly');
-
-// const signInWithEmailAndPassword = app.auth.signInWithEmailAndPassword
-// const signInWithRedirect = app.auth.signInWithRedirect
 
 // const isLoggedIn = () => {
 //   return auth.currentUser ? true : false
@@ -35,4 +40,4 @@
 //   }
 // }
 
-// export {auth, isLoggedIn, getUserId, provider, signInWithEmailAndPassword, signInWithRedirect}
+// export {auth, db, isLoggedIn, getUserId, provider}

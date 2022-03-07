@@ -12,6 +12,7 @@
     "@paljs/ui": "1.1.1",
     "@tinymce/tinymce-react": "3.12.6",
     "aws-sdk": "^2.1085.0",
+    "firebase": "^9.6.8",
     "gatsby": "3.13.1",
     "gatsby-image": "3.11.0",
     "gatsby-plugin-google-analytics": "^3.12.0",
