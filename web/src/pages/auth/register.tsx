@@ -8,9 +8,9 @@ import Auth from '../../components/Auth';
 import SEO from '../../components/SEO';
 import { emailValidator } from '../../utils/emailValidator'
 import { passwordValidator } from '../../utils/passwordValidator'
-import axios from 'axios';
 import { navigate } from 'gatsby';
-import { requestUrl } from '../../utils/requestUrl';
+import { createUserWithEmailAndPassword } from 'firebase/auth';
+import useFirebase from '../../utils/useFirebase';
 
 const Input = styled(InputGroup)`
   margin-bottom: 2rem;
@@ -20,15 +20,13 @@ export default function Register() {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [confirmPassword, setConfirmPassword] = useState('')
+  const firebase = useFirebase();
 
   const submit = async () => {
     try {
-      if (emailValidator(email) && passwordValidator(password)) {
-        const { data } = await axios.post(`${requestUrl}/createuser`, {
-          email,
-          password
-        })
-        navigate(`/dashboard?id=${data.uid}`)
+      if (password === confirmPassword && !emailValidator(email) && !passwordValidator(password) && firebase) {
+        await createUserWithEmailAndPassword(firebase, email, password);
+        navigate('/dashboard')
       } else {
         return null
       }

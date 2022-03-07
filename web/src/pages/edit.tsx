@@ -8,21 +8,25 @@ import axios from 'axios';
 import { CardPropsType } from '../utils/types';
 import { navigate } from 'gatsby';
 import { requestUrl } from '../utils/requestUrl';
+import useFirebase from '../utils/useFirebase';
 
 export default function Edit() {
   const collectionUrl = `${requestUrl}/collection`
   const [cardProps, setCardProps] = useState<CardPropsType[]>([]);
+  const firebase = useFirebase();
   useEffect(() => {
-    // if (!isLoggedIn()) {
-    //   navigate("/auth/login")
-    // } 
-  })
+    if (firebase && !firebase.currentUser) {
+      navigate("/auth/login")
+    }
+  }, [firebase])
   useEffect(() => {
     (async () => {
       try {
+        if (!firebase) { return null }
+        if (!firebase.currentUser) { return null }
         const response = await axios.get(collectionUrl)
         if (response) {
-          const userId = '696969'
+          const userId = firebase.currentUser.uid
           const objects = response.data.data
           const cardProps = objects.filter((obj: any) => userId !== obj["user_id"]).map((obj: any) => ({
             title: obj["name"],
