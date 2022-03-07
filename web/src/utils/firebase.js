@@ -1,6 +1,6 @@
 import { getFirestore, collection, getDocs } from 'firebase/firestore/lite';
 import { initializeApp } from 'firebase/app';
-import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
+import { getAuth, GoogleAuthProvider } from "firebase/auth";
 
 // TODO: Replace the following with your app's Firebase project configuration
 const firebaseConfig = {
@@ -17,6 +17,8 @@ const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
 const auth = getAuth();
+const provider = new GoogleAuthProvider();
+provider.addScope('https://www.googleapis.com/auth/contacts.readonly');
 
 const isLoggedIn = () => {
   return auth.currentUser ? true : false
@@ -30,4 +32,4 @@ const getUserId = () => {
   }
 }
 
-export {auth, db, isLoggedIn, getUserId}
+export {auth, db, isLoggedIn, getUserId, provider}

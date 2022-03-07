@@ -82,7 +82,7 @@ export default function View(props: Any) {
           <input value={newTitle} onChange={handleTitleChange} type="text" placeholder="Title" />
         </Input>
         <Input fullWidth size="Large">
-          <input value={newDescription} onChange={handleDescriptionChange} type="text" placeholder="Title" />
+          <textarea value={newDescription} onChange={handleDescriptionChange} placeholder="Description" />
         </Input>
         <Button disabled={hasChanged} onClick={submitChanges}>
           Submit

@@ -2,6 +2,8 @@ import Combine
 import FBSDKCoreKit
 import FBSDKLoginKit
 import FirebaseAuth
+import GoogleSignIn
+import FirebaseCore
 
 class SignInViewModel: ObservableObject {
     @Published var email: String = ""

@@ -7,11 +7,16 @@ import SEO from '../components/SEO';
 import axios from 'axios';
 import { CardPropsType } from '../utils/types';
 import { navigate } from 'gatsby';
-import { getUserId } from '../utils/firebase';
+import { getUserId, isLoggedIn } from '../utils/firebase';
 
 export default function Edit(props) {
   const requestUrl = 'http://ec2-3-98-130-154.ca-central-1.compute.amazonaws.com:3000/collection'
   const [cardProps, setCardProps] = useState<CardPropsType[]>([]);
+  useEffect(() => {
+    if (!isLoggedIn()) {
+      navigate("/auth/login")
+    } 
+  })
   useEffect(() => {
     (async () => {
       try {

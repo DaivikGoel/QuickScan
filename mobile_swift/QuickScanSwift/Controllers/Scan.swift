@@ -338,6 +338,11 @@ class Scan {
         
         if state == .ready || state == .defineBoundingBox || state == .scanning {
             
+            //let title = "you're legit gay"
+            //let message = "HEHEXD"
+            //ViewController.instance?.showAlert(title: title, message: message)
+            
+            
             if let lightEstimate = frame.lightEstimate, lightEstimate.ambientIntensity < 500, !hasWarnedAboutLowLight, isFirstScan {
                 hasWarnedAboutLowLight = true
                 let title = "Too dark"

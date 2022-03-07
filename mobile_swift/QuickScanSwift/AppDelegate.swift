@@ -3,6 +3,7 @@ import Firebase
 import AWSCore
 import AWSCognito
 import ARKit
+import GoogleSignIn
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
@@ -49,6 +50,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         )
         let configuration = AWSServiceConfiguration(region: .CACentral1, credentialsProvider: credentialsProvider)
         AWSServiceManager.default().defaultServiceConfiguration = configuration
+    }
+    
+    @available(iOS 9.0, *)
+    func application(_ application: UIApplication, open url: URL,
+                     options: [UIApplication.OpenURLOptionsKey: Any])
+      -> Bool {
+      return GIDSignIn.sharedInstance.handle(url)
     }
 
 
