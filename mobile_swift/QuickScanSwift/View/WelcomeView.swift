@@ -56,7 +56,7 @@ struct WelcomeView: View {
                 }
                 Spacer()
             }
-        }.navigationViewStyle(.stack)
+        }.navigationViewStyle(.stack).navigationBarBackButtonHidden(true).navigationBarHidden(true)
     }
     
     private func destinationView() -> AnyView {

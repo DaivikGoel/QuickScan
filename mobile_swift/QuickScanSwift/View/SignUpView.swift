@@ -10,7 +10,7 @@ struct SignUpView: View {
     
     var body: some View {
         VStack {
-            NavigationLink(destination: HomeView(state: viewModel.state),
+            NavigationLink(destination: WelcomeView(state: viewModel.state),
                            isActive: self.$pushActive) {
               EmptyView()
             }.hidden()
@@ -40,6 +40,8 @@ struct SignUpView: View {
                 }
             }
             Spacer()
+        
+            
         }.alert(item: self.$viewModel.statusViewModel) { status in
             Alert(title: Text(status.title),
                   message: Text(status.message),

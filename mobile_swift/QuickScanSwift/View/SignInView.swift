@@ -73,6 +73,7 @@ struct SignInView: View {
             } else {
                 // Fallback on earlier versions
             }
+            
         }.alert(item: self.$viewModel.statusViewModel) { status in
             Alert(title: Text(status.title),
                   message: Text(status.message),
