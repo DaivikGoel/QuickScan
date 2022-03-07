@@ -12,6 +12,7 @@ import User from '@paljs/ui/User';
 import { getPathReady } from './Sidebar';
 import { Location } from '@reach/router';
 import { breakpointDown } from '@paljs/ui/breakpoints';
+import { navigate } from 'gatsby';
 
 const HeaderStyle = styled.div`
   display: flex;
@@ -107,7 +108,9 @@ const Header: React.FC<HeaderProps> = (props) => {
   ];
 
   const submitHandle = (e) => {
-    console.log("Search submit")
+    if (window && window.location) {
+      navigate(`${window.location.pathname}?search=${e}`, { replace: true })
+    }
   }
   return (
     <LayoutHeader fixed>

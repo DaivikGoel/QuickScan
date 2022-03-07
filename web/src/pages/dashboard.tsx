@@ -90,6 +90,11 @@ const Home = (props) => {
     }
   }, [selectedTags])
 
+  useEffect(() => {
+    const searchString = location.search.replace('?search=', '')
+    setFilteredCardProps(cardProps.filter(card => card.description.includes(searchString) || card.title.includes(searchString)))
+  }, [props.location])
+
   const FilterStyle = styled.div`
     margin: 1rem;
   `;

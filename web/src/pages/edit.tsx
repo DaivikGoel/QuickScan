@@ -10,15 +10,22 @@ import { navigate } from 'gatsby';
 import { requestUrl } from '../utils/requestUrl';
 import useFirebase from '../utils/useFirebase';
 
-export default function Edit() {
+export default function Edit(props) {
   const collectionUrl = `${requestUrl}/collection`
   const [cardProps, setCardProps] = useState<CardPropsType[]>([]);
+  const [filteredCardProps, setFilteredCardProps] = useState<CardPropsType[]>([]);
   const firebase = useFirebase();
   useEffect(() => {
     if (firebase && !firebase.currentUser) {
       navigate("/auth/login")
     }
   }, [firebase])
+
+  useEffect(() => {
+    const searchString = location.search.replace('?search=', '')
+    setFilteredCardProps(cardProps.filter(card => card.description.includes(searchString) || card.title.includes(searchString)))
+  }, [props.location])
+
   useEffect(() => {
     (async () => {
       try {
@@ -37,6 +44,7 @@ export default function Edit() {
             tags: obj["tags"]
           }))
           setCardProps(cardProps)
+          setFilteredCardProps(cardProps)
         }
       } catch (error) {
         console.log(error)
@@ -47,11 +55,11 @@ export default function Edit() {
   const NUM_OF_COL = 4;
 
   const cardLayout = [];
-  for (let i = 0; i < cardProps.length; i = i + NUM_OF_COL) {
+  for (let i = 0; i < filteredCardProps.length; i = i + NUM_OF_COL) {
     const cardPropsRow: CardPropsType[] = [];
     for (let k = 0; k < NUM_OF_COL; k++) {
-      if (i + k < cardProps.length) {
-        cardPropsRow.push(cardProps[i + k]);
+      if (i + k < filteredCardProps.length) {
+        cardPropsRow.push(filteredCardProps[i + k]);
       }
     }
     cardLayout.push(
