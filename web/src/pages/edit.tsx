@@ -7,29 +7,30 @@ import SEO from '../components/SEO';
 import axios from 'axios';
 import { CardPropsType } from '../utils/types';
 import { navigate } from 'gatsby';
-import { getUserId, isLoggedIn } from '../utils/firebase';
+import { requestUrl } from '../utils/requestUrl';
 
-export default function Edit(props) {
-  const requestUrl = 'http://ec2-3-98-130-154.ca-central-1.compute.amazonaws.com:3000/collection'
+export default function Edit() {
+  const collectionUrl = `${requestUrl}/collection`
   const [cardProps, setCardProps] = useState<CardPropsType[]>([]);
   useEffect(() => {
-    if (!isLoggedIn()) {
-      navigate("/auth/login")
-    } 
+    // if (!isLoggedIn()) {
+    //   navigate("/auth/login")
+    // } 
   })
   useEffect(() => {
     (async () => {
       try {
-        const response = await axios.get(requestUrl)
+        const response = await axios.get(collectionUrl)
         if (response) {
-          const userId = getUserId()
+          const userId = '696969'
           const objects = response.data.data
           const cardProps = objects.filter((obj: any) => userId !== obj["user_id"]).map((obj: any) => ({
             title: obj["name"],
             description: obj["description"],
             thumbnail: `https://quickscanthumbnails.s3.ca-central-1.amazonaws.com/${obj["thumbnail"]}`,
             three_dimen_object_blob_storage: `https://quick-scan-3d-objects.s3.ca-central-1.amazonaws.com/${obj["three_dimen_object_blob_storage"]}`,
-            objectname: obj["three_dimen_object_blob_storage"]
+            objectname: obj["three_dimen_object_blob_storage"],
+            tags: obj["tags"]
           }))
           setCardProps(cardProps)
         }

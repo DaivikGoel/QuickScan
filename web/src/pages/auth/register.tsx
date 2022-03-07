@@ -4,13 +4,13 @@ import { Checkbox } from '@paljs/ui/Checkbox';
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import { Link } from 'gatsby';
-// import { createUserWithEmailAndPassword } from "firebase/auth";
-// import { auth, db } from '../../utils/firebase'
 import Auth from '../../components/Auth';
 import SEO from '../../components/SEO';
 import { emailValidator } from '../../utils/emailValidator'
 import { passwordValidator } from '../../utils/passwordValidator'
+import axios from 'axios';
 import { navigate } from 'gatsby';
+import { requestUrl } from '../../utils/requestUrl';
 
 const Input = styled(InputGroup)`
   margin-bottom: 2rem;
@@ -24,8 +24,11 @@ export default function Register() {
   const submit = async () => {
     try {
       if (emailValidator(email) && passwordValidator(password)) {
-        // let userCredential = await createUserWithEmailAndPassword(auth, email, password);
-        navigate("/dashboard")
+        const { data } = await axios.post(`${requestUrl}/createuser`, {
+          email,
+          password
+        })
+        navigate(`/dashboard?id=${data.uid}`)
       } else {
         return null
       }

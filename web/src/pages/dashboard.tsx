@@ -10,6 +10,7 @@ import axios from 'axios';
 import { navigate } from 'gatsby';
 import { CardPropsType, TagType } from '../utils/types';
 import { Toastr, ToastrRef } from '@paljs/ui/Toastr';
+import { requestUrl } from '../utils/requestUrl';
 
 const Home = (props) => {
   const defaultCardProps: CardPropsType[] = [
@@ -45,8 +46,8 @@ const Home = (props) => {
     },
   ];
 
-  const requestUrl = 'http://ec2-3-98-130-154.ca-central-1.compute.amazonaws.com:3000/collection'
-  const tagUrl = 'http://ec2-3-98-130-154.ca-central-1.compute.amazonaws.com:3000/tags'
+  const collectionUrl = `${requestUrl}/collection`
+  const tagUrl = `${requestUrl}/tags`
   const [cardProps, setCardProps] = useState<CardPropsType[]>(defaultCardProps);
   const [filteredCardProps, setFilteredCardProps] = useState<CardPropsType[]>(defaultCardProps);
   const [tags, setTags] = useState<TagType[]>([{value: 'hi', label: 'HI'}]);
@@ -56,12 +57,12 @@ const Home = (props) => {
   useEffect(() => {
     (async () => {
       try {
-        // const tagResponse = await axios.get(tagUrl)
-        // if (tagResponse) {
-        //   const data = tagResponse.data.data;
-        //   setTags(data.map((t: string) => ({ value: t, label: t.toUpperCase() })))
-        // }
-        const response = await axios.get(requestUrl)
+        const tagResponse = await axios.get(tagUrl)
+        if (tagResponse) {
+          const data = tagResponse.data.data;
+          setTags(data.map((t: string) => ({ value: t, label: t.toUpperCase() })))
+        }
+        const response = await axios.get(collectionUrl)
         if (response) {
           const objects = response.data.data
           const cardProps = objects.map((obj: any) => ({

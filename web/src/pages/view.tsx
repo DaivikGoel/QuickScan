@@ -6,7 +6,7 @@ import AWS from 'aws-sdk';
 import SEO from '../components/SEO';
 import styled from 'styled-components';
 
-export default function View(props: Any) {
+export default function View({ location }) {
   AWS.config.update({
     accessKeyId: 'AKIA4RGMXYINS5GS6JIA',
     secretAccessKey: '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',
@@ -16,10 +16,14 @@ export default function View(props: Any) {
   const [newTitle, setTitle] = useState<string>("");
   const [newDescription, setDescription] = useState<string>("");
   const [hasChanged, setHasChanged] = useState(false);
-  const isEditable = true
-  const cardProp = {}
-  // const { isEditable, cardProp } = props.location.state
-  const { title, description, thumbnail, three_dimen_object_blob_storage, objectname } = cardProp;
+  const { isEditable = false, cardProp = {} } = location.state
+  const {
+    title = '',
+    description = '',
+    thumbnail = '',
+    three_dimen_object_blob_storage = '',
+    objectname = ''
+  } = cardProp;
 
   useEffect(() => {
     setTitle(title);
