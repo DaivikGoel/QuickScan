@@ -1,35 +1,38 @@
-import { getFirestore, collection, getDocs } from 'firebase/firestore/lite';
-import { initializeApp } from 'firebase/app';
-import { getAuth, GoogleAuthProvider } from "firebase/auth";
+// import firebase from 'gatsby-plugin-firebase';
+// // import { initializeApp } from 'gatsby-plugin-firebase/app';
+// // import { getAuth, GoogleAuthProvider } from "gatsby-plugin-firebase/auth";
 
-// TODO: Replace the following with your app's Firebase project configuration
-const firebaseConfig = {
-  apiKey: "AIzaSyAidQ4LnvFBCBU6Q1VbTPVivfJZ_E6APbQ",
-  authDomain: "quickscan-2f853.firebaseapp.com",
-  projectId: "quickscan-2f853",
-  storageBucket: "quickscan-2f853.appspot.com",
-  messagingSenderId: "361465475773",
-  appId: "1:361465475773:web:45dc4aace1a0962ffbbdd4",
-  measurementId: "G-V91KRP3H7K"
-};
+// // TODO: Replace the following with your app's Firebase project configuration
 
-const app = initializeApp(firebaseConfig);
-const db = getFirestore(app);
+// const getFirebase = () => {
+//   if (typeof window !== 'undefined') {
+//     if (instance) return instance;
+//     instance = firebase.initializeApp(firebaseConfig);
+//     return instance;
+//   }
 
-const auth = getAuth();
-const provider = new GoogleAuthProvider();
-provider.addScope('https://www.googleapis.com/auth/contacts.readonly');
+//   return null;
+// }
 
-const isLoggedIn = () => {
-  return auth.currentUser ? true : false
-}
+// const app = getFirebase();
 
-const getUserId = () => {
-  if (isLoggedIn()) {
-    return auth.currentUser.uid
-  } else {
-    return false
-  }
-}
+// const auth = app.auth.getAuth();
+// const provider = new app.auth.GoogleAuthProvider();
+// provider.addScope('https://www.googleapis.com/auth/contacts.readonly');
 
-export {auth, db, isLoggedIn, getUserId, provider}
+// const signInWithEmailAndPassword = app.auth.signInWithEmailAndPassword
+// const signInWithRedirect = app.auth.signInWithRedirect
+
+// const isLoggedIn = () => {
+//   return auth.currentUser ? true : false
+// }
+
+// const getUserId = () => {
+//   if (isLoggedIn()) {
+//     return auth.currentUser.uid
+//   } else {
+//     return false
+//   }
+// }
+
+// export {auth, isLoggedIn, getUserId, provider, signInWithEmailAndPassword, signInWithRedirect}

@@ -4,8 +4,8 @@ import { Checkbox } from '@paljs/ui/Checkbox';
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import { Link } from 'gatsby';
-import { createUserWithEmailAndPassword } from "firebase/auth";
-import { auth, db } from '../../utils/firebase'
+// import { createUserWithEmailAndPassword } from "firebase/auth";
+// import { auth, db } from '../../utils/firebase'
 import Auth from '../../components/Auth';
 import SEO from '../../components/SEO';
 import { emailValidator } from '../../utils/emailValidator'
@@ -24,7 +24,7 @@ export default function Register() {
   const submit = async () => {
     try {
       if (emailValidator(email) && passwordValidator(password)) {
-        let userCredential = await createUserWithEmailAndPassword(auth, email, password);
+        // let userCredential = await createUserWithEmailAndPassword(auth, email, password);
         navigate("/dashboard")
       } else {
         return null
