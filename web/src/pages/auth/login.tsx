@@ -11,6 +11,7 @@ import Socials from '../../components/Auth/Socials';
 import SEO from '../../components/SEO';
 import { requestUrl } from '../../utils/requestUrl';
 import axios from 'axios';
+import { signInWithEmailAndPassword } from 'firebase/auth';
 import useFirebase from '../../utils/useFirebase';
 
 export default function Login() {
@@ -25,7 +26,7 @@ export default function Login() {
   const submit = async () => {
     try {
       if (!emailValidator(email) && !passwordValidator(password) && firebase) {
-        const userCredential = firebase.auth().signInWithEmailAndPassword(email, password);
+        const userCredential = signInWithEmailAndPassword(firebase, email, password);
         // let userCredential = await axios.post(`${requestUrl}/authuser`, {
         //   email,
         //   password

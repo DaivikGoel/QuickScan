@@ -1,6 +1,5 @@
-import firebase from 'firebase/app';
-import 'firebase/auth';
-// import { getAuth, GoogleAuthProvider } from "firebase/auth";
+import { initializeApp } from 'firebase/app';
+import { getAuth } from "firebase/auth";
 
 const firebaseConfig = {
   apiKey: "AIzaSyAidQ4LnvFBCBU6Q1VbTPVivfJZ_E6APbQ",
@@ -17,7 +16,8 @@ let instance = null;
 export default function getFirebase() {
   if (typeof window !== 'undefined') {
     if (instance) return instance;
-    instance = firebase.initializeApp(firebaseConfig);
+    const app = initializeApp(firebaseConfig);
+    instance = getAuth(app);
     return instance;
   }
 
