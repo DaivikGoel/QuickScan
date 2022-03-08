@@ -370,7 +370,7 @@ class Scan {
         self.sceneView.play(nil)
         
         if (!boundingBoxExists) {
-            let string = "Tap the screen to create a bounding box. \n Drag the corners of the box to modify size and shape. Tap and drag the box to move it wherever you desire. \n When you are ready, tap the record button and fill the box to complete the recording."
+            let string = "Hope you enjoyed using the app."
             let text = SCNText(string: string, extrusionDepth: 1.2)
             let material = SCNMaterial()
             material.diffuse.contents = UIColor.magenta
@@ -398,7 +398,7 @@ class Scan {
             print(instructionNode)
             instructionNode.removeFromParentNode()
             //print("HIT THIS THING")
-            let string = "You legit a chigga"
+            let string = ""
             let text = SCNText(string: string, extrusionDepth: 1.2)
             let material = SCNMaterial()
             material.diffuse.contents = UIColor.magenta
