@@ -1,15 +1,13 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import SEO from '../components/SEO';
 import Row from '@paljs/ui/Row';
 import Select from '@paljs/ui/Select';
 import Col from '@paljs/ui/Col';
 import styled from 'styled-components';
 import { Card, CardBody, CardFooter } from '@paljs/ui/Card';
-import { Button } from '@paljs/ui/Button';
 import axios from 'axios';
 import { navigate } from 'gatsby';
 import { CardPropsType, TagType } from '../utils/types';
-import { Toastr, ToastrRef } from '@paljs/ui/Toastr';
 import { requestUrl } from '../utils/requestUrl';
 
 const Home = (props) => {
@@ -18,31 +16,36 @@ const Home = (props) => {
       title: 'Card 1',
       description: 'Description',
       thumbnail: 'https://upload.wikimedia.org/wikipedia/commons/a/a7/React-icon.svg',
-      three_dimen_object_blob_storage: 'https://upload.wikimedia.org/wikipedia/commons/a/a7/React-icon.svg'
+      three_dimen_object_blob_storage: 'https://upload.wikimedia.org/wikipedia/commons/a/a7/React-icon.svg',
+      date: new Date("2022-03-07T21:16:44.000Z")
     },
     {
       title: 'Card 2',
       description: 'Description',
       thumbnail: 'https://upload.wikimedia.org/wikipedia/commons/a/a7/React-icon.svg',
-      three_dimen_object_blob_storage: 'https://upload.wikimedia.org/wikipedia/commons/a/a7/React-icon.svg'
+      three_dimen_object_blob_storage: 'https://upload.wikimedia.org/wikipedia/commons/a/a7/React-icon.svg',
+      date: new Date("2022-03-06T21:16:44.000Z")
     },
     {
       title: 'Card 3',
       description: 'Description',
       thumbnail: 'https://upload.wikimedia.org/wikipedia/commons/a/a7/React-icon.svg',
-      three_dimen_object_blob_storage: 'https://upload.wikimedia.org/wikipedia/commons/a/a7/React-icon.svg'
+      three_dimen_object_blob_storage: 'https://upload.wikimedia.org/wikipedia/commons/a/a7/React-icon.svg',
+      date: new Date("2022-03-05T21:16:44.000Z")
     },
     {
       title: 'Card 4',
       description: 'Description',
       thumbnail: 'https://upload.wikimedia.org/wikipedia/commons/a/a7/React-icon.svg',
-      three_dimen_object_blob_storage: 'https://upload.wikimedia.org/wikipedia/commons/a/a7/React-icon.svg'
+      three_dimen_object_blob_storage: 'https://upload.wikimedia.org/wikipedia/commons/a/a7/React-icon.svg',
+      date: new Date("2022-03-04T21:16:44.000Z")
     },
     {
       title: 'Card 5',
       description: 'Description',
       thumbnail: 'https://upload.wikimedia.org/wikipedia/commons/a/a7/React-icon.svg',
-      three_dimen_object_blob_storage: 'https://upload.wikimedia.org/wikipedia/commons/a/a7/React-icon.svg'
+      three_dimen_object_blob_storage: 'https://upload.wikimedia.org/wikipedia/commons/a/a7/React-icon.svg',
+      date: new Date("2022-03-03T21:16:44.000Z")
     },
   ];
 
@@ -52,7 +55,19 @@ const Home = (props) => {
   const [filteredCardProps, setFilteredCardProps] = useState<CardPropsType[]>(defaultCardProps);
   const [tags, setTags] = useState<TagType[]>([{value: 'hi', label: 'HI'}]);
   const [selectedTags, setSelectedTags] = useState<TagType[]>([]);
-  const toastRef = useRef<ToastrRef>(null)
+  const [selectedSort, setSelectedSort] = useState<TagType>();
+
+  const filterByUrlParam = () => {
+    const params = new URLSearchParams(location.search)
+    if (params) {
+      const searchString = params.get('search')?.toLowerCase()
+      if (!searchString) {
+        setFilteredCardProps(cardProps)
+      } else if (searchString) {
+        setFilteredCardProps([...cardProps].filter(card => card.description?.toLowerCase().includes(searchString) || card.title?.toLowerCase().includes(searchString)))
+      }
+    }
+  }
 
   useEffect(() => {
     (async () => {
@@ -60,7 +75,7 @@ const Home = (props) => {
         const tagResponse = await axios.get(tagUrl)
         if (tagResponse) {
           const data = tagResponse.data.data;
-          setTags(data.map((t: string) => ({ value: t, label: t.toUpperCase() })))
+          setTags(data.map(t => ({ value: t, label: t['tag_title'].toUpperCase() })))
         }
         const response = await axios.get(collectionUrl)
         if (response) {
@@ -71,10 +86,13 @@ const Home = (props) => {
             thumbnail: `https://quickscanthumbnails.s3.ca-central-1.amazonaws.com/${obj["thumbnail"]}`,
             three_dimen_object_blob_storage: `https://quick-scan-3d-objects.s3.ca-central-1.amazonaws.com/${obj["three_dimen_object_blob_storage"]}`,
             objectname: obj["three_dimen_object_blob_storage"],
-            tags: obj["tags"]
+            tags: JSON.parse(obj["tags"])?.data?.replace('[', '').replace(']', '').split(',') || [],
+            date: new Date(obj['timestamp']),
+            uid: obj["user_id"],
+            collection_id: obj["collection_id"]
           }))
           setCardProps(cardProps)
-          setFilteredCardProps(cardProps)
+          filterByUrlParam()
         }
       } catch (error) {
         console.log(error)
@@ -84,15 +102,56 @@ const Home = (props) => {
 
   useEffect(() => {
     if (selectedTags.length == 0) {
-      setFilteredCardProps(cardProps)
+      setSelectedSort({ value: 'newest', label: 'Newest' })
+      filterByUrlParam()
     } else {
-      setFilteredCardProps(cardProps.filter(card => selectedTags.every(t => card.tags?.includes(t.value))))
+      setFilteredCardProps(filteredCardProps.filter(card => selectedTags.every(t => card.tags?.includes(t.value))))
     }
   }, [selectedTags])
 
   useEffect(() => {
-    const searchString = location.search.replace('?search=', '')
-    setFilteredCardProps(cardProps.filter(card => card.description.includes(searchString) || card.title.includes(searchString)))
+    if (selectedSort) {
+      if (selectedSort.value === 'newest') {
+        const newCards = [...filteredCardProps].sort((first, second) => {
+          if (first.date < second.date) {
+            return 1
+          }
+          if (first.date > second.date) {
+            return -1
+          }
+          return 0
+        })
+        setFilteredCardProps(newCards)
+      } else if (selectedSort.value === 'oldest') {
+        const newCards = [...filteredCardProps].sort((first, second) => {
+          if (first.date < second.date) {
+            return -1
+          }
+          if (first.date > second.date) {
+            return 1
+          }
+          return 0
+        })
+        setFilteredCardProps(newCards)
+      } else if (selectedSort.value === 'creator') {
+        const newCards = [...filteredCardProps].sort((first, second) => {
+          if (first.uid < second.uid) {
+            return 1
+          }
+          if (first.uid > second.uid) {
+            return -1
+          }
+          return 0
+        })
+        setFilteredCardProps(newCards)
+      }
+    }
+  }, [selectedSort])
+
+  useEffect(() => {
+    setSelectedSort({ value: 'newest', label: 'Newest' })
+    setSelectedTags([])
+    filterByUrlParam()
   }, [props.location])
 
   const FilterStyle = styled.div`
@@ -104,11 +163,16 @@ const Home = (props) => {
     margin-bottom: 1rem;
   `;
 
+  const Image = styled.img`
+    align-self: 'center';
+    max-width: 96%;
+    max-height: 96%;
+  `;
+
   const sort = [
-    { value: 'mostPopular', label: 'Most Popular' },
-    { value: 'rating', label: 'Rating' },
     { value: 'newest', label: 'Newest' },
     { value: 'oldest', label: 'Oldest' },
+    { value: 'creator', label: 'Creator' },
   ];
 
   const NUM_OF_COL = 4;
@@ -132,12 +196,12 @@ const Home = (props) => {
                 cardProp,
               }
             })} >
-              <Card accent="Info">
+              <Card size={'Small'} accent="Info">
                 <CardBody>
-                  <img src={cardProp.thumbnail} />
+                  <Image src={cardProp.thumbnail} />
                 </CardBody>
                 <CardFooter>
-                    {cardProp.title}
+                  {cardProp.title}
                 </CardFooter>
               </Card>
             </div>
@@ -151,9 +215,12 @@ const Home = (props) => {
     setSelectedTags(selectedTags)
   }
 
+  const handleSort = (selectedSort) => {
+    setSelectedSort(selectedSort)
+  }
+
   return (
     <>
-      <Toastr hasIcon={false} ref={toastRef} />
       <SEO title="Home" />
       <Row>
         <Col breakPoint={{ xs: 12, sm: 8, md: 8, lg: 9 }}>
@@ -168,7 +235,7 @@ const Home = (props) => {
           <Card>
             <FilterStyle>
               <Text>Sort by</Text>
-              <Select options={sort} placeholder="Any" />
+              <Select value={selectedSort} onChange={handleSort} options={sort} placeholder="Any" />
             </FilterStyle>
           </Card>
         </Col>

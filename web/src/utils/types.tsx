@@ -6,7 +6,10 @@ export interface CardPropsType {
   thumbnail: string,
   three_dimen_object_blob_storage: string,
   objectname: string,
-  tags: string[]
+  tags: string[],
+  date: Date,
+  uid: string,
+  collection_id: string
 }
 
 export interface TagType {

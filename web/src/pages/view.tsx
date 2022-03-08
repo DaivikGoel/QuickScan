@@ -1,10 +1,13 @@
 import React, { useEffect, useState } from 'react';
-import { Card, CardBody, CardFooter } from '@paljs/ui/Card';
+import { Card, CardBody } from '@paljs/ui/Card';
 import { Button } from '@paljs/ui/Button';
 import { InputGroup } from '@paljs/ui/Input';
 import AWS from 'aws-sdk';
 import SEO from '../components/SEO';
 import styled from 'styled-components';
+import { navigate } from 'gatsby';
+import axios from 'axios';
+import { requestUrl } from '../utils/requestUrl';
 
 export default function View({ location }) {
   AWS.config.update({
@@ -21,7 +24,9 @@ export default function View({ location }) {
     description : '',
     thumbnail : '',
     three_dimen_object_blob_storage : '',
-    objectname : ''
+    objectname : '',
+    uid: '',
+    collection_id: ''
   }
   if (location && location.state) {
     isEditable = location.state.isEditable
@@ -32,7 +37,9 @@ export default function View({ location }) {
     description = '',
     thumbnail = '',
     three_dimen_object_blob_storage = '',
-    objectname = ''
+    objectname = '',
+    uid = '',
+    collection_id = ''
   } = cardProp;
 
   useEffect(() => {
@@ -79,14 +86,37 @@ export default function View({ location }) {
     setHasChanged(true)
   }
 
-  const submitChanges = () => {
-    if (hasChanged) {
+  const submitChanges = async () => {
+    try {
+      await axios.post(`${requestUrl}/collection`, { 
+        user_id: uid,
+        collection_id,
+        description,
+        name: title,
+      });
+      navigate(-1);
+    } catch (e) {
+      console.log(e)
+    }
+  }
 
+  const deleteObject = async () => {
+    try {
+      await axios.delete(`${requestUrl}/collection`, { data: { collection_id } })
+      navigate(-1);
+    } catch (e) {
+      console.log(e)
     }
   }
 
   const Input = styled(InputGroup)`
     margin-bottom: 10px;
+  `;
+
+  const Image = styled.a`
+    align-self: 'center';
+    max-width: 100%;
+    max-height: 100%;
   `;
   
   let body
@@ -99,8 +129,11 @@ export default function View({ location }) {
         <Input fullWidth size="Large">
           <textarea value={newDescription} onChange={handleDescriptionChange} placeholder="Description" />
         </Input>
-        <Button disabled={hasChanged} onClick={submitChanges}>
+        <Button appearance={'filled'} disabled={hasChanged} onClick={submitChanges}>
           Submit
+        </Button>
+        <Button appearance={'outline'} status={'Danger'} onClick={deleteObject}>
+          Delete
         </Button>
       </>
     )
@@ -115,17 +148,15 @@ export default function View({ location }) {
       </>
     )
   }
-  console.log(cardProp)
   return (
     <>
       <SEO title="Detailed View" />
-        <Card size="Giant">
+        <Card size="Medium">
           <CardBody>
-            <a rel='ar' href = {three_dimen_object_blob_storage}>
+            <Image rel='ar' href = {three_dimen_object_blob_storage}>
               <img src={thumbnail} />
-            </a>
+            </Image>
             {body}
-            
           </CardBody>
         </Card>
     </>

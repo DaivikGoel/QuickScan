@@ -48,14 +48,10 @@ export default function Register() {
         <Input fullWidth>
           <input value={confirmPassword} onChange={e => setConfirmPassword(e.target.value)} type="password" placeholder="Confirm Password" />
         </Input>
-        {/* <Checkbox onChange={onCheckbox}>
-          Agree to <Link to="/">Terms & Conditions</Link>
-        </Checkbox> */}
         <Button onClick={submit} status="Success" type="button" shape="SemiRound" fullWidth>
           Register
         </Button>
       </form>
-      {/* <Socials /> */}
       <p>
         Already have an account? <Link to="/auth/login">Log In</Link>
       </p>

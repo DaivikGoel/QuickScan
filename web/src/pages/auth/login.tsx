@@ -1,7 +1,7 @@
 import { Button } from '@paljs/ui/Button';
 import { InputGroup } from '@paljs/ui/Input';
 import { Checkbox } from '@paljs/ui/Checkbox';
-import React, { useState, useRef } from 'react';
+import React, { useState } from 'react';
 import { Link } from 'gatsby';
 import { emailValidator } from '../../utils/emailValidator'
 import { passwordValidator } from '../../utils/passwordValidator'
@@ -9,7 +9,7 @@ import { navigate } from 'gatsby';
 import Auth, { Group } from '../../components/Auth';
 import Socials from '../../components/Auth/Socials';
 import SEO from '../../components/SEO';
-import { signInWithEmailAndPassword, GoogleAuthProvider, signInWithRedirect } from 'firebase/auth';
+import { signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
 import useFirebase from '../../utils/useFirebase';
 
 export default function Login() {
@@ -25,12 +25,8 @@ export default function Login() {
   const submit = async () => {
     try {
       if (!emailValidator(email) && !passwordValidator(password) && firebase) {
-        const userCredential = signInWithEmailAndPassword(firebase, email, password);
-        navigate("/dashboard", {
-          state: {
-            justSignedIn: true
-          }
-        })
+        await signInWithEmailAndPassword(firebase, email, password);
+        navigate('/edit')
       } else {
         return null
       }
@@ -43,17 +39,13 @@ export default function Login() {
   const googleLogin = async () => {
     try {
       if (firebase) {
-        const result = await signInWithRedirect(firebase, provider);
-        navigate("/dashboard", {
-          state: {
-            justSignedIn: true
-          }
-        })
+        await signInWithPopup(firebase, provider);
+        navigate('/edit')
       } else {
         return null
       }
-    } catch {
-      console.log("Google Login failed.")
+    } catch(e) {
+      console.log(e)
       return null
     }
   }
