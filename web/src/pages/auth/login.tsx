@@ -52,8 +52,8 @@ export default function Login() {
       } else {
         return null
       }
-    } catch {
-      console.log("Google Login failed.")
+    } catch(e) {
+      console.log(e)
       return null
     }
   }
