@@ -1,4 +1,9 @@
 module.exports = {
+  siteMetadata: {
+    title: 'Quick Scan',
+    description: 'A free 3D object catalog.',
+    author: 'Group 2022.20',
+  },
   flags: {
     PRESERVE_FILE_DOWNLOAD_CACHE: true,
     PRESERVE_WEBPACK_CACHE: true,

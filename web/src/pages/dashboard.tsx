@@ -58,11 +58,14 @@ const Home = (props) => {
   const [selectedSort, setSelectedSort] = useState<TagType>();
 
   const filterByUrlParam = () => {
-    const searchString = location.search.replace('?search=', '').toLowerCase()
-    if (!searchString) {
-      setFilteredCardProps(cardProps)
-    } else if (searchString) {
-      setFilteredCardProps([...cardProps].filter(card => card.description?.toLowerCase().includes(searchString) || card.title?.toLowerCase().includes(searchString)))
+    const params = new URLSearchParams(location.search)
+    if (params) {
+      const searchString = params.get('search').toLowerCase()
+      if (!searchString) {
+        setFilteredCardProps(cardProps)
+      } else if (searchString) {
+        setFilteredCardProps([...cardProps].filter(card => card.description?.toLowerCase().includes(searchString) || card.title?.toLowerCase().includes(searchString)))
+      }
     }
   }
 
