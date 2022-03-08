@@ -55,7 +55,7 @@ struct UploadView: View {
                         self.pushActive = true
                     }
                   }))
-        }
+        }.navigationBarBackButtonHidden(true).navigationBarHidden(true)
     }
     
     private func customButton(title: String,
