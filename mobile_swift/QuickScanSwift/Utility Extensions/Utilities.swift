@@ -53,6 +53,7 @@ extension CVPixelBuffer
 // Convenience accessors for Asset Catalog named colors.
 extension UIColor {
     static let appYellow = UIColor(named: "appYellow")!
+    static let appPurple = UIColor(named: "appPurple")
     static let appLightYellow = UIColor(named: "appLightYellow")!
     static let appBrown = UIColor(named: "appBrown")!
     static let appGreen = UIColor(named: "appGreen")!

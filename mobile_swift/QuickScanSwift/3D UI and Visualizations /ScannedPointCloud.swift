@@ -110,8 +110,8 @@ class ScannedPointCloud: SCNNode, PointCloud {
         renderedPoints = referenceObjectPoints.filter { boundingBox.contains($0) }
         renderedPreliminaryPoints = currentFramePoints.filter { boundingBox.contains($0) }
         
-        self.pointNode.geometry = createVisualization(for: renderedPoints, color: .appYellow, size: 12)
-        self.preliminaryPointsNode.geometry = createVisualization(for: renderedPreliminaryPoints, color: .appLightYellow, size: 12)
+        self.pointNode.geometry = createVisualization(for: renderedPoints, color: .appBlue, size: 12)
+        self.preliminaryPointsNode.geometry = createVisualization(for: renderedPreliminaryPoints, color: .appBlue, size: 12)
     }
     
     var count: Int {

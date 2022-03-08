@@ -31,6 +31,23 @@ struct UploadView: View {
                                            color: UIConfiguration.tintColor))
                     .padding(.horizontal, 60)
                 VStack(alignment: .center) {
+                    CustomTextField(placeHolderText: "Title",
+                                  text: $viewModel.title)
+                    CustomTextField(placeHolderText: "Description",
+                                  text: $viewModel.description)
+                }.padding(.horizontal, 25)
+                Button(action: {
+                    self.pushActiveBack = true
+                }) {
+                    Text("Take a new video")
+                        .modifier(TextModifier(font: UIConfiguration.buttonFont,
+                                               color: .black))
+                        .frame(width: 275, height: 55)
+                        .overlay(RoundedRectangle(cornerRadius: 25)
+                            .stroke(Color.gray, lineWidth: 1)
+                    )
+                }
+                VStack(alignment: .center) {
                     customButton(title: "Upload Video",
                                  backgroundColor: UIColor(hexString: "#913FE7"),
                                  action: {
@@ -39,19 +56,6 @@ struct UploadView: View {
                         self.showingPopover = true
                     })
                     .padding(.horizontal, 60)
-                }
-                VStack(alignment: .center) {
-                    CustomTextField(placeHolderText: "Title",
-                                  text: $viewModel.title)
-                    CustomTextField(placeHolderText: "Description",
-                                  text: $viewModel.description)
-                }.padding(.horizontal, 25)
-                VStack(alignment: .center, spacing: 80) {
-                    customButton2(title: "Take a new video",
-                                 backgroundColor: UIColor(hexString: "#913FE7"),
-                                 action: {
-                        self.pushActiveBack = true
-                    })
                 }
             }
             Spacer()

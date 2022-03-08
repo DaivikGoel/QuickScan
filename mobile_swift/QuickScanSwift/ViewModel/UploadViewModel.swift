@@ -74,7 +74,7 @@ class UploadViewModel: ObservableObject {
         let parameters: [String: Any] = ["name": self.title, "description": self.description, "user_id": userId ?? "69696969", "uuid": modifieduuid]
       
       // create the url with URL
-      let url = URL(string: "http://ec2-3-98-130-154.ca-central-1.compute.amazonaws.com:3000/collection")! // change server url accordingly
+      let url = URL(string: "http://quickscan.live/collection")! // change server url accordingly
       
       // create the session object
       let session = URLSession.shared
