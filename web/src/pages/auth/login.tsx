@@ -9,7 +9,7 @@ import { navigate } from 'gatsby';
 import Auth, { Group } from '../../components/Auth';
 import Socials from '../../components/Auth/Socials';
 import SEO from '../../components/SEO';
-import { signInWithEmailAndPassword, GoogleAuthProvider, signInWithRedirect } from 'firebase/auth';
+import { signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
 import useFirebase from '../../utils/useFirebase';
 
 export default function Login() {
@@ -43,7 +43,7 @@ export default function Login() {
   const googleLogin = async () => {
     try {
       if (firebase) {
-        signInWithRedirect(firebase, provider);
+        await signInWithPopup(firebase, provider);
         navigate("/dashboard", {
           state: {
             justSignedIn: true
