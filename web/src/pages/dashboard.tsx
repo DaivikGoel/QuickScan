@@ -1,15 +1,13 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import SEO from '../components/SEO';
 import Row from '@paljs/ui/Row';
 import Select from '@paljs/ui/Select';
 import Col from '@paljs/ui/Col';
 import styled from 'styled-components';
 import { Card, CardBody, CardFooter } from '@paljs/ui/Card';
-import { Button } from '@paljs/ui/Button';
 import axios from 'axios';
 import { navigate } from 'gatsby';
 import { CardPropsType, TagType } from '../utils/types';
-import { Toastr, ToastrRef } from '@paljs/ui/Toastr';
 import { requestUrl } from '../utils/requestUrl';
 
 const Home = (props) => {
@@ -59,7 +57,6 @@ const Home = (props) => {
   const [selectedTags, setSelectedTags] = useState<TagType[]>([]);
   const [selectedSort, setSelectedSort] = useState<TagType>();
   const [searchString, setSearchString] = useState('');
-  const toastRef = useRef<ToastrRef>(null)
 
   useEffect(() => {
     (async () => {
@@ -139,13 +136,13 @@ const Home = (props) => {
     }
   }, [selectedSort])
 
-  // useEffect(() => {
-  //   const newSearchString = location.search.replace('?search=', '')
-  //   if (newSearchString && searchString !== newSearchString) {
-  //     setSearchString(newSearchString)
-  //     setFilteredCardProps(filteredCardProps.filter(card => card.description.includes(searchString) || card.title.includes(searchString)))
-  //   }
-  // }, [props.location])
+  useEffect(() => {
+    const newSearchString = location.search.replace('?search=', '')
+    if (newSearchString && searchString !== newSearchString) {
+      setSearchString(newSearchString)
+      setFilteredCardProps(filteredCardProps.filter(card => card.description.includes(searchString) || card.title.includes(searchString)))
+    }
+  }, [props.location])
 
   const FilterStyle = styled.div`
     margin: 1rem;
