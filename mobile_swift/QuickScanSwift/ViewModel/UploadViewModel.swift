@@ -12,6 +12,7 @@ class UploadViewModel: ObservableObject {
     @Published var showAlert = false
     @Published var downloadAmount: Double = 0.0
     @Published var uploadText: String = "Uploading..."
+    @Published var pushWebView = false
     
     private var userId = Auth.auth().currentUser?.uid
     private var cancellableBag = Set<AnyCancellable>()
@@ -74,7 +75,7 @@ class UploadViewModel: ObservableObject {
         let parameters: [String: Any] = ["name": self.title, "description": self.description, "user_id": userId ?? "69696969", "uuid": modifieduuid]
       
       // create the url with URL
-      let url = URL(string: "http://quickscan.live/collection")! // change server url accordingly
+      let url = URL(string: "https://quickscan.live/collection")! // change server url accordingly
       
       // create the session object
       let session = URLSession.shared
@@ -116,7 +117,6 @@ class UploadViewModel: ObservableObject {
           print("nil Data received from the server")
           return
         }
-        
         do {
           // create json object from data or use JSONDecoder to convert to Model stuct
           if let jsonResponse = try JSONSerialization.jsonObject(with: responseData, options: .mutableContainers) as? [String: Any] {

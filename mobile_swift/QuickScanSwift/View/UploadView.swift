@@ -24,6 +24,11 @@ struct UploadView: View {
                            isActive: self.$pushActiveBack) {
               EmptyView()
             }.hidden()
+            
+            NavigationLink(destination: WebView(),
+                           isActive: $viewModel.pushWebView) {
+              EmptyView()
+            }.hidden()
              
             VStack(alignment: .center, spacing: 10) {
                 Text("Upload")
@@ -107,6 +112,7 @@ struct UploadView: View {
                     self.showingPopover = false
                     viewModel.downloadAmount = 0
                     viewModel.uploadText = "Uploading..."
+                    viewModel.pushWebView = true
                 }) {
                     Text("Ok")
                         .modifier(ButtonModifier(font: UIConfiguration.buttonFont,
