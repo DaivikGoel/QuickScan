@@ -19,7 +19,7 @@ export default function Edit(props) {
     if (firebase && !firebase.currentUser) {
       navigate("/auth/login")
     }
-  }, [firebase])
+  }, [firebase, props])
 
   useEffect(() => {
     const searchString = location.search.replace('?search=', '')
