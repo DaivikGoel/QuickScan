@@ -60,7 +60,7 @@ const Home = (props) => {
   const filterByUrlParam = () => {
     const params = new URLSearchParams(location.search)
     if (params) {
-      const searchString = params.get('search').toLowerCase()
+      const searchString = params.get('search')?.toLowerCase()
       if (!searchString) {
         setFilteredCardProps(cardProps)
       } else if (searchString) {
