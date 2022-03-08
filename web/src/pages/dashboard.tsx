@@ -11,49 +11,49 @@ import { CardPropsType, TagType } from '../utils/types';
 import { requestUrl } from '../utils/requestUrl';
 
 const Home = (props) => {
-  const defaultCardProps: CardPropsType[] = [
-    {
-      title: 'Card 1',
-      description: 'Description',
-      thumbnail: 'https://upload.wikimedia.org/wikipedia/commons/a/a7/React-icon.svg',
-      three_dimen_object_blob_storage: 'https://upload.wikimedia.org/wikipedia/commons/a/a7/React-icon.svg',
-      date: new Date("2022-03-07T21:16:44.000Z")
-    },
-    {
-      title: 'Card 2',
-      description: 'Description',
-      thumbnail: 'https://upload.wikimedia.org/wikipedia/commons/a/a7/React-icon.svg',
-      three_dimen_object_blob_storage: 'https://upload.wikimedia.org/wikipedia/commons/a/a7/React-icon.svg',
-      date: new Date("2022-03-06T21:16:44.000Z")
-    },
-    {
-      title: 'Card 3',
-      description: 'Description',
-      thumbnail: 'https://upload.wikimedia.org/wikipedia/commons/a/a7/React-icon.svg',
-      three_dimen_object_blob_storage: 'https://upload.wikimedia.org/wikipedia/commons/a/a7/React-icon.svg',
-      date: new Date("2022-03-05T21:16:44.000Z")
-    },
-    {
-      title: 'Card 4',
-      description: 'Description',
-      thumbnail: 'https://upload.wikimedia.org/wikipedia/commons/a/a7/React-icon.svg',
-      three_dimen_object_blob_storage: 'https://upload.wikimedia.org/wikipedia/commons/a/a7/React-icon.svg',
-      date: new Date("2022-03-04T21:16:44.000Z")
-    },
-    {
-      title: 'Card 5',
-      description: 'Description',
-      thumbnail: 'https://upload.wikimedia.org/wikipedia/commons/a/a7/React-icon.svg',
-      three_dimen_object_blob_storage: 'https://upload.wikimedia.org/wikipedia/commons/a/a7/React-icon.svg',
-      date: new Date("2022-03-03T21:16:44.000Z")
-    },
-  ];
+  // const defaultCardProps: CardPropsType[] = [
+  //   {
+  //     title: 'Card 1',
+  //     description: 'Description',
+  //     thumbnail: 'https://upload.wikimedia.org/wikipedia/commons/a/a7/React-icon.svg',
+  //     three_dimen_object_blob_storage: 'https://upload.wikimedia.org/wikipedia/commons/a/a7/React-icon.svg',
+  //     date: new Date("2022-03-07T21:16:44.000Z")
+  //   },
+  //   {
+  //     title: 'Card 2',
+  //     description: 'Description',
+  //     thumbnail: 'https://upload.wikimedia.org/wikipedia/commons/a/a7/React-icon.svg',
+  //     three_dimen_object_blob_storage: 'https://upload.wikimedia.org/wikipedia/commons/a/a7/React-icon.svg',
+  //     date: new Date("2022-03-06T21:16:44.000Z")
+  //   },
+  //   {
+  //     title: 'Card 3',
+  //     description: 'Description',
+  //     thumbnail: 'https://upload.wikimedia.org/wikipedia/commons/a/a7/React-icon.svg',
+  //     three_dimen_object_blob_storage: 'https://upload.wikimedia.org/wikipedia/commons/a/a7/React-icon.svg',
+  //     date: new Date("2022-03-05T21:16:44.000Z")
+  //   },
+  //   {
+  //     title: 'Card 4',
+  //     description: 'Description',
+  //     thumbnail: 'https://upload.wikimedia.org/wikipedia/commons/a/a7/React-icon.svg',
+  //     three_dimen_object_blob_storage: 'https://upload.wikimedia.org/wikipedia/commons/a/a7/React-icon.svg',
+  //     date: new Date("2022-03-04T21:16:44.000Z")
+  //   },
+  //   {
+  //     title: 'Card 5',
+  //     description: 'Description',
+  //     thumbnail: 'https://upload.wikimedia.org/wikipedia/commons/a/a7/React-icon.svg',
+  //     three_dimen_object_blob_storage: 'https://upload.wikimedia.org/wikipedia/commons/a/a7/React-icon.svg',
+  //     date: new Date("2022-03-03T21:16:44.000Z")
+  //   },
+  // ];
 
   const collectionUrl = `${requestUrl}/collection`
   const tagUrl = `${requestUrl}/tags`
-  const [cardProps, setCardProps] = useState<CardPropsType[]>(defaultCardProps);
-  const [filteredCardProps, setFilteredCardProps] = useState<CardPropsType[]>(defaultCardProps);
-  const [tags, setTags] = useState<TagType[]>([{value: 'hi', label: 'HI'}]);
+  const [cardProps, setCardProps] = useState<CardPropsType[]>([]);
+  const [filteredCardProps, setFilteredCardProps] = useState<CardPropsType[]>([]);
+  const [tags, setTags] = useState<TagType[]>([]);
   const [selectedTags, setSelectedTags] = useState<TagType[]>([]);
   const [selectedSort, setSelectedSort] = useState<TagType>();
 
@@ -98,7 +98,7 @@ const Home = (props) => {
         console.log(error)
       }
     })();
-  }, [])
+  }, [props.location])
 
   useEffect(() => {
     if (selectedTags.length == 0) {
