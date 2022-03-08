@@ -51,7 +51,7 @@ class BoundingBoxSide: SCNNode {
     private var maxTileSize: CGFloat = 0.1
     
     // Maximum number of tiles per row/column
-    private var maxTileCount: Int = 4
+    private var maxTileCount: Int = 2
     
     private var lineThickness: CGFloat = 0.002
     
