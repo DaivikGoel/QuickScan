@@ -3,15 +3,20 @@ import SwiftUI
 struct SignUpView: View {
     @ObservedObject private var viewModel: SignUpViewModel
     @State var pushActive = false
+    @State var pushActiveWelcome = false
     
     init(state: AppState) {
         self.viewModel = SignUpViewModel(authAPI: AuthService(), state: state)
     }
     
     var body: some View {
-        VStack {
+        ScrollView{VStack {
             NavigationLink(destination: WelcomeView(state: viewModel.state),
                            isActive: self.$pushActive) {
+              EmptyView()
+            }.hidden()
+            NavigationLink(destination: WelcomeView(state: viewModel.state),
+                           isActive: self.$pushActiveWelcome) {
               EmptyView()
             }.hidden()
             VStack(alignment: .center, spacing: 30) {
@@ -37,8 +42,13 @@ struct SignUpView: View {
                                      backgroundColor: UIColor(hexString: "#913FE7"),
                                      action: self.viewModel.signUp)
                     }
+                    VStack(alignment: .center, spacing: 40) {
+                        customButton(title: "Back",
+                                     backgroundColor: UIColor(hexString: "#913FE7"),
+                                     action: {self.pushActiveWelcome = true})
+                    }
                 }
-            }
+            }}
             Spacer()
         
             

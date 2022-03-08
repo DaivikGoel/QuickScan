@@ -8,6 +8,7 @@ struct UploadView: View {
     @State var pushActive = false
     @ObservedObject private var viewModel: UploadViewModel
     @State private var showingPopover = false
+    @State var pushActiveBack = false
     
     init(state: AppState, url: String) {
         self.viewModel = UploadViewModel(authAPI: AuthService(), state: state, url: url)
@@ -18,12 +19,12 @@ struct UploadView: View {
     }
     var body: some View {
         VStack {
-            /*
-            NavigationLink(destination: HomeView(state: viewModel.state),
-                           isActive: self.$pushActive) {
+            
+            NavigationLink(destination: ARUIView(state: viewModel.state),
+                           isActive: self.$pushActiveBack) {
               EmptyView()
             }.hidden()
-             */
+             
             VStack(alignment: .center, spacing: 10) {
                 Text("Upload")
                     .modifier(TextModifier(font: UIConfiguration.titleFont,
@@ -45,6 +46,13 @@ struct UploadView: View {
                     CustomTextField(placeHolderText: "Description",
                                   text: $viewModel.description)
                 }.padding(.horizontal, 25)
+                VStack(alignment: .center, spacing: 80) {
+                    customButton2(title: "Take a new video",
+                                 backgroundColor: UIColor(hexString: "#913FE7"),
+                                 action: {
+                        self.pushActiveBack = true
+                    })
+                }
             }
             Spacer()
         }.alert(item: self.$viewModel.statusViewModel) { status in
@@ -56,6 +64,19 @@ struct UploadView: View {
                     }
                   }))
         }.navigationBarBackButtonHidden(true).navigationBarHidden(true)
+    }
+    
+    private func customButton2(title: String,
+                              backgroundColor: UIColor,
+                              action: @escaping () -> Void) -> some View {
+        Button(action: action) {
+            Text(title)
+                .modifier(ButtonModifier(font: UIConfiguration.buttonFont,
+                                         color: backgroundColor,
+                                         textColor: .white,
+                                         width: 275,
+                                         height: 45))
+        }
     }
     
     private func customButton(title: String,
