@@ -56,7 +56,15 @@ const Home = (props) => {
   const [tags, setTags] = useState<TagType[]>([{value: 'hi', label: 'HI'}]);
   const [selectedTags, setSelectedTags] = useState<TagType[]>([]);
   const [selectedSort, setSelectedSort] = useState<TagType>();
-  const [searchString, setSearchString] = useState('');
+
+  const filterByUrlParam = () => {
+    const searchString = location.search.replace('?search=', '').toLowerCase()
+    if (!searchString) {
+      setFilteredCardProps(cardProps)
+    } else if (searchString) {
+      setFilteredCardProps([...cardProps].filter(card => card.description?.toLowerCase().includes(searchString) || card.title?.toLowerCase().includes(searchString)))
+    }
+  }
 
   useEffect(() => {
     (async () => {
@@ -80,7 +88,7 @@ const Home = (props) => {
             uid: obj["user_id"]
           }))
           setCardProps(cardProps)
-          setFilteredCardProps(cardProps)
+          filterByUrlParam()
         }
       } catch (error) {
         console.log(error)
@@ -91,7 +99,7 @@ const Home = (props) => {
   useEffect(() => {
     if (selectedTags.length == 0) {
       setSelectedSort({ value: 'newest', label: 'Newest' })
-      setFilteredCardProps(cardProps)
+      filterByUrlParam()
     } else {
       setFilteredCardProps(filteredCardProps.filter(card => selectedTags.every(t => card.tags?.includes(t.value))))
     }
@@ -137,11 +145,9 @@ const Home = (props) => {
   }, [selectedSort])
 
   useEffect(() => {
-    const newSearchString = location.search.replace('?search=', '')
-    if (newSearchString && searchString !== newSearchString) {
-      setSearchString(newSearchString)
-      setFilteredCardProps(filteredCardProps.filter(card => card.description.includes(searchString) || card.title.includes(searchString)))
-    }
+    setSelectedSort({ value: 'newest', label: 'Newest' })
+    setSelectedTags([])
+    filterByUrlParam()
   }, [props.location])
 
   const FilterStyle = styled.div`

@@ -104,7 +104,11 @@ const Header: React.FC<HeaderProps> = (props) => {
 
   const submitHandle = (e) => {
     if (window && window.location) {
-      navigate(`${window.location.pathname}?search=${e}`, { replace: true })
+      if (!e) {
+        navigate(window.location.pathname, { replace: true })
+      } else {
+        navigate(`${window.location.pathname}?search=${e}`, { replace: true })
+      }
     }
   }
   return (
