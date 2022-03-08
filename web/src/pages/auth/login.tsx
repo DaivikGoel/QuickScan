@@ -1,7 +1,7 @@
 import { Button } from '@paljs/ui/Button';
 import { InputGroup } from '@paljs/ui/Input';
 import { Checkbox } from '@paljs/ui/Checkbox';
-import React, { useState, useRef } from 'react';
+import React, { useState } from 'react';
 import { Link } from 'gatsby';
 import { emailValidator } from '../../utils/emailValidator'
 import { passwordValidator } from '../../utils/passwordValidator'
@@ -25,7 +25,7 @@ export default function Login() {
   const submit = async () => {
     try {
       if (!emailValidator(email) && !passwordValidator(password) && firebase) {
-        const userCredential = signInWithEmailAndPassword(firebase, email, password);
+        await signInWithEmailAndPassword(firebase, email, password);
         navigate("/dashboard", {
           state: {
             justSignedIn: true
@@ -43,7 +43,7 @@ export default function Login() {
   const googleLogin = async () => {
     try {
       if (firebase) {
-        const result = await signInWithRedirect(firebase, provider);
+        signInWithRedirect(firebase, provider);
         navigate("/dashboard", {
           state: {
             justSignedIn: true
