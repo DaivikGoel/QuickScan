@@ -7,11 +7,14 @@
 //
 import SwiftUI
 import Foundation
+import ARKit
 struct ARUIView: View {
    @State var isRecording = false
    @State var pushActive = false
+   @State var buttonShow = true
     
-   @ObservedObject var state: AppState
+   @ObservedObject var state: AppState    
+    
    let ar = ARView()
    var body: some View {
        NavigationView {
@@ -25,6 +28,29 @@ struct ARUIView: View {
                  VStack {
                     Spacer()
                     Spacer()
+                     VStack {
+                             Button(action: {
+                                 if (self.buttonShow) {
+                                     self.buttonShow = false
+                                 } else {
+                                     self.buttonShow = true
+                                 }
+                             }, label: {
+                                 Text("Tap the screen to create a bounding box.\n Drag the corners of the box to modify size and shape. Tap and drag the box to move it wherever you desire.\n When you are ready, tap the record button and fill the box to complete the recording.\n\n Tap to dismiss")
+                                     .foregroundColor(Color.black).multilineTextAlignment(.center)        .font(.system(size: 500))
+                                     .minimumScaleFactor(0.01)
+                             })
+                             .frame(height: 220)
+                             .frame(maxWidth: .infinity)
+                             .background(
+                                 RoundedRectangle(cornerRadius: 90, style: .continuous).fill(Color.white)
+                             )
+                             .overlay(
+                                 RoundedRectangle(cornerRadius: 90, style: .continuous)
+                                     .strokeBorder(Color.blue, lineWidth: 1)
+                             )
+                             .opacity(self.buttonShow ? 1 : 0)
+                         }
                     ZStack {
                        Circle()
                        .frame(width: 60, height: 60)
@@ -53,6 +79,6 @@ struct ARUIView: View {
                  }
               }
           }
-       }.navigationViewStyle(StackNavigationViewStyle())
+       }.navigationViewStyle(StackNavigationViewStyle()).navigationBarBackButtonHidden(true).navigationBarHidden(true)
     }
 }

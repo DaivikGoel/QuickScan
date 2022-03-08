@@ -46,7 +46,7 @@ struct SignUpView: View {
             Alert(title: Text(status.title),
                   message: Text(status.message),
                   dismissButton: .default(Text("OK"), action: { self.pushActive = true }))
-        }
+        }.navigationBarBackButtonHidden(true).navigationBarHidden(true)
     }
     
     private func customButton(title: String,

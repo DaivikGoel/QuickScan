@@ -14,6 +14,7 @@ class Scan {
     static let stateChangedNotification = Notification.Name("ScanningStateChanged")
     static let stateUserInfoKey = "ScanState"
     static let objectCreationInterval: CFTimeInterval = 1.0
+    private var instructionNode: SCNNode = SCNNode()
     
     enum State {
         case ready
@@ -131,6 +132,35 @@ class Scan {
                                                selector: #selector(self.applicationStateChanged(_:)),
                                                name: ViewController.appStateChangedNotification,
                                                object: nil)
+        
+        if (!boundingBoxExists) {
+            let string = "Tap the screen to create a bounding box. \n Drag the corners of the box to modify size and shape. Tap and drag the box to move it wherever you desire. \n When you are ready, tap the record button and fill the box to complete the recording."
+            let text = SCNText(string: string, extrusionDepth: 1.2)
+            let material = SCNMaterial()
+            material.diffuse.contents = UIColor.magenta
+            
+            text.materials = [material]
+            
+            let plane = SCNPlane(width: 0.2, height: 0.2)
+            let blueMaterial = SCNMaterial()
+            blueMaterial.diffuse.contents = UIColor.blue
+            plane.firstMaterial = blueMaterial
+            let node = SCNNode(geometry: plane)
+            
+            
+            let yFreeConstraint = SCNBillboardConstraint()
+            yFreeConstraint.freeAxes = [.Y] // optionally
+            let (min, max) = text.boundingBox
+            let dx = min.x + 1 * (max.x - min.x)
+            let dy = min.y + 1 * (max.y - min.y)
+            let dz = min.z + 1 * (max.z - min.z)
+            node.pivot = SCNMatrix4MakeTranslation(dx, dy, dz)
+            node.constraints = [yFreeConstraint]
+            node.position = SCNVector3(x:0, y:0, z:-8)
+            node.scale = SCNVector3(x:0.015, y:0.015, z:0.015)
+            node.geometry = text
+            self.sceneView.scene.rootNode.addChildNode(node)
+        }
         
         self.sceneView.scene.rootNode.addChildNode(self.scannedObject)
         self.sceneView.scene.rootNode.addChildNode(self.pointCloud)
@@ -336,11 +366,50 @@ class Scan {
             }
         }
         
+        self.sceneView.stop(nil)
+        self.sceneView.play(nil)
+        
+        if (!boundingBoxExists) {
+            let string = "Hope you enjoyed using the app."
+            let text = SCNText(string: string, extrusionDepth: 1.2)
+            let material = SCNMaterial()
+            material.diffuse.contents = UIColor.magenta
+            
+            text.materials = [material]
+            
+            let plane = SCNPlane(width: 0.2, height: 0.2)
+            let blueMaterial = SCNMaterial()
+            blueMaterial.diffuse.contents = UIColor.blue
+            plane.firstMaterial = blueMaterial
+            
+            let yFreeConstraint = SCNBillboardConstraint()
+            yFreeConstraint.freeAxes = [.Y] // optionally
+            let (min, max) = text.boundingBox
+            let dx = min.x + 1 * (max.x - min.x)
+            let dy = min.y + 1 * (max.y - min.y)
+            let dz = min.z + 1 * (max.z - min.z)
+            instructionNode.pivot = SCNMatrix4MakeTranslation(dx, dy, dz)
+            instructionNode.constraints = [yFreeConstraint]
+            instructionNode.position = SCNVector3(x:0, y:0, z:-8)
+            instructionNode.scale = SCNVector3(x:0.015, y:0.015, z:0.015)
+            instructionNode.geometry = text
+            self.sceneView.scene.rootNode.addChildNode(instructionNode)
+        } else if (boundingBoxExists) {
+            print(instructionNode)
+            instructionNode.removeFromParentNode()
+            //print("HIT THIS THING")
+            let string = ""
+            let text = SCNText(string: string, extrusionDepth: 1.2)
+            let material = SCNMaterial()
+            material.diffuse.contents = UIColor.magenta
+            
+            text.materials = [material]
+            instructionNode.geometry = text
+            self.sceneView.scene.rootNode.addChildNode(instructionNode)
+        }
+        
         if state == .ready || state == .defineBoundingBox || state == .scanning {
             
-            //let title = "you're legit gay"
-            //let message = "HEHEXD"
-            //ViewController.instance?.showAlert(title: title, message: message)
             
             
             if let lightEstimate = frame.lightEstimate, lightEstimate.ambientIntensity < 500, !hasWarnedAboutLowLight, isFirstScan {
