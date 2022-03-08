@@ -41,7 +41,4 @@ struct HomeView: View {
         }
     }
     
-//    func upload() -> AnyView{
-//        return AnyView(UploadView(state: state))
-//    }
 }

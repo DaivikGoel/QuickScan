@@ -277,7 +277,7 @@ class BoundingBoxSide: SCNNode {
     
     private func cylinder(width: CGFloat, height: Float) -> SCNGeometry {
         let cylinderGeometry = SCNCylinder(radius: width / 2, height: CGFloat(height))
-        let gradientMaterial = SCNMaterial.material(withDiffuse: UIImage(named: "gradientyellow"))
+        let gradientMaterial = SCNMaterial.material(withDiffuse: UIImage(named: "gradientblue"))
         let clearMaterial = SCNMaterial.material(withDiffuse: UIColor.clear)
         cylinderGeometry.materials = [gradientMaterial, clearMaterial, clearMaterial]
         return cylinderGeometry
