@@ -24,7 +24,7 @@ class UploadViewModel: ObservableObject {
         self.state = state
         self.url = url
     }
-
+    
     func buttonTapped() {
         //handle request and then set to true to show the alert
         self.showAlert = true
@@ -69,126 +69,134 @@ class UploadViewModel: ObservableObject {
     }
     
     func postRequest(uuid: String) {
-      let userId = Auth.auth().currentUser?.uid
-      // declare the parameter as a dictionary that contains string as key and value combination. considering inputs are valid
+        let userId = Auth.auth().currentUser?.uid
+        // declare the parameter as a dictionary that contains string as key and value combination. considering inputs are valid
         let modifieduuid = uuid.replacingOccurrences(of: ".mov", with: "")
         let parameters: [String: Any] = ["name": self.title, "description": self.description, "user_id": userId ?? "69696969", "uuid": modifieduuid]
-      
-      // create the url with URL
-      let url = URL(string: "https://quickscan.live/collection")! // change server url accordingly
-      
-      // create the session object
-      let session = URLSession.shared
-      
-      // now create the URLRequest object using the url object
-      var request = URLRequest(url: url)
-      request.httpMethod = "POST" //set http method as POST
-      
-      // add headers for the request
-      request.addValue("application/json", forHTTPHeaderField: "Content-Type") // change as per server requirements
-      request.addValue("application/json", forHTTPHeaderField: "Accept")
-      
-      do {
-        // convert parameters to Data and assign dictionary to httpBody of request
-        request.httpBody = try JSONSerialization.data(withJSONObject: parameters, options: .prettyPrinted)
-      } catch let error {
-        print(error)
-        return
-      }
-      
-      // create dataTask using the session object to send data to the server
-      let task = session.dataTask(with: request) { data, response, error in
         
-        if let error = error {
-          print("Post Request Error: \(error)")
-          return
-        }
+        // create the url with URL
+        let url = URL(string: "https://quickscan.live/collection")! // change server url accordingly
         
-        // ensure there is valid response code returned from this HTTP response
-        guard let httpResponse = response as? HTTPURLResponse,
-              (200...299).contains(httpResponse.statusCode)
-        else {
-          print("Invalid Response received from the server")
-          return
-        }
+        // create the session object
+        let session = URLSession.shared
         
-        // ensure there is data returned
-        guard let responseData = data else {
-          print("nil Data received from the server")
-          return
-        }
+        // now create the URLRequest object using the url object
+        var request = URLRequest(url: url)
+        request.httpMethod = "POST" //set http method as POST
+        
+        // add headers for the request
+        request.addValue("application/json", forHTTPHeaderField: "Content-Type") // change as per server requirements
+        request.addValue("application/json", forHTTPHeaderField: "Accept")
+        
         do {
-          // create json object from data or use JSONDecoder to convert to Model stuct
-          if let jsonResponse = try JSONSerialization.jsonObject(with: responseData, options: .mutableContainers) as? [String: Any] {
-            print(jsonResponse)
-            // handle json response
-          } else {
-            print("data maybe corrupted or in wrong format")
-            throw URLError(.badServerResponse)
-          }
+            // convert parameters to Data and assign dictionary to httpBody of request
+            request.httpBody = try JSONSerialization.data(withJSONObject: parameters, options: .prettyPrinted)
         } catch let error {
-          print(error.localizedDescription)
+            print(error)
+            return
         }
-      }
-      // perform the task
-      task.resume()
-    }
-
-    func uploadVideo(with resource: String,type: String){   //1
-            
-            let key = "\(resource)"
-            //let resource = Bundle.main.path(forResource: resource, ofType: type)!
-            //let Url = URL(fileURLWithPath: resource)
-            let Url = URL(string: key)!
-            
-            let expression  = AWSS3TransferUtilityUploadExpression()
-            expression.progressBlock = { (task: AWSS3TransferUtilityTask,progress: Progress) -> Void in
-              print(progress.fractionCompleted)
-                self.downloadAmount = progress.fractionCompleted * 100
-                //self.uploadText = "Uploading..."
-//                if self.uploadText == "Uploading..." {
-//                   self.uploadText = "Uploading....."
-//                } else if (self.uploadText == "Uploading.....") {
-//                    self.uploadText = "Uploading..."
-//                }
-                if progress.isCancelled || progress.isPaused{
-                    print("cancelled for some reason")
-                }
-              if progress.isFinished{
-                self.uploadText = "Uploaded Succesfully!"//3
-                let uuid = Url.lastPathComponent
-                self.postRequest(uuid: uuid)
-                print("Upload Finished...")
-              }
-            }
         
+        // create dataTask using the session object to send data to the server
+        let task = session.dataTask(with: request) { data, response, error in
             
-            expression.setValue("public-read-write", forRequestHeader: "x-amz-acl")   //4
-            expression.setValue("public-read-write", forRequestParameter: "x-amz-acl")
-
-            completionHandler = { (task:AWSS3TransferUtilityUploadTask, error:NSError?) -> Void in
-                if(error != nil){
-                    print("Failure uploading file")
-                    
-                }else{
-                    print("Success uploading file")
-                }
-            } as? AWSS3TransferUtilityUploadCompletionHandlerBlock
+            if let error = error {
+                print("Post Request Error: \(error)")
+                return
+            }
             
-            let bucketFileName = Url.lastPathComponent
-            //5
-            AWSS3TransferUtility.default().uploadFile(Url, bucket: bucketName, key: String(bucketFileName), contentType: resource, expression: expression, completionHandler: self.completionHandler).continueWith(block: { (task:AWSTask) -> AnyObject? in
-                if(task.error != nil){
-                    print(task.error)
-                    print("Error uploading file: \(String(describing: task.error?.localizedDescription))")
+            // ensure there is valid response code returned from this HTTP response
+            guard let httpResponse = response as? HTTPURLResponse,
+                  (200...299).contains(httpResponse.statusCode)
+            else {
+                print("Invalid Response received from the server")
+                return
+            }
+            
+            // ensure there is data returned
+            guard let responseData = data else {
+                print("nil Data received from the server")
+                return
+            }
+            do {
+                // create json object from data or use JSONDecoder to convert to Model stuct
+                if let jsonResponse = try JSONSerialization.jsonObject(with: responseData, options: .mutableContainers) as? [String: Any] {
+                    print(jsonResponse)
+                    // handle json response
+                } else {
+                    print("data maybe corrupted or in wrong format")
+                    throw URLError(.badServerResponse)
                 }
-                if(task.result != nil){
-                    print("Starting upload...")
-                }
-                return nil
-            })
+            } catch let error {
+                print(error.localizedDescription)
+            }
+        }
+        // perform the task
+        task.resume()
     }
-      
+    
+    func uploadVideo(with resource: String,type: String){   //1
+        
+        let key = "\(resource)"
+        //let resource = Bundle.main.path(forResource: resource, ofType: type)!
+        //let Url = URL(fileURLWithPath: resource)
+        let Url = URL(string: key)!
+        
+        let expression  = AWSS3TransferUtilityUploadExpression()
+        var uploaded = false
+        let uuid = Url.lastPathComponent
+
+        expression.progressBlock = {
+            (task: AWSS3TransferUtilityTask, progress: Progress) -> Void in
+            print(progress.fractionCompleted)
+            self.downloadAmount = progress.fractionCompleted * 100
+            //self.uploadText = "Uploading..."
+            //                if self.uploadText == "Uploading..." {
+            //                   self.uploadText = "Uploading....."
+            //                } else if (self.uploadText == "Uploading.....") {
+            //                    self.uploadText = "Uploading..."
+            //                }
+            if progress.isCancelled || progress.isPaused{
+                print("cancelled for some reason")
+            }
+            if progress.isFinished{
+                self.uploadText = "Uploaded Succesfully!"//3
+//                self.postRequest(uuid: uuid)
+                if (!uploaded) {
+                    print("Upload Finished...")
+                    self.postRequest(uuid: uuid)
+                    uploaded = true
+                }
+                return
+            }
+        }
+        
+        
+        expression.setValue("public-read-write", forRequestHeader: "x-amz-acl")   //4
+        expression.setValue("public-read-write", forRequestParameter: "x-amz-acl")
+        
+        completionHandler = { (task:AWSS3TransferUtilityUploadTask, error:NSError?) -> Void in
+            if(error != nil){
+                print("Failure uploading file")
+                
+            }else{
+                print("Success uploading file")
+            }
+        } as? AWSS3TransferUtilityUploadCompletionHandlerBlock
+        
+        let bucketFileName = Url.lastPathComponent
+        //5
+        AWSS3TransferUtility.default().uploadFile(Url, bucket: bucketName, key: String(bucketFileName), contentType: resource, expression: expression, completionHandler: self.completionHandler).continueWith(block: { (task:AWSTask) -> AnyObject? in
+            if(task.error != nil){
+                print(task.error)
+                print("Error uploading file: \(String(describing: task.error?.localizedDescription))")
+            }
+            if(task.result != nil){
+                print("Starting upload...")
+            }
+            return nil
+        })
+    }
+    
 }
 
 // MARK: - Private helper function
