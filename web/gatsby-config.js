@@ -1,9 +1,4 @@
 module.exports = {
-  siteMetadata: {
-    title: 'Free React Admin dashboard template based on Gatsby',
-    description: 'Admin dashboard template based on Gatsby with @paljs/ui component package.',
-    author: 'Ahmed Elywa',
-  },
   flags: {
     PRESERVE_FILE_DOWNLOAD_CACHE: true,
     PRESERVE_WEBPACK_CACHE: true,

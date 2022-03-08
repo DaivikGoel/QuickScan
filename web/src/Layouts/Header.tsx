@@ -129,7 +129,18 @@ const Header: React.FC<HeaderProps> = (props) => {
                   QuickScan
                 </Link>
               ),
-            }
+            },
+            {content: (
+                  <SelectStyled
+                    isSearchable={false}
+                    shape="SemiRound"
+                    placeholder="Themes"
+                    value={themeOptions.find((item) => item.value === props.theme.value)}
+                    options={themeOptions}
+                    onChange={({ value }: { value: DefaultTheme['name'] }) => props.theme.set(value)}
+                  />
+                ),
+              }
           ]}
         />
         <Actions
