@@ -26,11 +26,7 @@ export default function Login() {
     try {
       if (!emailValidator(email) && !passwordValidator(password) && firebase) {
         await signInWithEmailAndPassword(firebase, email, password);
-        navigate("/dashboard", {
-          state: {
-            justSignedIn: true
-          }
-        })
+        navigate('/edit')
       } else {
         return null
       }
@@ -44,11 +40,7 @@ export default function Login() {
     try {
       if (firebase) {
         await signInWithPopup(firebase, provider);
-        navigate("/dashboard", {
-          state: {
-            justSignedIn: true
-          }
-        })
+        navigate('/edit')
       } else {
         return null
       }

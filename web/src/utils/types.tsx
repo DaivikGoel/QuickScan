@@ -8,7 +8,8 @@ export interface CardPropsType {
   objectname: string,
   tags: string[],
   date: Date,
-  uid: string
+  uid: string,
+  collection_id: string
 }
 
 export interface TagType {

@@ -9,6 +9,7 @@ import { CardPropsType } from '../utils/types';
 import { navigate } from 'gatsby';
 import { requestUrl } from '../utils/requestUrl';
 import useFirebase from '../utils/useFirebase';
+import styled from 'styled-components';
 
 export default function Edit(props) {
   const collectionUrl = `${requestUrl}/collection`
@@ -20,11 +21,6 @@ export default function Edit(props) {
       navigate("/auth/login")
     }
   }, [firebase, props])
-
-  useEffect(() => {
-    const searchString = location.search.replace('?search=', '')
-    setFilteredCardProps(cardProps.filter(card => card.description.includes(searchString) || card.title.includes(searchString)))
-  }, [props.location])
 
   useEffect(() => {
     (async () => {
@@ -41,16 +37,34 @@ export default function Edit(props) {
             thumbnail: `https://quickscanthumbnails.s3.ca-central-1.amazonaws.com/${obj["thumbnail"]}`,
             three_dimen_object_blob_storage: `https://quick-scan-3d-objects.s3.ca-central-1.amazonaws.com/${obj["three_dimen_object_blob_storage"]}`,
             objectname: obj["three_dimen_object_blob_storage"],
-            tags: obj["tags"]
+            tags: obj["tags"],
+            uid: obj["user_id"],
+            collection_id: obj["collection_id"]
           }))
           setCardProps(cardProps)
-          setFilteredCardProps(cardProps)
         }
       } catch (error) {
         console.log(error)
       }
+      if (props && props.location) {
+        const params = new URLSearchParams(props.location.search)
+        if (params) {
+          const searchString = params.get('search')?.toLowerCase()
+          if (!searchString) {
+            setFilteredCardProps(cardProps)
+          } else if (searchString) {
+            setFilteredCardProps([...cardProps].filter(card => card.description?.toLowerCase().includes(searchString) || card.title?.toLowerCase().includes(searchString)))
+          }
+        }
+      }
     })();
-  }, [])
+  }, [props.location])
+
+  const Image = styled.img`
+    align-self: 'center';
+    max-width: 96%;
+    max-height: 96%;
+  `;
 
   const NUM_OF_COL = 4;
 
@@ -75,7 +89,7 @@ export default function Edit(props) {
             })} >
               <Card accent="Info">
                 <CardBody>
-                  <img src={cardProp.thumbnail} />
+                  <Image src={cardProp.thumbnail} />
                 </CardBody>
                 <CardFooter>
                     {cardProp.title}

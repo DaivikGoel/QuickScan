@@ -88,7 +88,8 @@ const Home = (props) => {
             objectname: obj["three_dimen_object_blob_storage"],
             tags: JSON.parse(obj["tags"])?.data?.replace('[', '').replace(']', '').split(',') || [],
             date: new Date(obj['timestamp']),
-            uid: obj["user_id"]
+            uid: obj["user_id"],
+            collection_id: obj["collection_id"]
           }))
           setCardProps(cardProps)
           filterByUrlParam()
@@ -164,8 +165,8 @@ const Home = (props) => {
 
   const Image = styled.img`
     align-self: 'center';
-    max-width: 100%;
-    max-height: 100%;
+    max-width: 96%;
+    max-height: 96%;
   `;
 
   const sort = [
