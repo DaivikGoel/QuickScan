@@ -88,6 +88,12 @@ export default function View({ location }) {
   const Input = styled(InputGroup)`
     margin-bottom: 10px;
   `;
+
+  const Image = styled.a`
+    align-self: 'center';
+    max-width: 100%;
+    max-height: 100%;
+  `;
   
   let body
   if (isEditable) {
@@ -115,15 +121,14 @@ export default function View({ location }) {
       </>
     )
   }
-  console.log(cardProp)
   return (
     <>
       <SEO title="Detailed View" />
-        <Card size="Giant">
+        <Card size="Medium">
           <CardBody>
-            <a rel='ar' href = {three_dimen_object_blob_storage}>
+            <Image rel='ar' href = {three_dimen_object_blob_storage}>
               <img src={thumbnail} />
-            </a>
+            </Image>
             {body}
             
           </CardBody>

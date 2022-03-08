@@ -1,1 +1,1 @@
-export const requestUrl = 'http://ec2-3-98-130-154.ca-central-1.compute.amazonaws.com:3000'
+export const requestUrl = 'http://ec2-3-98-15-7.ca-central-1.compute.amazonaws.com:3000'
