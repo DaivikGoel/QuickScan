@@ -151,7 +151,7 @@ export default function View({ location }) {
   return (
     <>
       <SEO title="Detailed View" />
-        <Card size="Medium">
+        <Card size="Large">
           <CardBody>
             <Image rel='ar' href = {three_dimen_object_blob_storage}>
               <img src={thumbnail} />
