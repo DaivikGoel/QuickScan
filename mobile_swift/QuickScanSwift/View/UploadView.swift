@@ -143,7 +143,8 @@ struct UploadView: View {
                                         self.showingPopover = false
                                         viewModel.downloadAmount = 0
                                         viewModel.uploadText = "Uploading..."
-                                        viewModel.pushWebView = true
+                                        // leave this commented out so it doesnt go to dead page
+                                        //viewModel.pushWebView = true
                                     }) {
                                         Text("Ok")
                                             .modifier(ButtonModifier(font: UIConfiguration.buttonFont,
