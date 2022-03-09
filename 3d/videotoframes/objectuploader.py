@@ -26,6 +26,7 @@ def uploader(message):
 
     if os.path.exists('result.usdz') == False:
         Uploaded = False
+        os.chdir('../')
         print("OBJECT CREATION FAILED")
     else: 
         print("OBJECT DONE")
