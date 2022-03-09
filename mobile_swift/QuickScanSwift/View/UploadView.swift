@@ -9,18 +9,10 @@ struct UploadView: View {
     @ObservedObject private var viewModel: UploadViewModel
     @State private var showingPopover = false
     @State var pushActiveBack = false
-    @State var redirectUrl = "https://relaxed-snyder-a1ac71.netlify.app/edit?id="
     //    @State var pushActiveWebButton = false
-    
-    func redirectWebsiteUrl() {
-        // creates url redirect using userid
-        let userId = Auth.auth().currentUser?.uid
-        self.redirectUrl = "https://relaxed-snyder-a1ac71.netlify.app/edit?id=" + userId!
-    }
     
     init(state: AppState, url: String) {
         self.viewModel = UploadViewModel(authAPI: AuthService(), state: state, url: url)
-        redirectWebsiteUrl()
     }
     
     func thing() {
@@ -85,7 +77,7 @@ struct UploadView: View {
                 }
                  */
                 if #available(iOS 14.0, *) {
-                    Link("View Uploads and 3d Objects", destination: URL(string: redirectUrl)!)                        .modifier(TextModifier(font: UIConfiguration.buttonFont,
+                    Link("View Uploads and 3d Objects", destination: URL(string: viewModel.redirectUrl)!)                        .modifier(TextModifier(font: UIConfiguration.buttonFont,
                                                                                                                                                            color: .black))
                         .frame(width: 275, height: 55)
                         .overlay(RoundedRectangle(cornerRadius: 25)
