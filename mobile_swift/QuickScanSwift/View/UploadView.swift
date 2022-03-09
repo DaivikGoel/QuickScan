@@ -9,6 +9,7 @@ struct UploadView: View {
     @ObservedObject private var viewModel: UploadViewModel
     @State private var showingPopover = false
     @State var pushActiveBack = false
+//    @State var pushActiveWebButton = false
     
     init(state: AppState, url: String) {
         self.viewModel = UploadViewModel(authAPI: AuthService(), state: state, url: url)
@@ -61,6 +62,17 @@ struct UploadView: View {
                         self.showingPopover = true
                     })
                     .padding(.horizontal, 60)
+                }
+                Button(action: {
+                    self.viewModel.pushWebView = true
+                }) {
+                    Text("View Uploads and 3d Objects")
+                        .modifier(TextModifier(font: UIConfiguration.buttonFont,
+                                               color: .black))
+                        .frame(width: 275, height: 55)
+                        .overlay(RoundedRectangle(cornerRadius: 25)
+                            .stroke(Color.gray, lineWidth: 1)
+                    )
                 }
             }
             Spacer()
