@@ -12,7 +12,7 @@ sqs = boto3.client('sqs')
 s3_client = boto3.client('s3', region_name='ca-central-1')
 output_directory = './frames'
 queue_url = 'https://sqs.ca-central-1.amazonaws.com/861570318875/3DObject'
-api_url = 'http://ec2-3-98-130-154.ca-central-1.compute.amazonaws.com:3000/finalobject'
+api_url = 'https://quickscan.live/finalobject'
 
 # Send message to SQS queue
 # Receive message from SQS queue

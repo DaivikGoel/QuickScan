@@ -9,9 +9,18 @@ struct UploadView: View {
     @ObservedObject private var viewModel: UploadViewModel
     @State private var showingPopover = false
     @State var pushActiveBack = false
+    @State var redirectUrl = "https://relaxed-snyder-a1ac71.netlify.app/edit?id="
+    //    @State var pushActiveWebButton = false
+    
+    func redirectWebsiteUrl() {
+        // creates url redirect using userid
+        let userId = Auth.auth().currentUser?.uid
+        self.redirectUrl = "https://relaxed-snyder-a1ac71.netlify.app/edit?id=" + userId!
+    }
     
     init(state: AppState, url: String) {
         self.viewModel = UploadViewModel(authAPI: AuthService(), state: state, url: url)
+        redirectWebsiteUrl()
     }
     
     func thing() {
@@ -22,14 +31,14 @@ struct UploadView: View {
             
             NavigationLink(destination: ARUIView(state: viewModel.state),
                            isActive: self.$pushActiveBack) {
-              EmptyView()
+                EmptyView()
             }.hidden()
             
-            NavigationLink(destination: WebView(),
+            NavigationLink(destination: WebsiteRedirectView(),
                            isActive: $viewModel.pushWebView) {
-              EmptyView()
+                EmptyView()
             }.hidden()
-             
+            
             VStack(alignment: .center, spacing: 10) {
                 Text("Upload")
                     .modifier(TextModifier(font: UIConfiguration.titleFont,
@@ -37,9 +46,9 @@ struct UploadView: View {
                     .padding(.horizontal, 60)
                 VStack(alignment: .center) {
                     CustomTextField(placeHolderText: "Title",
-                                  text: $viewModel.title)
+                                    text: $viewModel.title)
                     CustomTextField(placeHolderText: "Description",
-                                  text: $viewModel.description)
+                                    text: $viewModel.description)
                 }.padding(.horizontal, 25)
                 Button(action: {
                     self.pushActiveBack = true
@@ -49,8 +58,8 @@ struct UploadView: View {
                                                color: .black))
                         .frame(width: 275, height: 55)
                         .overlay(RoundedRectangle(cornerRadius: 25)
-                            .stroke(Color.gray, lineWidth: 1)
-                    )
+                                    .stroke(Color.gray, lineWidth: 1)
+                        )
                 }
                 VStack(alignment: .center) {
                     customButton(title: "Upload Video",
@@ -60,68 +69,91 @@ struct UploadView: View {
                         self.pushActive = true
                         self.showingPopover = true
                     })
-                    .padding(.horizontal, 60)
+                        .padding(.horizontal, 60)
                 }
-            }
-            Spacer()
-        }.alert(item: self.$viewModel.statusViewModel) { status in
-            Alert(title: Text(status.title),
-                  message: Text(status.message),
-                  dismissButton: .default(Text("OK"), action: {
-                    if status.title == "Successful" {
-                        self.pushActive = true
-                    }
-                  }))
-        }.navigationBarBackButtonHidden(true).navigationBarHidden(true)
-    }
-    
-    private func customButton2(title: String,
-                              backgroundColor: UIColor,
-                              action: @escaping () -> Void) -> some View {
-        Button(action: action) {
-            Text(title)
-                .modifier(ButtonModifier(font: UIConfiguration.buttonFont,
-                                         color: backgroundColor,
-                                         textColor: .white,
-                                         width: 275,
-                                         height: 45))
-        }
-    }
-    
-    private func customButton(title: String,
-                              backgroundColor: UIColor,
-                              action: @escaping () -> Void) -> some View {
-        Button(action: action) {
-            Text(title)
-                .modifier(ButtonModifier(font: UIConfiguration.buttonFont,
-                                         color: backgroundColor,
-                                         textColor: .white,
-                                         width: 275,
-                                         height: 55))
-        }.popover(isPresented: $showingPopover) {
-            Text("Progress")
-                .font(.headline)
-                .padding()
-            if #available(iOS 14.0, *) {
-                ProgressView(viewModel.uploadText, value: viewModel.downloadAmount, total: 100).scaleEffect(x: 0.8, y: 1, anchor: .center)
-            } else {
-                // Fallback on earlier versions
-            }
-            if (viewModel.downloadAmount == 100) {
+                /*
                 Button(action: {
-                    self.showingPopover = false
-                    viewModel.downloadAmount = 0
-                    viewModel.uploadText = "Uploading..."
-                    viewModel.pushWebView = true
+                    self.viewModel.pushWebView = true
                 }) {
-                    Text("Ok")
-                        .modifier(ButtonModifier(font: UIConfiguration.buttonFont,
-                                                 color: UIConfiguration.tintColor,
-                                                 textColor: .white,
-                                                 width: 275,
-                                                 height: 55))
+                    Text("View Uploads and 3d Objects")
+                        .modifier(TextModifier(font: UIConfiguration.buttonFont,
+                                               color: .black))
+                        .frame(width: 275, height: 55)
+                        .overlay(RoundedRectangle(cornerRadius: 25)
+                                    .stroke(Color.gray, lineWidth: 1)
+                        )
                 }
-            }
-        }
-    }
-}
+                 */
+                if #available(iOS 14.0, *) {
+                    Link("View Uploads and 3d Objects", destination: URL(string: redirectUrl)!)                        .modifier(TextModifier(font: UIConfiguration.buttonFont,
+                                                                                                                                                           color: .black))
+                        .frame(width: 275, height: 55)
+                        .overlay(RoundedRectangle(cornerRadius: 25)
+                                    .stroke(Color.gray, lineWidth: 1))
+                                 } else {
+                            // Fallback on earlier versions
+                        }
+                                 }
+                                 Spacer()
+                                 }.alert(item: self.$viewModel.statusViewModel) { status in
+                            Alert(title: Text(status.title),
+                                  message: Text(status.message),
+                                  dismissButton: .default(Text("OK"), action: {
+                                if status.title == "Successful" {
+                                    self.pushActive = true
+                                }
+                            }))
+                        }.navigationBarBackButtonHidden(true).navigationBarHidden(true)
+                                 }
+                                 
+                                 private func customButton2(title: String,
+                                                            backgroundColor: UIColor,
+                                                            action: @escaping () -> Void) -> some View {
+                            Button(action: action) {
+                                Text(title)
+                                    .modifier(ButtonModifier(font: UIConfiguration.buttonFont,
+                                                             color: backgroundColor,
+                                                             textColor: .white,
+                                                             width: 275,
+                                                             height: 45))
+                            }
+                        }
+                                 
+                                 private func customButton(title: String,
+                                                           backgroundColor: UIColor,
+                                                           action: @escaping () -> Void) -> some View {
+                            Button(action: action) {
+                                Text(title)
+                                    .modifier(ButtonModifier(font: UIConfiguration.buttonFont,
+                                                             color: backgroundColor,
+                                                             textColor: .white,
+                                                             width: 275,
+                                                             height: 55))
+                            }.popover(isPresented: $showingPopover) {
+                                Text("Progress")
+                                    .font(.headline)
+                                    .padding()
+                                if #available(iOS 14.0, *) {
+                                    ProgressView(viewModel.uploadText, value: viewModel.downloadAmount, total: 100).scaleEffect(x: 0.8, y: 1, anchor: .center)
+                                } else {
+                                    // Fallback on earlier versions
+                                }
+                                if (viewModel.downloadAmount == 100) {
+                                    Button(action: {
+                                        self.showingPopover = false
+                                        viewModel.downloadAmount = 0
+                                        viewModel.uploadText = "Uploading..."
+                                        // leave this commented out so it doesnt go to dead page
+                                        //viewModel.pushWebView = true
+                                    }) {
+                                        Text("Ok")
+                                            .modifier(ButtonModifier(font: UIConfiguration.buttonFont,
+                                                                     color: UIConfiguration.tintColor,
+                                                                     textColor: .white,
+                                                                     width: 275,
+                                                                     height: 55))
+                                    }
+                                }
+                            }
+                        }
+                                 }
