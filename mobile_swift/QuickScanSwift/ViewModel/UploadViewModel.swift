@@ -13,6 +13,7 @@ class UploadViewModel: ObservableObject {
     @Published var downloadAmount: Double = 0.0
     @Published var uploadText: String = "Uploading..."
     @Published var pushWebView = false
+    @Published var redirectUrl = "https://relaxed-snyder-a1ac71.netlify.app/edit?id="
     
     private var userId = Auth.auth().currentUser?.uid
     private var cancellableBag = Set<AnyCancellable>()
@@ -23,6 +24,16 @@ class UploadViewModel: ObservableObject {
         self.authAPI = authAPI
         self.state = state
         self.url = url
+        redirectWebsiteUrl()
+    }
+    
+    func redirectWebsiteUrl() {
+        // creates url redirect using userid
+        let userId = Auth.auth().currentUser?.uid
+        print("XDDDDD")
+        let userIdString = String(userId!)
+        self.redirectUrl = "\("https://relaxed-snyder-a1ac71.netlify.app/edit?id=")\(userIdString)"
+        print(self.redirectUrl)
     }
     
     func buttonTapped() {
