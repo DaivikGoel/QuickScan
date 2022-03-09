@@ -10,7 +10,7 @@ import { emailValidator } from '../../utils/emailValidator'
 import { passwordValidator } from '../../utils/passwordValidator'
 import { navigate } from 'gatsby';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
-import useFirebase from '../../utils/useFirebase';
+import { useFirebase } from '../../utils/useFirebase';
 
 const Input = styled(InputGroup)`
   margin-bottom: 2rem;

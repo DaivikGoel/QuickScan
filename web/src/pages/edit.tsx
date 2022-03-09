@@ -8,28 +8,30 @@ import axios from 'axios';
 import { CardPropsType } from '../utils/types';
 import { navigate } from 'gatsby';
 import { requestUrl } from '../utils/requestUrl';
-import useFirebase from '../utils/useFirebase';
+import { useFBUser } from '../utils/useFirebase';
 import styled from 'styled-components';
 
 export default function Edit({ location }) {
   const collectionUrl = `${requestUrl}/collection`
   const [cardProps, setCardProps] = useState<CardPropsType[]>([]);
   const [filteredCardProps, setFilteredCardProps] = useState<CardPropsType[]>([]);
-  const firebase = useFirebase();
+  const [prevUser, setPrevUser] = useState('initial');
+  const user = useFBUser();
   useEffect(() => {
     const params = new URLSearchParams(location?.search)
-    if ((firebase && firebase.currentUser == null) && !params.has('id')) {
+    if (user == null && prevUser == null && !params.has('id')) {
       navigate("/auth/login", { replace: true })
     }
-  }, [location])
+    setPrevUser(user);
+  }, [location, user])
 
   useEffect(() => {
     (async () => {
       try {
+        const params = new URLSearchParams(location?.search)
+        const userId = params.get('id') || user?.uid
         const response = await axios.get(collectionUrl)
         if (response) {
-          const params = new URLSearchParams(location?.search)
-          const userId = params.get('id') || firebase?.currentUser?.uid
           const objects = response.data.data
           const newCardProps = objects.filter((obj: any) => userId === obj["user_id"]).map((obj: any) => ({
             title: obj["name"],
@@ -41,26 +43,23 @@ export default function Edit({ location }) {
             uid: obj["user_id"],
             collection_id: obj["collection_id"]
           }))
-          if (newCardProps) {
-
-            setCardProps(newCardProps)
-            if (params && params.has('search')) {
-              const searchString = params.get('search')?.toLowerCase()
-              if (!searchString) {
-                setFilteredCardProps(newCardProps)
-              } else if (searchString) {
-                setFilteredCardProps([...newCardProps].filter(card => card.description?.toLowerCase().includes(searchString) || card.title?.toLowerCase().includes(searchString)))
-              }
-            } else {
+          setCardProps(newCardProps)
+          if (params && params.has('search')) {
+            const searchString = params.get('search')?.toLowerCase()
+            if (!searchString) {
               setFilteredCardProps(newCardProps)
+            } else if (searchString) {
+              setFilteredCardProps([...newCardProps].filter(card => card.description?.toLowerCase().includes(searchString) || card.title?.toLowerCase().includes(searchString)))
             }
+          } else {
+            setFilteredCardProps(newCardProps)
           }
         }
       } catch (error) {
         console.log(error)
       }
     })();
-  }, [location, firebase])
+  }, [location, user])
 
   const Image = styled.img`
     align-self: 'center';

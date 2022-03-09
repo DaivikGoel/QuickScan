@@ -10,7 +10,7 @@ import Auth, { Group } from '../../components/Auth';
 import Socials from '../../components/Auth/Socials';
 import SEO from '../../components/SEO';
 import { signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup, setPersistence, browserSessionPersistence } from 'firebase/auth';
-import useFirebase from '../../utils/useFirebase';
+import { useFirebase } from '../../utils/useFirebase';
 
 export default function Login() {
   const [checked, setChecked] = useState(false)
