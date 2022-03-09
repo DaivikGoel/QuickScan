@@ -10,7 +10,7 @@ import { navigate } from 'gatsby';
 import { CardPropsType, TagType } from '../utils/types';
 import { requestUrl } from '../utils/requestUrl';
 
-const Home = (props) => {
+const Home = ({ location }) => {
   // const defaultCardProps: CardPropsType[] = [
   //   {
   //     title: 'Card 1',
@@ -58,8 +58,8 @@ const Home = (props) => {
   const [selectedSort, setSelectedSort] = useState<TagType>();
 
   const filterByUrlParam = () => {
-    const params = new URLSearchParams(location.search)
-    if (params) {
+    const params = new URLSearchParams(location?.search)
+    if (params.has('search')) {
       const searchString = params.get('search')?.toLowerCase()
       if (!searchString) {
         setFilteredCardProps(cardProps)
@@ -72,33 +72,40 @@ const Home = (props) => {
   useEffect(() => {
     (async () => {
       try {
-        const tagResponse = await axios.get(tagUrl)
-        if (tagResponse) {
-          const data = tagResponse.data.data;
-          setTags(data.map(t => ({ value: t, label: t['tag_title'].toUpperCase() })))
-        }
-        const response = await axios.get(collectionUrl)
-        if (response) {
-          const objects = response.data.data
-          const cardProps = objects.map((obj: any) => ({
-            title: obj["name"],
-            description: obj["description"],
-            thumbnail: `https://quickscanthumbnails.s3.ca-central-1.amazonaws.com/${obj["thumbnail"]}`,
-            three_dimen_object_blob_storage: `https://quick-scan-3d-objects.s3.ca-central-1.amazonaws.com/${obj["three_dimen_object_blob_storage"]}`,
-            objectname: obj["three_dimen_object_blob_storage"],
-            tags: JSON.parse(obj["tags"])?.data?.replace('[', '').replace(']', '').split(',') || [],
-            date: new Date(obj['timestamp']),
-            uid: obj["user_id"],
-            collection_id: obj["collection_id"]
-          }))
-          setCardProps(cardProps)
-          filterByUrlParam()
+        if (location) {
+          const tagResponse = await axios.get(tagUrl)
+          if (tagResponse) {
+            const data = tagResponse.data.data;
+            setTags(data.map(t => ({ value: t, label: t['tag_title'].toUpperCase() })))
+          }
+          const response = await axios.get(collectionUrl)
+          if (response) {
+            const objects = response.data.data
+            const newCardProps = objects.map((obj: any) => ({
+              title: obj["name"],
+              description: obj["description"],
+              thumbnail: `https://quickscanthumbnails.s3.ca-central-1.amazonaws.com/${obj["thumbnail"]}`,
+              three_dimen_object_blob_storage: `https://quick-scan-3d-objects.s3.ca-central-1.amazonaws.com/${obj["three_dimen_object_blob_storage"]}`,
+              objectname: obj["three_dimen_object_blob_storage"],
+              tags: JSON.parse(obj["tags"])?.data?.replace('[', '').replace(']', '').split(',') || [],
+              date: new Date(obj['timestamp']),
+              uid: obj["user_id"],
+              collection_id: obj["collection_id"]
+            }))
+            setCardProps(newCardProps)
+            const params = new URLSearchParams(location.search)
+            if (params.has('search')) {
+              filterByUrlParam()
+            } else {
+              setFilteredCardProps(newCardProps)
+            }
+          }
         }
       } catch (error) {
         console.log(error)
       }
     })();
-  }, [props.location])
+  }, [location])
 
   useEffect(() => {
     if (selectedTags.length == 0) {
@@ -152,7 +159,7 @@ const Home = (props) => {
     setSelectedSort({ value: 'newest', label: 'Newest' })
     setSelectedTags([])
     filterByUrlParam()
-  }, [props.location])
+  }, [location])
 
   const FilterStyle = styled.div`
     margin: 1rem;
