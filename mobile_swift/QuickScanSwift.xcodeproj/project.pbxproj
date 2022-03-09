@@ -66,6 +66,7 @@
 		D539E1BD27BEFC36004E3C9E /* UploadViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D539E1BC27BEFC36004E3C9E /* UploadViewModel.swift */; };
 		D5A224F227D576530051104C /* GoogleSignIn in Frameworks */ = {isa = PBXBuildFile; productRef = D5A224F127D576530051104C /* GoogleSignIn */; };
 		D5A224F427D57B840051104C /* GoogleLoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5A224F327D57B840051104C /* GoogleLoginViewModel.swift */; };
+		D5A224F627D856780051104C /* WebsiteRedirectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5A224F527D856780051104C /* WebsiteRedirectView.swift */; };
 		D67277D8155DE049A430452D /* Pods_QuickScanSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9DA9DF5518C4734E912E9966 /* Pods_QuickScanSwift.framework */; };
 /* End PBXBuildFile section */
 
@@ -140,6 +141,7 @@
 		D539E1BC27BEFC36004E3C9E /* UploadViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadViewModel.swift; sourceTree = "<group>"; };
 		D580538927D2B0340009EE2B /* logo6.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = logo6.png; path = QuickScanSwift/resources/logo6.png; sourceTree = "<group>"; };
 		D5A224F327D57B840051104C /* GoogleLoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoogleLoginViewModel.swift; sourceTree = "<group>"; };
+		D5A224F527D856780051104C /* WebsiteRedirectView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebsiteRedirectView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -295,6 +297,7 @@
 				073C368127CFEA30000CE6C2 /* ARUIView.swift */,
 				07D21EC927D7EEF50062D1D3 /* WebUIController.swift */,
 				07D21ECB27D7EF560062D1D3 /* WebView.swift */,
+				D5A224F527D856780051104C /* WebsiteRedirectView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -540,6 +543,7 @@
 				073C366C27CF3BEB000CE6C2 /* ThresholdPinchGestureRecognizer.swift in Sources */,
 				073C366D27CF3BEB000CE6C2 /* ThresholdPanGestureRecognizer.swift in Sources */,
 				30D8C60224E818D400CB0858 /* SignUpView.swift in Sources */,
+				D5A224F627D856780051104C /* WebsiteRedirectView.swift in Sources */,
 				073C368027CFE79A000CE6C2 /* DetectedObject.swift in Sources */,
 				30127DCD24DE506300576F65 /* SceneDelegate.swift in Sources */,
 				30D8C5F124E77CFB00CB0858 /* UIConfiguration.swift in Sources */,

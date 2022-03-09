@@ -9,7 +9,7 @@ import { navigate } from 'gatsby';
 import Auth, { Group } from '../../components/Auth';
 import Socials from '../../components/Auth/Socials';
 import SEO from '../../components/SEO';
-import { signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
+import { signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup, setPersistence, browserSessionPersistence } from 'firebase/auth';
 import useFirebase from '../../utils/useFirebase';
 
 export default function Login() {
@@ -25,6 +25,7 @@ export default function Login() {
   const submit = async () => {
     try {
       if (!emailValidator(email) && !passwordValidator(password) && firebase) {
+        await setPersistence(firebase, browserSessionPersistence)
         await signInWithEmailAndPassword(firebase, email, password);
         navigate('/edit')
       } else {
@@ -39,6 +40,7 @@ export default function Login() {
   const googleLogin = async () => {
     try {
       if (firebase) {
+        await setPersistence(firebase, browserSessionPersistence)
         await signInWithPopup(firebase, provider);
         navigate('/edit')
       } else {
