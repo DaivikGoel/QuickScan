@@ -12,16 +12,12 @@ import User from '@paljs/ui/User';
 import { getPathReady } from './Sidebar';
 import { Location } from '@reach/router';
 import { breakpointDown } from '@paljs/ui/breakpoints';
+import { navigate } from 'gatsby';
 
 const HeaderStyle = styled.div`
   display: flex;
   width: 100%;
   justify-content: space-between;
-  ${breakpointDown('sm')`
-    .right{
-      display: none;
-    }
-  `}
   .right > div {
     height: auto;
     display: flex;
@@ -107,7 +103,13 @@ const Header: React.FC<HeaderProps> = (props) => {
   ];
 
   const submitHandle = (e) => {
-    console.log("Search submit")
+    if (window && window.location) {
+      if (!e) {
+        navigate(window.location.pathname, { replace: true })
+      } else {
+        navigate(`${window.location.pathname}?search=${e}`, { replace: true })
+      }
+    }
   }
   return (
     <LayoutHeader fixed>
@@ -123,28 +125,11 @@ const Header: React.FC<HeaderProps> = (props) => {
             },
             {
               content: (
-                <Link to="/" className="logo">
+                <Link to="/dashboard" className="logo">
                   QuickScan
                 </Link>
               ),
-            },
-            // {
-            //   content: (
-            //     <SelectStyled
-            //       isSearchable={false}
-            //       shape="SemiRound"
-            //       placeholder="Themes"
-            //       value={themeOptions.find((item) => item.value === props.theme.value)}
-            //       options={themeOptions}
-            //       onChange={({ value }: { value: DefaultTheme['name'] }) => props.theme.set(value)}
-            //     />
-            //   ),
-            // },
-            {
-              content: (
-                <Search submit={(v) => submitHandle(v)} type={'curtain'} placeholder="Search..." hint="Hit Enter to search" />
-              ),
-            },
+            }
           ]}
         />
         <Actions
@@ -153,22 +138,7 @@ const Header: React.FC<HeaderProps> = (props) => {
           actions={[
             {
               content: (
-                <Location>
-                  {({ location }) => (
-                    <ContextMenu
-                      style={{ cursor: 'pointer' }}
-                      placement="bottom"
-                      currentPath={getPathReady(location.pathname)}
-                      items={[
-                        { title: 'Profile', link: { to: '/' } },
-                        { title: 'Log out', link: { to: '/logout' } },
-                      ]}
-                      Link={Link}
-                    >
-                      <User image="url('/icons/icon-72x72.png')" name="TEST" title="Manger" size="Medium" />
-                    </ContextMenu>
-                  )}
-                </Location>
+                <Search submit={(v) => submitHandle(v)} type={'curtain'} placeholder="Search..." hint="Hit Enter to search" />
               ),
             },
           ]}

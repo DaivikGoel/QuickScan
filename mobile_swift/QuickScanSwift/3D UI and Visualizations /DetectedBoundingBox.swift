@@ -10,7 +10,7 @@ import ARKit
 
 class DetectedBoundingBox: SCNNode {
     
-    init(points: [float3], scale: CGFloat, color: UIColor = .appYellow) {
+    init(points: [float3], scale: CGFloat, color: UIColor = .appBlue) {
         super.init()
         
         var localMin = float3(Float.greatestFiniteMagnitude)

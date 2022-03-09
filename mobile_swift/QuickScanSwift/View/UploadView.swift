@@ -8,6 +8,8 @@ struct UploadView: View {
     @State var pushActive = false
     @ObservedObject private var viewModel: UploadViewModel
     @State private var showingPopover = false
+    @State var pushActiveBack = false
+//    @State var pushActiveWebButton = false
     
     init(state: AppState, url: String) {
         self.viewModel = UploadViewModel(authAPI: AuthService(), state: state, url: url)
@@ -18,17 +20,39 @@ struct UploadView: View {
     }
     var body: some View {
         VStack {
-            /*
-            NavigationLink(destination: HomeView(state: viewModel.state),
-                           isActive: self.$pushActive) {
+            
+            NavigationLink(destination: ARUIView(state: viewModel.state),
+                           isActive: self.$pushActiveBack) {
               EmptyView()
             }.hidden()
-             */
+            
+            NavigationLink(destination: WebView(),
+                           isActive: $viewModel.pushWebView) {
+              EmptyView()
+            }.hidden()
+             
             VStack(alignment: .center, spacing: 10) {
                 Text("Upload")
                     .modifier(TextModifier(font: UIConfiguration.titleFont,
                                            color: UIConfiguration.tintColor))
                     .padding(.horizontal, 60)
+                VStack(alignment: .center) {
+                    CustomTextField(placeHolderText: "Title",
+                                  text: $viewModel.title)
+                    CustomTextField(placeHolderText: "Description",
+                                  text: $viewModel.description)
+                }.padding(.horizontal, 25)
+                Button(action: {
+                    self.pushActiveBack = true
+                }) {
+                    Text("Take a new video")
+                        .modifier(TextModifier(font: UIConfiguration.buttonFont,
+                                               color: .black))
+                        .frame(width: 275, height: 55)
+                        .overlay(RoundedRectangle(cornerRadius: 25)
+                            .stroke(Color.gray, lineWidth: 1)
+                    )
+                }
                 VStack(alignment: .center) {
                     customButton(title: "Upload Video",
                                  backgroundColor: UIColor(hexString: "#913FE7"),
@@ -39,12 +63,17 @@ struct UploadView: View {
                     })
                     .padding(.horizontal, 60)
                 }
-                VStack(alignment: .center) {
-                    CustomTextField(placeHolderText: "Title",
-                                  text: $viewModel.title)
-                    CustomTextField(placeHolderText: "Description",
-                                  text: $viewModel.description)
-                }.padding(.horizontal, 25)
+                Button(action: {
+                    self.viewModel.pushWebView = true
+                }) {
+                    Text("View Uploads and 3d Objects")
+                        .modifier(TextModifier(font: UIConfiguration.buttonFont,
+                                               color: .black))
+                        .frame(width: 275, height: 55)
+                        .overlay(RoundedRectangle(cornerRadius: 25)
+                            .stroke(Color.gray, lineWidth: 1)
+                    )
+                }
             }
             Spacer()
         }.alert(item: self.$viewModel.statusViewModel) { status in
@@ -55,6 +84,19 @@ struct UploadView: View {
                         self.pushActive = true
                     }
                   }))
+        }.navigationBarBackButtonHidden(true).navigationBarHidden(true)
+    }
+    
+    private func customButton2(title: String,
+                              backgroundColor: UIColor,
+                              action: @escaping () -> Void) -> some View {
+        Button(action: action) {
+            Text(title)
+                .modifier(ButtonModifier(font: UIConfiguration.buttonFont,
+                                         color: backgroundColor,
+                                         textColor: .white,
+                                         width: 275,
+                                         height: 45))
         }
     }
     
@@ -82,6 +124,7 @@ struct UploadView: View {
                     self.showingPopover = false
                     viewModel.downloadAmount = 0
                     viewModel.uploadText = "Uploading..."
+                    viewModel.pushWebView = true
                 }) {
                     Text("Ok")
                         .modifier(ButtonModifier(font: UIConfiguration.buttonFont,

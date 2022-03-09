@@ -4,13 +4,13 @@ import { Checkbox } from '@paljs/ui/Checkbox';
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import { Link } from 'gatsby';
-import { createUserWithEmailAndPassword } from "firebase/auth";
-import { auth, db } from '../../utils/firebase'
 import Auth from '../../components/Auth';
 import SEO from '../../components/SEO';
 import { emailValidator } from '../../utils/emailValidator'
 import { passwordValidator } from '../../utils/passwordValidator'
 import { navigate } from 'gatsby';
+import { createUserWithEmailAndPassword } from 'firebase/auth';
+import useFirebase from '../../utils/useFirebase';
 
 const Input = styled(InputGroup)`
   margin-bottom: 2rem;
@@ -20,12 +20,13 @@ export default function Register() {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [confirmPassword, setConfirmPassword] = useState('')
+  const firebase = useFirebase();
 
   const submit = async () => {
     try {
-      if (emailValidator(email) && passwordValidator(password)) {
-        let userCredential = await createUserWithEmailAndPassword(auth, email, password);
-        navigate("/dashboard")
+      if (password === confirmPassword && !emailValidator(email) && !passwordValidator(password) && firebase) {
+        await createUserWithEmailAndPassword(firebase, email, password);
+        navigate('/dashboard')
       } else {
         return null
       }
@@ -47,14 +48,10 @@ export default function Register() {
         <Input fullWidth>
           <input value={confirmPassword} onChange={e => setConfirmPassword(e.target.value)} type="password" placeholder="Confirm Password" />
         </Input>
-        {/* <Checkbox onChange={onCheckbox}>
-          Agree to <Link to="/">Terms & Conditions</Link>
-        </Checkbox> */}
         <Button onClick={submit} status="Success" type="button" shape="SemiRound" fullWidth>
           Register
         </Button>
       </form>
-      {/* <Socials /> */}
       <p>
         Already have an account? <Link to="/auth/login">Log In</Link>
       </p>

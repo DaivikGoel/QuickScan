@@ -1,8 +1,6 @@
-import { getFirestore, collection, getDocs } from 'firebase/firestore/lite';
 import { initializeApp } from 'firebase/app';
-import { getAuth, GoogleAuthProvider } from "firebase/auth";
+import { getAuth } from "firebase/auth";
 
-// TODO: Replace the following with your app's Firebase project configuration
 const firebaseConfig = {
   apiKey: "AIzaSyAidQ4LnvFBCBU6Q1VbTPVivfJZ_E6APbQ",
   authDomain: "quickscan-2f853.firebaseapp.com",
@@ -13,23 +11,33 @@ const firebaseConfig = {
   measurementId: "G-V91KRP3H7K"
 };
 
-const app = initializeApp(firebaseConfig);
-const db = getFirestore(app);
+let instance = null;
 
-const auth = getAuth();
-const provider = new GoogleAuthProvider();
-provider.addScope('https://www.googleapis.com/auth/contacts.readonly');
-
-const isLoggedIn = () => {
-  return auth.currentUser ? true : false
-}
-
-const getUserId = () => {
-  if (isLoggedIn()) {
-    return auth.currentUser.uid
-  } else {
-    return false
+export default function getFirebase() {
+  if (typeof window !== 'undefined') {
+    if (instance) return instance;
+    const app = initializeApp(firebaseConfig);
+    instance = getAuth(app);
+    return instance;
   }
+
+  return null;
 }
 
-export {auth, db, isLoggedIn, getUserId, provider}
+// const auth = getAuth();
+// const provider = new GoogleAuthProvider();
+// provider.addScope('https://www.googleapis.com/auth/contacts.readonly');
+
+// const isLoggedIn = () => {
+//   return auth.currentUser ? true : false
+// }
+
+// const getUserId = () => {
+//   if (isLoggedIn()) {
+//     return auth.currentUser.uid
+//   } else {
+//     return false
+//   }
+// }
+
+// export {auth, db, isLoggedIn, getUserId, provider}

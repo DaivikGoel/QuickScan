@@ -13,14 +13,22 @@ exports.onCreatePage = ({ page, actions }) => {
     createPage(page);
   }
 };
-exports.onCreateWebpackConfig = ({ stage, actions, getConfig }) => {
-  actions.setWebpackConfig({
-    externals: getConfig().externals?.concat(function(context, request, callback) {
-      const regex = /^@?firebase(\/(.+))?/;
-      if (regex.test(request)) {
-        return callback(null, `umd ${request}`);
-      }
-      callback();
-    }),
-  });
+
+exports.onCreateWebpackConfig = ({
+  stage,
+  actions,
+  getConfig
+}) => {
+  if (stage === 'build-html' || stage === "develop-html") {
+    actions.setWebpackConfig({
+      externals: getConfig().externals.concat(function(context, request, callback) {
+        const regex = /^@?firebase(\/(.+))?/;
+        // exclude firebase products from being bundled, so they will be loaded using require() at runtime.
+        if (regex.test(request)) {
+          return callback(null, 'commonjs ' + request); // <- use commonjs!
+        }
+        callback();
+      })
+    });
+  }
 };

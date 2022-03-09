@@ -45,13 +45,13 @@ class BoundingBoxSide: SCNNode {
     // The tiles of this side.
     private(set) var tiles: [Tile] = []
     
-    private var color = UIColor.appYellow
+    private var color = UIColor.appBlue
     
     // Maximum width or height of a tile. If the size of the side exceeds this value, a new row or column is added.
     private var maxTileSize: CGFloat = 0.1
     
     // Maximum number of tiles per row/column
-    private var maxTileCount: Int = 4
+    private var maxTileCount: Int = 2
     
     private var lineThickness: CGFloat = 0.002
     
@@ -80,7 +80,7 @@ class BoundingBoxSide: SCNNode {
         return Float(capturedTiles.count) / Float(tiles.count)
     }
     
-    init(_ face: Position, boundingBoxExtent extent: float3, color: UIColor = .appYellow) {
+    init(_ face: Position, boundingBoxExtent extent: float3, color: UIColor = .appBlue) {
         self.color = color
         self.face = face
         super.init()
@@ -277,7 +277,7 @@ class BoundingBoxSide: SCNNode {
     
     private func cylinder(width: CGFloat, height: Float) -> SCNGeometry {
         let cylinderGeometry = SCNCylinder(radius: width / 2, height: CGFloat(height))
-        let gradientMaterial = SCNMaterial.material(withDiffuse: UIImage(named: "gradientyellow"))
+        let gradientMaterial = SCNMaterial.material(withDiffuse: UIImage(named: "gradientblue"))
         let clearMaterial = SCNMaterial.material(withDiffuse: UIColor.clear)
         cylinderGeometry.materials = [gradientMaterial, clearMaterial, clearMaterial]
         return cylinderGeometry

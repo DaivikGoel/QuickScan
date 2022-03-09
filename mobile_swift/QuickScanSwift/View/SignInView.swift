@@ -32,7 +32,7 @@ struct SignInView: View {
     }
     
     var body: some View {
-        VStack {
+        ScrollView {VStack {
             NavigationLink(destination: ARUIView(state: viewModel.state),
                            isActive: self.$pushActive) {
               EmptyView()
@@ -69,10 +69,11 @@ struct SignInView: View {
                     }else{
                         SignInButton()
                     }
-                }.navigationTitle("Login")
+                }.navigationTitle("")
             } else {
                 // Fallback on earlier versions
             }
+            
         }.alert(item: self.$viewModel.statusViewModel) { status in
             Alert(title: Text(status.title),
                   message: Text(status.message),
@@ -82,6 +83,7 @@ struct SignInView: View {
                     }
                   }))
         }
+    }
     }
     
     private func customButton(title: String,

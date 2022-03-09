@@ -56,7 +56,7 @@ class BoundingBox: SCNNode {
     private var sidesNode = SCNNode()
     private var sides: [BoundingBoxSide.Position: BoundingBoxSide] = [:]
     
-    private var color = UIColor.appYellow
+    private var color = UIColor.appBlue
     
     private var cameraRaysAndHitLocations: [(ray: Ray, hitLocation: float3)] = []
     private var frameCounter: Int = 0

@@ -37,6 +37,8 @@
 		073C367E27CFE444000CE6C2 /* TestRun.swift in Sources */ = {isa = PBXBuildFile; fileRef = 073C367D27CFE444000CE6C2 /* TestRun.swift */; };
 		073C368027CFE79A000CE6C2 /* DetectedObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 073C367F27CFE79A000CE6C2 /* DetectedObject.swift */; };
 		073C368227CFEA30000CE6C2 /* ARUIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 073C368127CFEA30000CE6C2 /* ARUIView.swift */; };
+		07D21ECA27D7EEF50062D1D3 /* WebUIController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07D21EC927D7EEF50062D1D3 /* WebUIController.swift */; };
+		07D21ECC27D7EF560062D1D3 /* WebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07D21ECB27D7EF560062D1D3 /* WebView.swift */; };
 		30127DCB24DE506300576F65 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30127DCA24DE506300576F65 /* AppDelegate.swift */; };
 		30127DCD24DE506300576F65 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30127DCC24DE506300576F65 /* SceneDelegate.swift */; };
 		30127DCF24DE506300576F65 /* SignInView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30127DCE24DE506300576F65 /* SignInView.swift */; };
@@ -98,6 +100,8 @@
 		073C367D27CFE444000CE6C2 /* TestRun.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestRun.swift; sourceTree = "<group>"; };
 		073C367F27CFE79A000CE6C2 /* DetectedObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetectedObject.swift; sourceTree = "<group>"; };
 		073C368127CFEA30000CE6C2 /* ARUIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARUIView.swift; sourceTree = "<group>"; usesTabs = 0; };
+		07D21EC927D7EEF50062D1D3 /* WebUIController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebUIController.swift; sourceTree = "<group>"; };
+		07D21ECB27D7EF560062D1D3 /* WebView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebView.swift; sourceTree = "<group>"; };
 		0B8AE8CB2A252EC929D1448D /* Pods-FirebaseStarterSwiftUIApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FirebaseStarterSwiftUIApp.release.xcconfig"; path = "Target Support Files/Pods-FirebaseStarterSwiftUIApp/Pods-FirebaseStarterSwiftUIApp.release.xcconfig"; sourceTree = "<group>"; };
 		29C8AC219E5BF9499AB43332 /* Pods-QuickScanSwift.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-QuickScanSwift.debug.xcconfig"; path = "Target Support Files/Pods-QuickScanSwift/Pods-QuickScanSwift.debug.xcconfig"; sourceTree = "<group>"; };
 		30127DC724DE506300576F65 /* QuickScanSwift.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = QuickScanSwift.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -289,6 +293,8 @@
 				D539E1BA27BEFBD0004E3C9E /* UploadView.swift */,
 				073C367427CF450C000CE6C2 /* ARView.swift */,
 				073C368127CFEA30000CE6C2 /* ARUIView.swift */,
+				07D21EC927D7EEF50062D1D3 /* WebUIController.swift */,
+				07D21ECB27D7EF560062D1D3 /* WebView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -504,6 +510,7 @@
 				073C366F27CF3BEB000CE6C2 /* ARCameraTrackingState.swift in Sources */,
 				30DDE0B924EABC9700208D32 /* User.swift in Sources */,
 				073C363C27CF3BC7000CE6C2 /* ScannedObject.swift in Sources */,
+				07D21ECA27D7EEF50062D1D3 /* WebUIController.swift in Sources */,
 				073C366527CF3BEB000CE6C2 /* ViewController+SessionInfo.swift in Sources */,
 				073C368227CFEA30000CE6C2 /* ARUIView.swift in Sources */,
 				30F0AF8C24E92D160084CE6E /* AuthAPI.swift in Sources */,
@@ -524,6 +531,7 @@
 				D539E1BB27BEFBD0004E3C9E /* UploadView.swift in Sources */,
 				073C367E27CFE444000CE6C2 /* TestRun.swift in Sources */,
 				073C365F27CF3BEB000CE6C2 /* MessageLabel.swift in Sources */,
+				07D21ECC27D7EF560062D1D3 /* WebView.swift in Sources */,
 				073C363E27CF3BC7000CE6C2 /* BoundingBox.swift in Sources */,
 				073C364527CF3BC7000CE6C2 /* DetectedBoundingBox.swift in Sources */,
 				073C366827CF3BEB000CE6C2 /* ViewController+Gestures.swift in Sources */,
@@ -688,7 +696,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.quickscan.swift.mobile.5;
+				PRODUCT_BUNDLE_IDENTIFIER = com.quickscan.swift.mobile.8;
 				PRODUCT_NAME = QuickScanSwift;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -709,7 +717,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.quickscan.swift.mobile.5;
+				PRODUCT_BUNDLE_IDENTIFIER = com.quickscan.swift.mobile.8;
 				PRODUCT_NAME = QuickScanSwift;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";

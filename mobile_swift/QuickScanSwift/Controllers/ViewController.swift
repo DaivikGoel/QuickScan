@@ -17,7 +17,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, UI
     
     static var instance: ViewController?
     
-//    @IBOutlet weak var sceneView: ARSCNView!
+//    @IBOutlet var sceneView: ARSCNView!
 //    @IBOutlet weak var blurView: UIVisualEffectView!
 //    @IBOutlet weak var nextButton: RoundedButton!
     var backButton: UIBarButtonItem!

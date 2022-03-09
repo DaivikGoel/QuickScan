@@ -1,34 +1,32 @@
 import { Button } from '@paljs/ui/Button';
 import { InputGroup } from '@paljs/ui/Input';
 import { Checkbox } from '@paljs/ui/Checkbox';
-import React, { useState, useRef } from 'react';
+import React, { useState } from 'react';
 import { Link } from 'gatsby';
 import { emailValidator } from '../../utils/emailValidator'
 import { passwordValidator } from '../../utils/passwordValidator'
-import { signInWithEmailAndPassword, signInWithRedirect } from "firebase/auth";
-import { auth, provider } from '../../utils/firebase'
 import { navigate } from 'gatsby';
 import Auth, { Group } from '../../components/Auth';
 import Socials from '../../components/Auth/Socials';
 import SEO from '../../components/SEO';
+import { signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
+import useFirebase from '../../utils/useFirebase';
 
 export default function Login() {
   const [checked, setChecked] = useState(false)
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [badLogin, setBadLogin] = useState(false)
+  const firebase = useFirebase();
+  const provider = new GoogleAuthProvider();
   const onCheckbox = (v) => {
     setChecked(v)
   };
   const submit = async () => {
     try {
-      if (!emailValidator(email) && !passwordValidator(password)) {
-        let userCredential = await signInWithEmailAndPassword(auth, email, password);
-        navigate("/dashboard", {
-          state: {
-            justSignedIn: true
-          }
-        })
+      if (!emailValidator(email) && !passwordValidator(password) && firebase) {
+        await signInWithEmailAndPassword(firebase, email, password);
+        navigate('/edit')
       } else {
         return null
       }
@@ -40,14 +38,14 @@ export default function Login() {
 
   const googleLogin = async () => {
     try {
-      const result = await signInWithRedirect(auth, provider);
-      navigate("/dashboard", {
-        state: {
-          justSignedIn: true
-        }
-      })
-    } catch {
-      console.log("Google Login failed.")
+      if (firebase) {
+        await signInWithPopup(firebase, provider);
+        navigate('/edit')
+      } else {
+        return null
+      }
+    } catch(e) {
+      console.log(e)
       return null
     }
   }

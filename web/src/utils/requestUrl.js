@@ -1,0 +1,1 @@
+export const requestUrl = 'https://quickscan.live'

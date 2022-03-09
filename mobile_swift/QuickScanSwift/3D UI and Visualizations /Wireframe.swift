@@ -10,7 +10,7 @@ import SceneKit
 
 class Wireframe: SCNNode {
     
-    private var color = UIColor.appYellow
+    private var color = UIColor.appBlue
     
     var isHighlighted: Bool = false {
         didSet {
