@@ -83,7 +83,7 @@ const Home = ({ location }) => {
           const response = await axios.get(collectionUrl)
           if (response) {
             const objects = response.data.data
-            const newCardProps = objects.map((obj: any) => ({
+            const newCardProps = objects.filter((obj: any) => typeof obj['thumbnail'] == 'string').map((obj: any) => ({
               title: obj["name"],
               description: obj["description"],
               thumbnail: `https://quickscanthumbnails.s3.ca-central-1.amazonaws.com/${obj["thumbnail"]}`,
@@ -110,7 +110,6 @@ const Home = ({ location }) => {
       filterByUrlParam()
     } else {
       setFilteredCardProps(filteredCardProps.filter(card => selectedTags.every(t => {
-        console.log(t, card.tags)
         return card.tags?.includes(t.value['tag_title'])
       })))
     }
@@ -225,7 +224,6 @@ const Home = ({ location }) => {
   const handleSort = (selectedSort) => {
     setSelectedSort(selectedSort)
   }
-  console.log(filteredCardProps)
 
   return (
     <>
