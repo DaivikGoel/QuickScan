@@ -82,7 +82,7 @@ export default function View({ location }) {
     setHasChanged(true)
   }
 
-  const submitChanges = async () => {
+  const submit = async () => {
     try {
       const result = await axios.put(`${requestUrl}/collection`, { 
         user_id: uid,
@@ -128,7 +128,7 @@ export default function View({ location }) {
             <textarea value={newDescription} onChange={handleDescriptionChange} placeholder="Description" />
           </InputGroup>
           <Spacer />
-          <Button appearance={'filled'} disabled={!hasChanged} onClick={submitChanges}>
+          <Button status='Success' disabled={!hasChanged} onClick={submit}>
             Submit
           </Button>
         </form>

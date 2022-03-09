@@ -18,7 +18,7 @@ export default function Edit({ location }) {
   const firebase = useFirebase();
   useEffect(() => {
     const params = new URLSearchParams(location?.search)
-    if (firebase && firebase.currentUser == null && !params.has('id')) {
+    if ((firebase && firebase.currentUser == null) && !params.has('id')) {
       navigate("/auth/login", { replace: true })
     }
   }, [location])

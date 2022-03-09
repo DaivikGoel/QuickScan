@@ -66,6 +66,8 @@ const Home = ({ location }) => {
       } else if (searchString) {
         setFilteredCardProps([...cardProps].filter(card => card.description?.toLowerCase().includes(searchString) || card.title?.toLowerCase().includes(searchString)))
       }
+    } else {
+      setFilteredCardProps(cardProps)
     }
   }
 
@@ -93,12 +95,7 @@ const Home = ({ location }) => {
               collection_id: obj["collection_id"]
             }))
             setCardProps(newCardProps)
-            const params = new URLSearchParams(location.search)
-            if (params.has('search')) {
-              filterByUrlParam()
-            } else {
-              setFilteredCardProps(newCardProps)
-            }
+            filterByUrlParam()
           }
         }
       } catch (error) {
@@ -112,7 +109,10 @@ const Home = ({ location }) => {
       setSelectedSort({ value: 'newest', label: 'Newest' })
       filterByUrlParam()
     } else {
-      setFilteredCardProps(filteredCardProps.filter(card => selectedTags.every(t => card.tags?.includes(t.value))))
+      setFilteredCardProps(filteredCardProps.filter(card => selectedTags.every(t => {
+        console.log(t, card.tags)
+        return card.tags?.includes(t.value['tag_title'])
+      })))
     }
   }, [selectedTags])
 
@@ -225,6 +225,7 @@ const Home = ({ location }) => {
   const handleSort = (selectedSort) => {
     setSelectedSort(selectedSort)
   }
+  console.log(filteredCardProps)
 
   return (
     <>
