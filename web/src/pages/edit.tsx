@@ -11,27 +11,27 @@ import { requestUrl } from '../utils/requestUrl';
 import useFirebase from '../utils/useFirebase';
 import styled from 'styled-components';
 
-export default function Edit(props) {
+export default function Edit({ location }) {
   const collectionUrl = `${requestUrl}/collection`
   const [cardProps, setCardProps] = useState<CardPropsType[]>([]);
   const [filteredCardProps, setFilteredCardProps] = useState<CardPropsType[]>([]);
   const firebase = useFirebase();
   useEffect(() => {
-    if (firebase && !firebase.currentUser) {
-      navigate("/auth/login")
+    const params = new URLSearchParams(location?.search)
+    if (firebase && firebase.currentUser == null && !params.has('id')) {
+      navigate("/auth/login", { replace: true })
     }
-  }, [firebase, props])
+  }, [location])
 
   useEffect(() => {
     (async () => {
       try {
-        if (!firebase) { return null }
-        if (!firebase.currentUser) { return null }
         const response = await axios.get(collectionUrl)
         if (response) {
-          const userId = firebase.currentUser.uid
+          const params = new URLSearchParams(location?.search)
+          const userId = params.get('id') || firebase?.currentUser?.uid
           const objects = response.data.data
-          const cardProps = objects.filter((obj: any) => userId !== obj["user_id"]).map((obj: any) => ({
+          const newCardProps = objects.filter((obj: any) => userId === obj["user_id"]).map((obj: any) => ({
             title: obj["name"],
             description: obj["description"],
             thumbnail: `https://quickscanthumbnails.s3.ca-central-1.amazonaws.com/${obj["thumbnail"]}`,
@@ -41,24 +41,26 @@ export default function Edit(props) {
             uid: obj["user_id"],
             collection_id: obj["collection_id"]
           }))
-          setCardProps(cardProps)
+          if (newCardProps) {
+
+            setCardProps(newCardProps)
+            if (params && params.has('search')) {
+              const searchString = params.get('search')?.toLowerCase()
+              if (!searchString) {
+                setFilteredCardProps(newCardProps)
+              } else if (searchString) {
+                setFilteredCardProps([...newCardProps].filter(card => card.description?.toLowerCase().includes(searchString) || card.title?.toLowerCase().includes(searchString)))
+              }
+            } else {
+              setFilteredCardProps(newCardProps)
+            }
+          }
         }
       } catch (error) {
         console.log(error)
       }
-      if (props && props.location) {
-        const params = new URLSearchParams(props.location.search)
-        if (params) {
-          const searchString = params.get('search')?.toLowerCase()
-          if (!searchString) {
-            setFilteredCardProps(cardProps)
-          } else if (searchString) {
-            setFilteredCardProps([...cardProps].filter(card => card.description?.toLowerCase().includes(searchString) || card.title?.toLowerCase().includes(searchString)))
-          }
-        }
-      }
     })();
-  }, [props.location])
+  }, [location, firebase])
 
   const Image = styled.img`
     align-self: 'center';
@@ -92,7 +94,7 @@ export default function Edit(props) {
                   <Image src={cardProp.thumbnail} />
                 </CardBody>
                 <CardFooter>
-                    {cardProp.title}
+                  {cardProp.title}
                 </CardFooter>
               </Card>
             </div>

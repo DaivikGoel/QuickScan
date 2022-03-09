@@ -16,8 +16,6 @@ export default function View({ location }) {
     region: 'ca-central-1'
   });
 
-  const [newTitle, setTitle] = useState<string>("");
-  const [newDescription, setDescription] = useState<string>("");
   const [hasChanged, setHasChanged] = useState(false);
   let isEditable = false
   let cardProp = {title : '',
@@ -42,10 +40,8 @@ export default function View({ location }) {
     collection_id = ''
   } = cardProp;
 
-  useEffect(() => {
-    setTitle(title);
-    setDescription(description);
-  }, [title, description])
+  const [newTitle, setTitle] = useState(title || '');
+  const [newDescription, setDescription] = useState(description || '');
 
   const handleDownload = (usdzFile: string) => {
     const s3 = new AWS.S3();
@@ -88,13 +84,13 @@ export default function View({ location }) {
 
   const submitChanges = async () => {
     try {
-      await axios.post(`${requestUrl}/collection`, { 
+      const result = await axios.put(`${requestUrl}/collection`, { 
         user_id: uid,
         collection_id,
         description,
         name: title,
       });
-      navigate(-1);
+      // navigate(-1);
     } catch (e) {
       console.log(e)
     }
@@ -103,13 +99,13 @@ export default function View({ location }) {
   const deleteObject = async () => {
     try {
       await axios.delete(`${requestUrl}/collection`, { data: { collection_id } })
-      navigate(-1);
+      // navigate(-1);
     } catch (e) {
       console.log(e)
     }
   }
 
-  const Input = styled(InputGroup)`
+  const Spacer = styled.div`
     margin-bottom: 10px;
   `;
 
@@ -123,15 +119,19 @@ export default function View({ location }) {
   if (isEditable) {
     body = (
       <>
-        <Input fullWidth size="Large">
-          <input value={newTitle} onChange={handleTitleChange} type="text" placeholder="Title" />
-        </Input>
-        <Input fullWidth size="Large">
-          <textarea value={newDescription} onChange={handleDescriptionChange} placeholder="Description" />
-        </Input>
-        <Button appearance={'filled'} disabled={hasChanged} onClick={submitChanges}>
-          Submit
-        </Button>
+        <form>
+          <InputGroup fullWidth size="Large">
+            <input value={newTitle} onChange={handleTitleChange} type="text" placeholder="Title" />
+          </InputGroup>
+          <Spacer />
+          <InputGroup fullWidth size="Large">
+            <textarea value={newDescription} onChange={handleDescriptionChange} placeholder="Description" />
+          </InputGroup>
+          <Spacer />
+          <Button appearance={'filled'} disabled={!hasChanged} onClick={submitChanges}>
+            Submit
+          </Button>
+        </form>
         <Button appearance={'outline'} status={'Danger'} onClick={deleteObject}>
           Delete
         </Button>
