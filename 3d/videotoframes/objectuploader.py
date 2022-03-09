@@ -17,7 +17,7 @@ def uploader(message):
     print("UUID", uuid)
 
     print("RUNNING COMMAND FOR PIPELINE")
-    os.system('./HelloPhotogrammetry {} ./output_models/result.usdz -d medium '.format(frames_directory))
+    os.system('./HelloPhotogrammetry {} ./output_models/result.usdz -d full '.format(frames_directory))
 
  
     os.chdir(output_directory)
