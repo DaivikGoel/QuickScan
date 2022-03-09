@@ -37,7 +37,7 @@ export default function Edit({ location }) {
             thumbnail: `https://quickscanthumbnails.s3.ca-central-1.amazonaws.com/${obj["thumbnail"]}`,
             three_dimen_object_blob_storage: `https://quick-scan-3d-objects.s3.ca-central-1.amazonaws.com/${obj["three_dimen_object_blob_storage"]}`,
             objectname: obj["three_dimen_object_blob_storage"],
-            tags: obj["tags"],
+            tags: JSON.parse(obj["tags"])?.data?.replace('[', '').replace(']', '').split(',') || [],
             uid: obj["user_id"],
             collection_id: obj["collection_id"]
           }))
