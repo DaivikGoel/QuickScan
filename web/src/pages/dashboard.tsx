@@ -11,44 +11,6 @@ import { CardPropsType, TagType } from '../utils/types';
 import { requestUrl } from '../utils/requestUrl';
 
 const Home = ({ location }) => {
-  // const defaultCardProps: CardPropsType[] = [
-  //   {
-  //     title: 'Card 1',
-  //     description: 'Description',
-  //     thumbnail: 'https://upload.wikimedia.org/wikipedia/commons/a/a7/React-icon.svg',
-  //     three_dimen_object_blob_storage: 'https://upload.wikimedia.org/wikipedia/commons/a/a7/React-icon.svg',
-  //     date: new Date("2022-03-07T21:16:44.000Z")
-  //   },
-  //   {
-  //     title: 'Card 2',
-  //     description: 'Description',
-  //     thumbnail: 'https://upload.wikimedia.org/wikipedia/commons/a/a7/React-icon.svg',
-  //     three_dimen_object_blob_storage: 'https://upload.wikimedia.org/wikipedia/commons/a/a7/React-icon.svg',
-  //     date: new Date("2022-03-06T21:16:44.000Z")
-  //   },
-  //   {
-  //     title: 'Card 3',
-  //     description: 'Description',
-  //     thumbnail: 'https://upload.wikimedia.org/wikipedia/commons/a/a7/React-icon.svg',
-  //     three_dimen_object_blob_storage: 'https://upload.wikimedia.org/wikipedia/commons/a/a7/React-icon.svg',
-  //     date: new Date("2022-03-05T21:16:44.000Z")
-  //   },
-  //   {
-  //     title: 'Card 4',
-  //     description: 'Description',
-  //     thumbnail: 'https://upload.wikimedia.org/wikipedia/commons/a/a7/React-icon.svg',
-  //     three_dimen_object_blob_storage: 'https://upload.wikimedia.org/wikipedia/commons/a/a7/React-icon.svg',
-  //     date: new Date("2022-03-04T21:16:44.000Z")
-  //   },
-  //   {
-  //     title: 'Card 5',
-  //     description: 'Description',
-  //     thumbnail: 'https://upload.wikimedia.org/wikipedia/commons/a/a7/React-icon.svg',
-  //     three_dimen_object_blob_storage: 'https://upload.wikimedia.org/wikipedia/commons/a/a7/React-icon.svg',
-  //     date: new Date("2022-03-03T21:16:44.000Z")
-  //   },
-  // ];
-
   const collectionUrl = `${requestUrl}/collection`
   const tagUrl = `${requestUrl}/tags`
   const [cardProps, setCardProps] = useState<CardPropsType[]>([]);
@@ -57,15 +19,17 @@ const Home = ({ location }) => {
   const [selectedTags, setSelectedTags] = useState<TagType[]>([]);
   const [selectedSort, setSelectedSort] = useState<TagType>();
 
-  const filterByUrlParam = () => {
+  const filterByUrlParam = (newCardProps) => {
     const params = new URLSearchParams(location?.search)
     if (params.has('search')) {
       const searchString = params.get('search')?.toLowerCase()
       if (!searchString) {
-        setFilteredCardProps(cardProps)
+        setFilteredCardProps(newCardProps)
       } else if (searchString) {
-        setFilteredCardProps([...cardProps].filter(card => card.description?.toLowerCase().includes(searchString) || card.title?.toLowerCase().includes(searchString)))
+        setFilteredCardProps([...newCardProps].filter(card => card.description?.toLowerCase().includes(searchString) || card.title?.toLowerCase().includes(searchString)))
       }
+    } else {
+      setFilteredCardProps(newCardProps)
     }
   }
 
@@ -81,7 +45,7 @@ const Home = ({ location }) => {
           const response = await axios.get(collectionUrl)
           if (response) {
             const objects = response.data.data
-            const newCardProps = objects.map((obj: any) => ({
+            const newCardProps = objects.filter((obj: any) => typeof obj['thumbnail'] == 'string').map((obj: any) => ({
               title: obj["name"],
               description: obj["description"],
               thumbnail: `https://quickscanthumbnails.s3.ca-central-1.amazonaws.com/${obj["thumbnail"]}`,
@@ -93,12 +57,7 @@ const Home = ({ location }) => {
               collection_id: obj["collection_id"]
             }))
             setCardProps(newCardProps)
-            const params = new URLSearchParams(location.search)
-            if (params.has('search')) {
-              filterByUrlParam()
-            } else {
-              setFilteredCardProps(newCardProps)
-            }
+            filterByUrlParam(newCardProps)
           }
         }
       } catch (error) {
@@ -110,9 +69,11 @@ const Home = ({ location }) => {
   useEffect(() => {
     if (selectedTags.length == 0) {
       setSelectedSort({ value: 'newest', label: 'Newest' })
-      filterByUrlParam()
+      filterByUrlParam(cardProps)
     } else {
-      setFilteredCardProps(filteredCardProps.filter(card => selectedTags.every(t => card.tags?.includes(t.value))))
+      setFilteredCardProps(filteredCardProps.filter(card => selectedTags.every(t => {
+        return card.tags?.includes(t.value['tag_title'])
+      })))
     }
   }, [selectedTags])
 
@@ -158,7 +119,7 @@ const Home = ({ location }) => {
   useEffect(() => {
     setSelectedSort({ value: 'newest', label: 'Newest' })
     setSelectedTags([])
-    filterByUrlParam()
+    filterByUrlParam(cardProps)
   }, [location])
 
   const FilterStyle = styled.div`

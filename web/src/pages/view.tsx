@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Card, CardBody } from '@paljs/ui/Card';
 import { Button } from '@paljs/ui/Button';
 import { InputGroup } from '@paljs/ui/Input';
+import { List, ListItem } from '@paljs/ui/List';
 import AWS from 'aws-sdk';
 import SEO from '../components/SEO';
 import styled from 'styled-components';
@@ -24,7 +25,8 @@ export default function View({ location }) {
     three_dimen_object_blob_storage : '',
     objectname : '',
     uid: '',
-    collection_id: ''
+    collection_id: '',
+    tags: []
   }
   if (location && location.state) {
     isEditable = location.state.isEditable
@@ -37,7 +39,8 @@ export default function View({ location }) {
     three_dimen_object_blob_storage = '',
     objectname = '',
     uid = '',
-    collection_id = ''
+    collection_id = '',
+    tags = []
   } = cardProp;
 
   const [newTitle, setTitle] = useState(title || '');
@@ -82,24 +85,26 @@ export default function View({ location }) {
     setHasChanged(true)
   }
 
-  const submitChanges = async () => {
+  const submit = async (e) => {
     try {
-      const result = await axios.put(`${requestUrl}/collection`, { 
+      e.preventDefault()
+      await axios.post(`${requestUrl}/updatecollection`, { 
         user_id: uid,
         collection_id,
-        description,
-        name: title,
+        description: newDescription,
+        name: newTitle,
       });
-      // navigate(-1);
+      navigate(-1);
     } catch (e) {
       console.log(e)
     }
   }
 
-  const deleteObject = async () => {
+  const deleteObject = async (e) => {
     try {
+      e.preventDefault()
       await axios.delete(`${requestUrl}/collection`, { data: { collection_id } })
-      // navigate(-1);
+      navigate(-1);
     } catch (e) {
       console.log(e)
     }
@@ -128,13 +133,13 @@ export default function View({ location }) {
             <textarea value={newDescription} onChange={handleDescriptionChange} placeholder="Description" />
           </InputGroup>
           <Spacer />
-          <Button appearance={'filled'} disabled={!hasChanged} onClick={submitChanges}>
+          <Button status='Success' disabled={!hasChanged} onClick={submit}>
             Submit
           </Button>
+          <Button appearance={'outline'} status={'Danger'} onClick={deleteObject}>
+            Delete
+          </Button>
         </form>
-        <Button appearance={'outline'} status={'Danger'} onClick={deleteObject}>
-          Delete
-        </Button>
       </>
     )
   } else {
@@ -157,6 +162,16 @@ export default function View({ location }) {
               <img src={thumbnail} />
             </Image>
             {body}
+            <Spacer />
+            <p>Tags</p>
+            <Spacer />
+            {tags &&
+              <List>
+                {tags.map((tag, index) => (
+                  <ListItem key={index}>{tag}</ListItem>
+                ))}
+              </List>
+            }
           </CardBody>
         </Card>
     </>
