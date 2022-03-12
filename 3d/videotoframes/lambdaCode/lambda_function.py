@@ -6,9 +6,9 @@ import boto3
 from PIL import Image
 import io
 import os
-import tempfile
 import logging
 import json
+import random
 
 
 logger = logging.getLogger()
@@ -18,6 +18,8 @@ bucket_name = 'quickscanvideoswift'
 sqs = boto3.client('sqs')
 queue_url = 'https://sqs.ca-central-1.amazonaws.com/861570318875/3DObject'
 s3_client = boto3.client('s3', region_name='ca-central-1')
+output_directory = '/tmp'
+
 
 def push_to_sqs(event, number_of_images, linkarray):
     # Send message to SQS queue
@@ -66,15 +68,32 @@ def upload_frames_to_s3(uuid, output_directory):
     return linkarray
         
 
+def remove_blurry_frames(vidcap, success, count):
+    while success:
+        success,image = vidcap.read()
+    
+        if image is None:
+            continue
+    
+        rand = random.uniform(0, 1)
+        pictureblurred, fm = isblurry(image)
+        
+        if not pictureblurred or rand < 0.25:
+            cv2.imwrite(output_directory + '/'+ "frame%d.jpg" % count, image) 
+            count += 1
+    
+        else:
+            continue
+        
+    return count
+
 
 def lambda_handler(event, context):
     logger.info('lambda fn invoked')
-    output_directory = '/tmp'
     event = json.loads(event["body"])
     
     # comment this out for not testing 
     # push_to_sqs(event, 30)
-
     # logger.info('This is a short test run to enqueue request to SQS')
     # return {
     #     'message': "this is a short test run: " + event["body"]["uuid"]
@@ -105,27 +124,8 @@ def lambda_handler(event, context):
     print(vidcap)
     print(success)
     
-    while success:
-        success,image = vidcap.read()
+    count = remove_blurry_frames(vidcap, success, count)
     
-        if image is None:
-            continue
-    
-        pictureblurred, fm = isblurry(image)
-        if not pictureblurred:
-            cv2.imwrite(output_directory + '/'+ "frame%d.jpg" % count, image) 
-            # img = Image.fromarray(image)
-            # imgByteArr = io.BytesIO()
-            # img.save(imgByteArr, format='JPEG')
-            # imgByteArr = imgByteArr.getvalue()
-            # frame_name = "frame" + str(count) + ".jpg"
-            # with tempfile.NamedTemporaryFile(mode="wb", delete="True") as jpg:
-            #     jpg.write(imgByteArr)
-            #     s3_client.upload_file(jpg.name,'quickscanimages',frame_name)
-            count += 1
-
-        else:
-            continue
             
     print("NUMBER OF FRAMES in dir /tmp after blur detection ", len(os.listdir(output_directory)))
     logger.info(f'NUMBER OF FRAMES in dir /tmp after blur detection {len(os.listdir(output_directory))}')
@@ -133,7 +133,7 @@ def lambda_handler(event, context):
     logger.info(f'count of non blurry images: {count}')
     
     removeSimilarFramesRMS()
-    removeSimilarFramesSIFT()
+    # removeSimilarFramesSIFT()
     
     logger.info(f'number OF frames left after RMS and SIFT {len(os.listdir(output_directory))}')
     logger.info('completed video to frame processing, generating model now...')
@@ -143,8 +143,7 @@ def lambda_handler(event, context):
     linkarray = upload_frames_to_s3(event["uuid"], output_directory)
     print("LINK ARRAY", linkarray)
     push_to_sqs(event, len(linkarray), linkarray)
-    # os.system('./HelloPhotogrammetry {} ./output_models/result.usdz -d medium '.format(output_directory))
-    
+
     print('Completed Model')
     
     return { 
