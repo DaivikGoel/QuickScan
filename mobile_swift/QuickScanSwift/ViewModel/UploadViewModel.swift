@@ -155,7 +155,7 @@ class UploadViewModel: ObservableObject {
         let expression  = AWSS3TransferUtilityUploadExpression()
         var uploaded = false
         let uuid = Url.lastPathComponent
-
+        
         expression.progressBlock = {
             (task: AWSS3TransferUtilityTask, progress: Progress) -> Void in
             print(progress.fractionCompleted)
@@ -171,7 +171,7 @@ class UploadViewModel: ObservableObject {
             }
             if progress.isFinished{
                 self.uploadText = "Uploaded Succesfully!"//3
-//                self.postRequest(uuid: uuid)
+                //                self.postRequest(uuid: uuid)
                 if (!uploaded) {
                     print("Upload Finished...")
                     self.postRequest(uuid: uuid)

@@ -7,6 +7,7 @@ import GoogleSignIn
 
 struct SignInView: View {
     @State var pushActive = false
+    @State var change = false
     @ObservedObject private var viewModel: SignInViewModel
     @ObservedObject var vm: UserAuthModel
     
@@ -31,15 +32,27 @@ struct SignInView: View {
         }
     }
     
+    fileprivate func LoggedinAlready() -> Button<Text> {
+        return Button(action: {
+            self.change = true
+        }) {
+            Text("Continue Session")
+        }
+    }
+    
     var body: some View {
         ScrollView {VStack {
             NavigationLink(destination: ARUIView(state: viewModel.state),
-                           isActive: self.$pushActive) {
-              EmptyView()
+                           isActive: self.$change) {
+                EmptyView()
             }.hidden()
-            .onReceive(self.vm.$isLoggedInFirebase) { newVal in // << here !!
-                                self.pushActive = newVal
-                            }
+            NavigationLink(destination: ARUIView(state: viewModel.state),
+                           isActive: self.$pushActive) {
+                EmptyView()
+            }.hidden()
+                .onReceive(self.vm.$isLoggedInFirebase) { newVal in // << here !!
+                    self.pushActive = newVal
+                }
             VStack(alignment: .center, spacing: 35) {
                 Text("Log in")
                     .modifier(TextModifier(font: UIConfiguration.titleFont,
@@ -49,10 +62,10 @@ struct SignInView: View {
                 VStack(alignment: .center, spacing: 30) {
                     VStack(alignment: .center, spacing: 25) {
                         CustomTextField(placeHolderText: "E-mail",
-                                      text: $viewModel.email)
+                                        text: $viewModel.email)
                         CustomTextField(placeHolderText: "Password",
-                                      text: $viewModel.password,
-                                      isPasswordType: true)
+                                        text: $viewModel.password,
+                                        isPasswordType: true)
                     }.padding(.horizontal, 25).padding(.vertical, 50)
                     VStack(alignment: .center, spacing: 40) {
                         customButton(title: "Login",
@@ -65,7 +78,10 @@ struct SignInView: View {
             if #available(iOS 14.0, *) {
                 VStack{
                     if(vm.isLoggedIn){
-                        SignOutButton()
+                        VStack(spacing: 10){
+                            SignOutButton()
+                            LoggedinAlready()
+                        }
                     }else{
                         SignInButton()
                     }
@@ -78,12 +94,12 @@ struct SignInView: View {
             Alert(title: Text(status.title),
                   message: Text(status.message),
                   dismissButton: .default(Text("OK"), action: {
-                    if status.title == "Successful" {
-                        self.pushActive = true
-                    }
-                  }))
+                if status.title == "Successful" {
+                    self.pushActive = true
+                }
+            }))
         }
-    }
+        }
     }
     
     private func customButton(title: String,

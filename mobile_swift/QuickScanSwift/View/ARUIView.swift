@@ -61,22 +61,22 @@ struct ARUIView: View {
                                 .padding()
                                 .frame(width: 200, height: 200)
                                 .opacity(1.5)
-                                                .buttonStyle(PlainButtonStyle())
+                                .buttonStyle(PlainButtonStyle())
                         }
                         
                         //HStack{
                         //Spacer()
                         //        .frame(height: 17)
-//                        Button(action: {
-//                            toggleFlashLight()
-//                        }, label: {
-//                            Text("flashlight")
-//                                .frame(minWidth: 200, maxWidth: 200, minHeight: 200, maxHeight: 200, alignment: .center)
-//                                .foregroundColor(Color.white)
-//                                .background(Color.accentColor)
-//                                .contentShape(Rectangle())
-//                        })
-                       // }
+                        //                        Button(action: {
+                        //                            toggleFlashLight()
+                        //                        }, label: {
+                        //                            Text("flashlight")
+                        //                                .frame(minWidth: 200, maxWidth: 200, minHeight: 200, maxHeight: 200, alignment: .center)
+                        //                                .foregroundColor(Color.white)
+                        //                                .background(Color.accentColor)
+                        //                                .contentShape(Rectangle())
+                        //                        })
+                        // }
                         Spacer()
                         Spacer()
                         VStack {
@@ -103,33 +103,38 @@ struct ARUIView: View {
                                 .opacity(self.buttonShow ? 1 : 0)
                         }
                         ZStack {
-                                Circle()
-                                    .frame(width: 60, height: 60)
-                                    .opacity(0)
-                                    .overlay(
-                                        RoundedRectangle(cornerRadius: .infinity)
-                                            .stroke(Color.white, lineWidth: 5)
-                                    )
-                                Button(action: {
-                                    if (isRecording) {
-                                        isRecording = false
-                                        ar.stopRecording()
-                                        print(ar.getUrl())
-                                        self.pushActive = true
-                                    } else {
-                                        isRecording = ar.startRecording()
-                                    }
-                                }) {
-                                    Text("")
-                                        .padding()
-                                        .frame(width: 40, height: 40)
-                                        .background(RoundedRectangle(cornerRadius: .infinity)
-                                                        .foregroundColor(isRecording ? Color.red : Color.white))
+                            Circle()
+                                .frame(width: 60, height: 60)
+                                .opacity(0)
+                                .overlay(
+                                    RoundedRectangle(cornerRadius: .infinity)
+                                        .stroke(Color.white, lineWidth: 5)
+                                )
+                            Button(action: {
+                                if (isRecording) {
+                                    isRecording = false
+                                    ar.stopRecording()
+                                    print(ar.getUrl())
+                                    self.pushActive = true
+                                } else {
+                                    isRecording = ar.startRecording()
                                 }
+                            }) {
+                                Text("")
+                                    .padding()
+                                    .frame(width: 40, height: 40)
+                                    .background(RoundedRectangle(cornerRadius: .infinity)
+                                                    .foregroundColor(isRecording ? Color.red : Color.white))
                             }
+                        }
                     }
                 }
             }
-        }.navigationViewStyle(StackNavigationViewStyle()).navigationBarBackButtonHidden(true).navigationBarHidden(true)
+        }.navigationViewStyle(StackNavigationViewStyle()).navigationBarBackButtonHidden(true).navigationBarHidden(true).onAppear {
+            UIDevice.current.setValue(UIInterfaceOrientation.portrait.rawValue, forKey: "orientation") // Forcing the rotation to portrait
+            AppDelegate.orientationLock = .portrait // And making sure it stays that way
+        }.onDisappear {
+            AppDelegate.orientationLock = .all // Unlocking the rotation when leaving the view
+        }
     }
 }

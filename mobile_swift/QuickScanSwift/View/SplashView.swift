@@ -8,7 +8,7 @@ struct SplashView: View {
         VStack {
             if self.isActive {
                 WelcomeView(state: state)
-//                WelcomeView(state: self.state)
+                //                WelcomeView(state: self.state)
             } else {
                 ZStack {
                     Color(UIConfiguration.tintColor)

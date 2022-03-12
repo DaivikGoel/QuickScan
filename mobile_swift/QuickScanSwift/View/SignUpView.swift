@@ -13,11 +13,11 @@ struct SignUpView: View {
         ScrollView{VStack {
             NavigationLink(destination: WelcomeView(state: viewModel.state),
                            isActive: self.$pushActive) {
-              EmptyView()
+                EmptyView()
             }.hidden()
             NavigationLink(destination: WelcomeView(state: viewModel.state),
                            isActive: self.$pushActiveWelcome) {
-              EmptyView()
+                EmptyView()
             }.hidden()
             VStack(alignment: .center, spacing: 30) {
                 Text("Sign Up")
@@ -27,14 +27,14 @@ struct SignUpView: View {
                 VStack(alignment: .center, spacing: 30) {
                     VStack(alignment: .center, spacing: 25) {
                         CustomTextField(placeHolderText: "Full Name",
-                                      text: $viewModel.fullName)
+                                        text: $viewModel.fullName)
                         CustomTextField(placeHolderText: "Phone Number",
-                                      text: $viewModel.phoneNumber)
+                                        text: $viewModel.phoneNumber)
                         CustomTextField(placeHolderText: "E-mail Address",
-                                      text: $viewModel.email)
+                                        text: $viewModel.email)
                         CustomTextField(placeHolderText: "Password",
-                                      text: $viewModel.password,
-                                      isPasswordType: true)
+                                        text: $viewModel.password,
+                                        isPasswordType: true)
                     }.padding(.horizontal, 25)
                     
                     VStack(alignment: .center, spacing: 40) {
@@ -50,7 +50,7 @@ struct SignUpView: View {
                 }
             }}
             Spacer()
-        
+            
             
         }.alert(item: self.$viewModel.statusViewModel) { status in
             Alert(title: Text(status.title),

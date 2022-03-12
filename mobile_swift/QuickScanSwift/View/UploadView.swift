@@ -64,88 +64,88 @@ struct UploadView: View {
                         .padding(.horizontal, 60)
                 }
                 /*
-                Button(action: {
-                    self.viewModel.pushWebView = true
-                }) {
-                    Text("View Uploads and 3d Objects")
-                        .modifier(TextModifier(font: UIConfiguration.buttonFont,
-                                               color: .black))
-                        .frame(width: 275, height: 55)
-                        .overlay(RoundedRectangle(cornerRadius: 25)
-                                    .stroke(Color.gray, lineWidth: 1)
-                        )
-                }
+                 Button(action: {
+                 self.viewModel.pushWebView = true
+                 }) {
+                 Text("View Uploads and 3d Objects")
+                 .modifier(TextModifier(font: UIConfiguration.buttonFont,
+                 color: .black))
+                 .frame(width: 275, height: 55)
+                 .overlay(RoundedRectangle(cornerRadius: 25)
+                 .stroke(Color.gray, lineWidth: 1)
+                 )
+                 }
                  */
                 if #available(iOS 14.0, *) {
                     Link("View Uploads and 3d Objects", destination: URL(string: viewModel.redirectUrl)!)                        .modifier(TextModifier(font: UIConfiguration.buttonFont,
-                                                                                                                                                           color: .black))
+                                                                                                                                                        color: .black))
                         .frame(width: 275, height: 55)
                         .overlay(RoundedRectangle(cornerRadius: 25)
                                     .stroke(Color.gray, lineWidth: 1))
-                                 } else {
-                            // Fallback on earlier versions
-                        }
-                                 }
-                                 Spacer()
-                                 }.alert(item: self.$viewModel.statusViewModel) { status in
-                            Alert(title: Text(status.title),
-                                  message: Text(status.message),
-                                  dismissButton: .default(Text("OK"), action: {
-                                if status.title == "Successful" {
-                                    self.pushActive = true
-                                }
-                            }))
-                        }.navigationBarBackButtonHidden(true).navigationBarHidden(true)
-                                 }
-                                 
-                                 private func customButton2(title: String,
-                                                            backgroundColor: UIColor,
-                                                            action: @escaping () -> Void) -> some View {
-                            Button(action: action) {
-                                Text(title)
-                                    .modifier(ButtonModifier(font: UIConfiguration.buttonFont,
-                                                             color: backgroundColor,
-                                                             textColor: .white,
-                                                             width: 275,
-                                                             height: 45))
-                            }
-                        }
-                                 
-                                 private func customButton(title: String,
-                                                           backgroundColor: UIColor,
-                                                           action: @escaping () -> Void) -> some View {
-                            Button(action: action) {
-                                Text(title)
-                                    .modifier(ButtonModifier(font: UIConfiguration.buttonFont,
-                                                             color: backgroundColor,
-                                                             textColor: .white,
-                                                             width: 275,
-                                                             height: 55))
-                            }.popover(isPresented: $showingPopover) {
-                                Text("Progress")
-                                    .font(.headline)
-                                    .padding()
-                                if #available(iOS 14.0, *) {
-                                    ProgressView(viewModel.uploadText, value: viewModel.downloadAmount, total: 100).scaleEffect(x: 0.8, y: 1, anchor: .center)
-                                } else {
-                                    // Fallback on earlier versions
-                                }
-                                if (viewModel.downloadAmount == 100) {
-                                    Button(action: {
-                                        self.showingPopover = false
-                                        viewModel.downloadAmount = 0
-                                        viewModel.uploadText = "Uploading..."
-                                        // leave this commented out so it doesnt go to dead page
-                                        //viewModel.pushWebView = true
-                                    }) {
-                                        Text("Ok")
-                                            .modifier(ButtonModifier(font: UIConfiguration.buttonFont,
-                                                                     color: UIConfiguration.tintColor,
-                                                                     textColor: .white,
-                                                                     width: 275,
-                                                                     height: 55))
-                                    }
-                                }
-                            }
-                        }
-                                 }
+                } else {
+                    // Fallback on earlier versions
+                }
+            }
+            Spacer()
+        }.alert(item: self.$viewModel.statusViewModel) { status in
+            Alert(title: Text(status.title),
+                  message: Text(status.message),
+                  dismissButton: .default(Text("OK"), action: {
+                if status.title == "Successful" {
+                    self.pushActive = true
+                }
+            }))
+        }.navigationBarBackButtonHidden(true).navigationBarHidden(true)
+    }
+    
+    private func customButton2(title: String,
+                               backgroundColor: UIColor,
+                               action: @escaping () -> Void) -> some View {
+        Button(action: action) {
+            Text(title)
+                .modifier(ButtonModifier(font: UIConfiguration.buttonFont,
+                                         color: backgroundColor,
+                                         textColor: .white,
+                                         width: 275,
+                                         height: 45))
+        }
+    }
+    
+    private func customButton(title: String,
+                              backgroundColor: UIColor,
+                              action: @escaping () -> Void) -> some View {
+        Button(action: action) {
+            Text(title)
+                .modifier(ButtonModifier(font: UIConfiguration.buttonFont,
+                                         color: backgroundColor,
+                                         textColor: .white,
+                                         width: 275,
+                                         height: 55))
+        }.popover(isPresented: $showingPopover) {
+            Text("Progress")
+                .font(.headline)
+                .padding()
+            if #available(iOS 14.0, *) {
+                ProgressView(viewModel.uploadText, value: viewModel.downloadAmount, total: 100).scaleEffect(x: 0.8, y: 1, anchor: .center)
+            } else {
+                // Fallback on earlier versions
+            }
+            if (viewModel.downloadAmount == 100) {
+                Button(action: {
+                    self.showingPopover = false
+                    viewModel.downloadAmount = 0
+                    viewModel.uploadText = "Uploading..."
+                    // leave this commented out so it doesnt go to dead page
+                    //viewModel.pushWebView = true
+                }) {
+                    Text("Ok")
+                        .modifier(ButtonModifier(font: UIConfiguration.buttonFont,
+                                                 color: UIConfiguration.tintColor,
+                                                 textColor: .white,
+                                                 width: 275,
+                                                 height: 55))
+                }
+            }
+        }
+    }
+}

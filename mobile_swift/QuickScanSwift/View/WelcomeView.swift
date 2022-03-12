@@ -10,9 +10,9 @@ struct WelcomeView: View {
             VStack {
                 NavigationLink(destination: destinationView(),
                                isActive: self.$pushActive) {
-                                EmptyView()
+                    EmptyView()
                 }
-                .navigationBarHidden(true)
+                               .navigationBarHidden(true)
                 
                 VStack(spacing: 25) {
                     Image("logo6")
@@ -20,7 +20,7 @@ struct WelcomeView: View {
                         .frame(width: 240, height: 240, alignment: .center)
                         .colorMultiply(Color(UIConfiguration.tintColor))
                         .padding(.top, 120)
-                
+                    
                     Text("QuickScan")
                         .modifier(TextModifier(font: UIConfiguration.titleFont,
                                                color: UIConfiguration.tintColor))
@@ -49,14 +49,19 @@ struct WelcomeView: View {
                                                        color: .black))
                                 .frame(width: 275, height: 55)
                                 .overlay(RoundedRectangle(cornerRadius: 25)
-                                    .stroke(Color.gray, lineWidth: 1)
-                            )
+                                            .stroke(Color.gray, lineWidth: 1)
+                                )
                         }
                     }
                 }
                 Spacer()
             }
-        }.navigationViewStyle(.stack).navigationBarBackButtonHidden(true).navigationBarHidden(true)
+        }.navigationViewStyle(.stack).navigationBarBackButtonHidden(true).navigationBarHidden(true).onAppear {
+            UIDevice.current.setValue(UIInterfaceOrientation.portrait.rawValue, forKey: "orientation") // Forcing the rotation to portrait
+            AppDelegate.orientationLock = .portrait // And making sure it stays that way
+        }.onDisappear {
+            AppDelegate.orientationLock = .all // Unlocking the rotation when leaving the view
+        }
     }
     
     private func destinationView() -> AnyView {

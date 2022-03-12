@@ -6,6 +6,12 @@ import ARKit
 import GoogleSignIn
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
+    
+    static var orientationLock = UIInterfaceOrientationMask.all //By default you want all your views to rotate freely
+
+    func application(_ application: UIApplication, supportedInterfaceOrientationsFor window: UIWindow?) -> UIInterfaceOrientationMask {
+        return AppDelegate.orientationLock
+    }
 
 
 
