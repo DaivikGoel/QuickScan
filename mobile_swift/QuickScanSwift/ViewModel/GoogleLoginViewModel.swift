@@ -50,8 +50,6 @@ class UserAuthModel: ObservableObject {
             // User is signed in
             // ...
         }
-        print("CURRENT USER PLEASE BE SOMETHING")
-        print(Auth.auth().currentUser)
         self.isLoggedInFirebase = true
     }
  
@@ -77,8 +75,6 @@ class UserAuthModel: ObservableObject {
                 if let error = error {
                     self.errorMessage = "error: \(error.localizedDescription)"
                 }
-                print("PLEASE LOVE OF GOD")
-                print(user?.userID)
                 self.fireBaseConnect()
                 self.checkStatus()
             }

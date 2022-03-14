@@ -30,10 +30,8 @@ class UploadViewModel: ObservableObject {
     func redirectWebsiteUrl() {
         // creates url redirect using userid
         let userId = Auth.auth().currentUser?.uid
-        print("XDDDDD")
         let userIdString = String(userId!)
         self.redirectUrl = "\("https://relaxed-snyder-a1ac71.netlify.app/edit?id=")\(userIdString)"
-        print(self.redirectUrl)
     }
     
     func buttonTapped() {
@@ -53,7 +51,6 @@ class UploadViewModel: ObservableObject {
     
     func uploadFileOld(with resource: String, type: String) {   //1
         let key = "\(resource).\(type)"
-        print(key)
         let localImagePath = Bundle.main.path(forResource: resource, ofType: type)!  //2
         let localImageUrl = URL(fileURLWithPath: localImagePath)
         
@@ -131,7 +128,6 @@ class UploadViewModel: ObservableObject {
             do {
                 // create json object from data or use JSONDecoder to convert to Model stuct
                 if let jsonResponse = try JSONSerialization.jsonObject(with: responseData, options: .mutableContainers) as? [String: Any] {
-                    print(jsonResponse)
                     // handle json response
                 } else {
                     print("data maybe corrupted or in wrong format")

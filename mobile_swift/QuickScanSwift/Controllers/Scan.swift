@@ -366,7 +366,6 @@ class Scan {
             instructionNode.geometry = text
             self.sceneView.scene.rootNode.addChildNode(instructionNode)
         } else if (boundingBoxExists) {
-            print(instructionNode)
             instructionNode.removeFromParentNode()
             //print("HIT THIS THING")
             let string = ""
