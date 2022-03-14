@@ -29,6 +29,14 @@ struct ARView: UIViewControllerRepresentable {
         return controller.stopRecording()
     }
     
+    func pauseRecording() {
+        return controller.pauseRecording()
+    }
+    
+    func resumeRecording() {
+        return controller.resumeRecording()
+    }
+    
     func getUrl() -> String {
         return controller.outputUrl
     }

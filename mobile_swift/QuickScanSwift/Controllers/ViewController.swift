@@ -48,6 +48,8 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, UI
     
     var snapshotArray:[[String:Any]] = [[String:Any]]()
     var lastTime:TimeInterval = 0
+    var pauseOffset:TimeInterval = 0
+    var startPauseTime:TimeInterval = 0
     var firstTime:CMTime = CMTime.zero
     var isRecording:Bool = false;
     
@@ -66,20 +68,6 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, UI
     override func loadView() {
         self.view = ARSCNView(frame: .zero)
     }
-    
-//    var modelURL: URL? {
-//        didSet {
-//            if let url = modelURL {
-//                displayMessage("3D model \"\(url.lastPathComponent)\" received.", expirationTime: 3.0)
-//            }
-//            if let scannedObject = self.scan?.scannedObject {
-//                scannedObject.set3DModel(modelURL)
-//            }
-//            if let dectectedObject = self.testRun?.detectedObject {
-//                dectectedObject.set3DModel(modelURL)
-//            }
-//        }
-//    }
     
     var instructionsVisible: Bool {
 //        didSet {
@@ -165,12 +153,28 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, UI
     
     func startRecording() {
         self.lastTime = 0;
+        self.pauseOffset = 0;
+        self.startPauseTime = 0;
         self.initVideo(withName: UUID().uuidString, imageArray: self.snapshotArray, size: self.screenResolution);
     }
         
     func stopRecording() {
         self.isRecording = false;
+        self.pauseOffset = 0;
+        self.startPauseTime = 0;
         self.finishVideoRecordingAndSave();
+    }
+    
+    func pauseRecording() {
+        self.pauseOffset = 0;
+        self.startPauseTime = self.viewController.session.currentFrame!.timestamp;
+        self.isRecording = false;
+    }
+    
+    func resumeRecording() {
+        self.pauseOffset = self.viewController.session.currentFrame!.timestamp - self.startPauseTime;
+        self.startPauseTime = 0;
+        self.isRecording = true;
     }
     
     public func initVideo(withName:String, imageArray:[[String:Any]], size:CGSize) {
@@ -178,21 +182,9 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, UI
                 self.prepareWriterAndInput(imageArray:imageArray, size:size, videoURL: videoURL, completionHandler: { (error) in
                     
                     guard error == nil else {
-                        // it errored.
+                        print("Error: Failed to init video")
                         return
                     }
-                    
-//                    self.createVideo(imageArray: imageArray, fps: fps, size:size, completionHandler: { _ in
-//                        print("[F] saveVideo :: DONE");
-//
-//                        guard error == nil else {
-//                            // it errored.
-//                            return
-//                        }
-//
-//                        self.finishVideoRecordingAndSave();
-//
-//                    });
                     self.outputUrl = videoURL.absoluteString
                     self.isRecording = true
                 });
@@ -298,10 +290,10 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, UI
                         alertController.addAction(defaultAction)
                         self.present(alertController, animated: true, completion: nil)
                     }
-                    // Clear the original array
+                     Clear the original array
                     self.snapshotArray.removeAll();
-                    // Clear memory
-//                    FileManager.default.clearTempMemory();
+                     Clear memory
+                    FileManager.default.clearTempMemory();
                 }
             })
             */
@@ -316,7 +308,8 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, UI
                    self!.lastTime = time;
                    
                    let scale = CMTimeScale(NSEC_PER_SEC)
-                   let currentframeTime = CMTime(value: CMTimeValue((self?.viewController.session.currentFrame!.timestamp)! * Double(scale)), timescale: scale)
+                   let timeWithPause: TimeInterval = (self?.viewController.session.currentFrame!.timestamp)! - self!.pauseOffset
+                   let currentframeTime = CMTime(value: CMTimeValue(timeWithPause * Double(scale)), timescale: scale)
                    if self!.firstTime.seconds == 0 {
                        self!.firstTime = currentframeTime
                    }

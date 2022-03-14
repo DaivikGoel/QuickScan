@@ -10,6 +10,7 @@ import Foundation
 import ARKit
 struct ARUIView: View {
     @State var isRecording = false
+    @State var isPaused = false
     @State var pushActive = false
     @State var buttonShow = true
     @State var toggledOn = false
@@ -95,9 +96,13 @@ struct ARUIView: View {
                                     )
                                 Button(action: {
                                     if (isRecording) {
+                                        isPaused = true
                                         isRecording = false
-                                        ar.stopRecording()
-                                        self.pushActive = true
+                                        ar.pauseRecording()
+                                    } else if (isPaused) {
+                                        isPaused = false
+                                        isRecording = true
+                                        ar.resumeRecording()
                                     } else {
                                         isRecording = ar.startRecording()
                                     }
@@ -112,7 +117,10 @@ struct ARUIView: View {
                             Spacer()
                             Spacer()
                             Button {
-                                toggleFlashLight()
+                                isPaused = false
+                                isRecording = false
+                                ar.stopRecording()
+                                self.pushActive = true
                             } label: {
                                 Image(systemName: "square.and.arrow.up").font(.system(size: 30.0)).foregroundColor(Color.white)
                             }.padding()
