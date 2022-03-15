@@ -313,28 +313,19 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, UI
         })
     }
     
-    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
-            if UIDevice.current.orientation.isLandscape {
-                print("landscape")
-            } else {
-                print("portrait")
-            }
-        }
-    
     public func getVideoTransform() -> CGAffineTransform {
-        switch UIDevice.current.orientation {
+        guard let scene = UIApplication.shared.windows.first?.windowScene else {
+            return .identity
+        }
+        switch scene.interfaceOrientation {
             case .portrait:
-                print("Portrait")
                 return CGAffineTransform(rotationAngle: .pi/2)
             case .portraitUpsideDown:
-                print("Protrait inverse")
                 return CGAffineTransform(rotationAngle: -.pi/2)
             case .landscapeLeft:
-                print("Land LEFT")
-                return .identity
-            case .landscapeRight:
-                print("Land RIGHT")
                 return CGAffineTransform(rotationAngle: .pi)
+            case .landscapeRight:
+                return .identity
             default:
                 return .identity
             }

@@ -83,7 +83,7 @@ struct ARUIView: View {
                             Button {
                                 toggleFlashLight()
                             } label: {
-                                Image(systemName: "flashlight.on.fill").font(.system(size: 40.0)).foregroundColor(Color.white)
+                                Image(systemName: "flashlight.on.fill").font(.system(size: 30.0)).foregroundColor(Color.white)
                             }.padding()
                             Spacer()
                             Spacer()

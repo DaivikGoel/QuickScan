@@ -32,16 +32,21 @@ struct UploadView: View {
             }.hidden()
             
             VStack(alignment: .center, spacing: 10) {
-                Text("Upload")
+                Spacer()
+                Text("Upload Video")
                     .modifier(TextModifier(font: UIConfiguration.titleFont,
                                            color: UIConfiguration.tintColor))
                     .padding(.horizontal, 60)
+                Spacer()
+                Spacer()
                 VStack(alignment: .center) {
                     CustomTextField(placeHolderText: "Title",
                                     text: $viewModel.title)
                     CustomTextField(placeHolderText: "Description",
                                     text: $viewModel.description)
                 }.padding(.horizontal, 25)
+                Spacer()
+                Spacer()
                 Button(action: {
                     self.pushActiveBack = true
                 }) {
@@ -53,16 +58,14 @@ struct UploadView: View {
                                     .stroke(Color.gray, lineWidth: 1)
                         )
                 }
-                VStack(alignment: .center) {
-                    customButton(title: "Upload Video",
-                                 backgroundColor: UIColor(hexString: "#913FE7"),
-                                 action: {
-                        self.viewModel.upload()
-                        self.pushActive = true
-                        self.showingPopover = true
-                    })
-                        .padding(.horizontal, 60)
-                }
+                customButton(title: "Upload Video",
+                             backgroundColor: UIColor(hexString: "#913FE7"),
+                             action: {
+                    self.viewModel.upload()
+                    self.pushActive = true
+                    self.showingPopover = true
+                })
+                    .padding(.horizontal, 60)
                 /*
                  Button(action: {
                  self.viewModel.pushWebView = true
@@ -77,16 +80,17 @@ struct UploadView: View {
                  }
                  */
                 if #available(iOS 14.0, *) {
-                    Link("View Uploads and 3d Objects", destination: URL(string: viewModel.redirectUrl)!)                        .modifier(TextModifier(font: UIConfiguration.buttonFont,
+                    Link("View Uploads", destination: URL(string: viewModel.redirectUrl)!)                        .modifier(TextModifier(font: UIConfiguration.buttonFont,
                                                                                                                                                         color: .black))
                         .frame(width: 275, height: 55)
                         .overlay(RoundedRectangle(cornerRadius: 25)
                                     .stroke(Color.gray, lineWidth: 1))
+                    Spacer()
                 } else {
+                    Spacer()
                     // Fallback on earlier versions
                 }
             }
-            Spacer()
         }.alert(item: self.$viewModel.statusViewModel) { status in
             Alert(title: Text(status.title),
                   message: Text(status.message),
