@@ -10,6 +10,7 @@ import Foundation
 import ARKit
 struct ARUIView: View {
     @State var isRecording = false
+    @State var hasVideo = false
     @State var isPaused = false
     @State var pushActive = false
     @State var buttonShow = true
@@ -105,6 +106,7 @@ struct ARUIView: View {
                                         ar.resumeRecording()
                                     } else {
                                         isRecording = ar.startRecording()
+                                        hasVideo = isRecording
                                     }
                                 }) {
                                     Text("")
@@ -117,10 +119,14 @@ struct ARUIView: View {
                             Spacer()
                             Spacer()
                             Button {
-                                isPaused = false
-                                isRecording = false
-                                ar.stopRecording()
-                                self.pushActive = true
+                                if (hasVideo) {
+                                    isPaused = false
+                                    isRecording = false
+                                    ar.stopRecording()
+                                    self.pushActive = true
+                                } else {
+                                    ar.showAlert(msg: "Record a video before uploading")
+                                }
                             } label: {
                                 Image(systemName: "square.and.arrow.up").font(.system(size: 30.0)).foregroundColor(Color.white)
                             }.padding()

@@ -157,6 +157,13 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, UI
         self.startPauseTime = 0;
         self.initVideo(withName: UUID().uuidString, imageArray: self.snapshotArray, size: self.screenResolution);
     }
+    
+    func showAlert(msg: String) {
+        let alertController = UIAlertController(title: msg, message: nil, preferredStyle: .alert)
+        let defaultAction = UIAlertAction(title: "OK", style: .default, handler: nil)
+        alertController.addAction(defaultAction)
+        self.present(alertController, animated: true, completion: nil)
+    }
         
     func stopRecording() {
         self.isRecording = false;

@@ -41,6 +41,10 @@ struct ARView: UIViewControllerRepresentable {
         return controller.outputUrl
     }
     
+    func showAlert(msg: String) {
+        return controller.showAlert(msg: msg)
+    }
+    
     func updateUIViewController(_ uiViewController:
        ARView.UIViewControllerType, context:
        UIViewControllerRepresentableContext<ARView>) { }
