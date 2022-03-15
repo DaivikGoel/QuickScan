@@ -207,6 +207,18 @@ extension ViewController {
         }
     }
     
+    func switchToDefineBoundingBox() {
+        if let scan = scan {
+            scan.state = .defineBoundingBox
+        }
+    }
+    
+    func switchToScanning() {
+        if let scan = scan {
+            scan.state = .scanning
+        }
+    }
+    
     func switchToNextState() {
         switch state {
         case .startARSession:

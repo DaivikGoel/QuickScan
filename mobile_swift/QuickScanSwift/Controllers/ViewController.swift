@@ -50,6 +50,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, UI
     var lastTime:TimeInterval = 0
     var pauseOffset:TimeInterval = 0
     var startPauseTime:TimeInterval = 0
+    var currentPauseOffset:TimeInterval = 0
     var firstTime:CMTime = CMTime.zero
     var isRecording:Bool = false;
     
@@ -153,6 +154,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, UI
     
     func startRecording() {
         self.lastTime = 0;
+        self.currentPauseOffset = 0;
         self.pauseOffset = 0;
         self.startPauseTime = 0;
         self.initVideo(withName: UUID().uuidString, imageArray: self.snapshotArray, size: self.screenResolution);
@@ -167,21 +169,25 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, UI
         
     func stopRecording() {
         self.isRecording = false;
+        self.currentPauseOffset = 0;
         self.pauseOffset = 0;
         self.startPauseTime = 0;
         self.finishVideoRecordingAndSave();
     }
     
     func pauseRecording() {
-        self.pauseOffset = 0;
+        self.currentPauseOffset = 0;
+        switchToDefineBoundingBox();
         self.startPauseTime = self.viewController.session.currentFrame!.timestamp;
         self.isRecording = false;
     }
     
     func resumeRecording() {
-        self.pauseOffset = self.viewController.session.currentFrame!.timestamp - self.startPauseTime;
+        self.currentPauseOffset = self.viewController.session.currentFrame!.timestamp - self.startPauseTime;
+        self.pauseOffset += self.currentPauseOffset;
         self.startPauseTime = 0;
         self.isRecording = true;
+        switchToScanning();
     }
     
     public func initVideo(withName:String, imageArray:[[String:Any]], size:CGSize) {
@@ -226,6 +232,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, UI
         
                 self.videoInput  = AVAssetWriterInput (mediaType: AVMediaType.video, outputSettings: videoOutputSettings)
                 self.videoInput!.expectsMediaDataInRealTime = true
+                self.videoInput!.transform = getVideoTransform()
                 self.assetWriter!.add(self.videoInput!)
                 
                 // Create Pixel buffer Adaptor
@@ -236,7 +243,6 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, UI
                     (kCVPixelBufferHeightKey as String): Float(size.height)] as [String : Any]
                 
                 self.pixelBufferAdaptor = AVAssetWriterInputPixelBufferAdaptor(assetWriterInput: self.videoInput!, sourcePixelBufferAttributes: sourceBufferAttributes);
-        
                 self.assetWriter?.startWriting();
                 self.assetWriter?.startSession(atSourceTime: CMTime.zero);
                 completionHandler(nil);
@@ -306,6 +312,33 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, UI
             */
         })
     }
+    
+    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+            if UIDevice.current.orientation.isLandscape {
+                print("landscape")
+            } else {
+                print("portrait")
+            }
+        }
+    
+    public func getVideoTransform() -> CGAffineTransform {
+        switch UIDevice.current.orientation {
+            case .portrait:
+                print("Portrait")
+                return CGAffineTransform(rotationAngle: .pi/2)
+            case .portraitUpsideDown:
+                print("Protrait inverse")
+                return CGAffineTransform(rotationAngle: -.pi/2)
+            case .landscapeLeft:
+                print("Land LEFT")
+                return .identity
+            case .landscapeRight:
+                print("Land RIGHT")
+                return CGAffineTransform(rotationAngle: .pi)
+            default:
+                return .identity
+            }
+        }
     
     public func didUpdateAtTime(time: TimeInterval, snapshot: CVPixelBuffer) {
        if self.isRecording {
