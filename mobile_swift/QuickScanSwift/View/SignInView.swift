@@ -42,11 +42,11 @@ struct SignInView: View {
     
     var body: some View {
         ScrollView {VStack {
-            NavigationLink(destination: ARUIView(state: viewModel.state),
+            NavigationLink(destination: TutorialView(state: viewModel.state),
                            isActive: self.$change) {
                 EmptyView()
             }.hidden()
-            NavigationLink(destination: ARUIView(state: viewModel.state),
+            NavigationLink(destination: TutorialView(state: viewModel.state),
                            isActive: self.$pushActive) {
                 EmptyView()
             }.hidden()

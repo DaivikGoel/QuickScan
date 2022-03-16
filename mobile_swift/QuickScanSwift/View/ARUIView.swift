@@ -56,28 +56,6 @@ struct ARUIView: View {
                     ar
                     VStack {
                         Spacer()
-                        Button(action: {
-                            if (self.buttonShow) {
-                                self.buttonShow = false
-                            } else {
-                                self.buttonShow = true
-                            }
-                        }, label: {
-                            Text("Tap the screen to create a bounding box.\n Drag the corners of the box to modify size and shape. Tap and drag the box to move it wherever you desire.\n When you are ready, tap the record button and fill the box to complete the recording.\n\n Tap to dismiss")
-                                .foregroundColor(Color.black).multilineTextAlignment(.center)        .font(.system(size: 500))
-                                .minimumScaleFactor(0.01)
-                        })
-                            .frame(height: 220)
-                            .frame(maxWidth: .infinity)
-                            .background(
-                                RoundedRectangle(cornerRadius: 90, style: .continuous).fill(Color.white)
-                            )
-                            .overlay(
-                                RoundedRectangle(cornerRadius: 90, style: .continuous)
-                                    .strokeBorder(Color.blue, lineWidth: 1)
-                            )
-                            .opacity(self.buttonShow ? 1 : 0)
-                        Spacer()
                         HStack {
                             Spacer()
                             Button {

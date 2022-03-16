@@ -341,7 +341,7 @@ class Scan {
         self.sceneView.play(nil)
         
         if (!boundingBoxExists) {
-            let string = "Hope you enjoyed using the app."
+            let string = ""
             let text = SCNText(string: string, extrusionDepth: 1.2)
             let material = SCNMaterial()
             material.diffuse.contents = UIColor.magenta
