@@ -39,6 +39,12 @@
 		073C368227CFEA30000CE6C2 /* ARUIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 073C368127CFEA30000CE6C2 /* ARUIView.swift */; };
 		07D21ECA27D7EEF50062D1D3 /* WebUIController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07D21EC927D7EEF50062D1D3 /* WebUIController.swift */; };
 		07D21ECC27D7EF560062D1D3 /* WebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07D21ECB27D7EF560062D1D3 /* WebView.swift */; };
+		07E709AF27E16D2200EEF6B2 /* TutorialView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07E709AE27E16D2200EEF6B2 /* TutorialView.swift */; };
+		07E709B127E1BCB700EEF6B2 /* VideoPlayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07E709B027E1BCB700EEF6B2 /* VideoPlayerView.swift */; };
+		07E709B827E2479700EEF6B2 /* video1.mov in Resources */ = {isa = PBXBuildFile; fileRef = 07E709B427E2479600EEF6B2 /* video1.mov */; };
+		07E709B927E2479700EEF6B2 /* video2.mov in Resources */ = {isa = PBXBuildFile; fileRef = 07E709B527E2479600EEF6B2 /* video2.mov */; };
+		07E709BA27E2479700EEF6B2 /* video4.mov in Resources */ = {isa = PBXBuildFile; fileRef = 07E709B627E2479600EEF6B2 /* video4.mov */; };
+		07E709BB27E2479700EEF6B2 /* video3.mov in Resources */ = {isa = PBXBuildFile; fileRef = 07E709B727E2479700EEF6B2 /* video3.mov */; };
 		30127DCB24DE506300576F65 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30127DCA24DE506300576F65 /* AppDelegate.swift */; };
 		30127DCD24DE506300576F65 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30127DCC24DE506300576F65 /* SceneDelegate.swift */; };
 		30127DCF24DE506300576F65 /* SignInView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30127DCE24DE506300576F65 /* SignInView.swift */; };
@@ -103,6 +109,12 @@
 		073C368127CFEA30000CE6C2 /* ARUIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARUIView.swift; sourceTree = "<group>"; usesTabs = 0; };
 		07D21EC927D7EEF50062D1D3 /* WebUIController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebUIController.swift; sourceTree = "<group>"; };
 		07D21ECB27D7EF560062D1D3 /* WebView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebView.swift; sourceTree = "<group>"; };
+		07E709AE27E16D2200EEF6B2 /* TutorialView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TutorialView.swift; sourceTree = "<group>"; };
+		07E709B027E1BCB700EEF6B2 /* VideoPlayerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoPlayerView.swift; sourceTree = "<group>"; };
+		07E709B427E2479600EEF6B2 /* video1.mov */ = {isa = PBXFileReference; lastKnownFileType = video.quicktime; path = video1.mov; sourceTree = "<group>"; };
+		07E709B527E2479600EEF6B2 /* video2.mov */ = {isa = PBXFileReference; lastKnownFileType = video.quicktime; path = video2.mov; sourceTree = "<group>"; };
+		07E709B627E2479600EEF6B2 /* video4.mov */ = {isa = PBXFileReference; lastKnownFileType = video.quicktime; path = video4.mov; sourceTree = "<group>"; };
+		07E709B727E2479700EEF6B2 /* video3.mov */ = {isa = PBXFileReference; lastKnownFileType = video.quicktime; path = video3.mov; sourceTree = "<group>"; };
 		0B8AE8CB2A252EC929D1448D /* Pods-FirebaseStarterSwiftUIApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FirebaseStarterSwiftUIApp.release.xcconfig"; path = "Target Support Files/Pods-FirebaseStarterSwiftUIApp/Pods-FirebaseStarterSwiftUIApp.release.xcconfig"; sourceTree = "<group>"; };
 		29C8AC219E5BF9499AB43332 /* Pods-QuickScanSwift.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-QuickScanSwift.debug.xcconfig"; path = "Target Support Files/Pods-QuickScanSwift/Pods-QuickScanSwift.debug.xcconfig"; sourceTree = "<group>"; };
 		30127DC724DE506300576F65 /* QuickScanSwift.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = QuickScanSwift.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -298,6 +310,8 @@
 				07D21EC927D7EEF50062D1D3 /* WebUIController.swift */,
 				07D21ECB27D7EF560062D1D3 /* WebView.swift */,
 				D5A224F527D856780051104C /* WebsiteRedirectView.swift */,
+				07E709AE27E16D2200EEF6B2 /* TutorialView.swift */,
+				07E709B027E1BCB700EEF6B2 /* VideoPlayerView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -374,6 +388,10 @@
 		D52D27E727C46C32003284D8 /* videos */ = {
 			isa = PBXGroup;
 			children = (
+				07E709B427E2479600EEF6B2 /* video1.mov */,
+				07E709B527E2479600EEF6B2 /* video2.mov */,
+				07E709B727E2479700EEF6B2 /* video3.mov */,
+				07E709B627E2479600EEF6B2 /* video4.mov */,
 			);
 			path = videos;
 			sourceTree = "<group>";
@@ -445,8 +463,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				30127DD724DE506500576F65 /* LaunchScreen.storyboard in Resources */,
+				07E709B927E2479700EEF6B2 /* video2.mov in Resources */,
 				073C365E27CF3BEB000CE6C2 /* art.scnassets in Resources */,
+				07E709BB27E2479700EEF6B2 /* video3.mov in Resources */,
+				07E709B827E2479700EEF6B2 /* video1.mov in Resources */,
 				30127DDF24DE9F3400576F65 /* GoogleService-Info.plist in Resources */,
+				07E709BA27E2479700EEF6B2 /* video4.mov in Resources */,
 				30127DD424DE506500576F65 /* Preview Assets.xcassets in Resources */,
 				30127DD124DE506500576F65 /* Assets.xcassets in Resources */,
 			);
@@ -519,6 +541,7 @@
 				30F0AF8C24E92D160084CE6E /* AuthAPI.swift in Sources */,
 				073C366927CF3BEB000CE6C2 /* Scan.swift in Sources */,
 				073C364627CF3BC7000CE6C2 /* Tile.swift in Sources */,
+				07E709AF27E16D2200EEF6B2 /* TutorialView.swift in Sources */,
 				073C363B27CF3BC7000CE6C2 /* ScannedPointCloud.swift in Sources */,
 				073C364227CF3BC7000CE6C2 /* DetectedPointCloud.swift in Sources */,
 				D539E1BD27BEFC36004E3C9E /* UploadViewModel.swift in Sources */,
@@ -555,6 +578,7 @@
 				073C366127CF3BEB000CE6C2 /* RoundedButton.swift in Sources */,
 				073C366E27CF3BEB000CE6C2 /* Utilities.swift in Sources */,
 				30F0AF9B24E989020084CE6E /* CustomTextField.swift in Sources */,
+				07E709B127E1BCB700EEF6B2 /* VideoPlayerView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -622,7 +646,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.5;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -676,7 +700,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.5;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
@@ -693,14 +717,14 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_ASSET_PATHS = "";
-				DEVELOPMENT_TEAM = BS9DKVU4ZA;
+				DEVELOPMENT_TEAM = 8D84J3WQ55;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = "$(SRCROOT)/QuickScanSwift/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.quickscan.swift.mobile.8;
+				PRODUCT_BUNDLE_IDENTIFIER = com.quickscan.mobile.2;
 				PRODUCT_NAME = QuickScanSwift;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
