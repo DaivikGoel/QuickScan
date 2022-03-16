@@ -40,7 +40,7 @@ const Home = ({ location }) => {
           const tagResponse = await axios.get(tagUrl)
           if (tagResponse) {
             const data = tagResponse.data.data;
-            setTags(data.map(t => ({ value: t, label: t['tag_title'].toUpperCase() })))
+            setTags(data.map(t => ({ value: t['TAG_TITLE'], label: t['TAG_TITLE'] })))
           }
           const response = await axios.get(collectionUrl)
           if (response) {
@@ -72,7 +72,7 @@ const Home = ({ location }) => {
       filterByUrlParam(cardProps)
     } else {
       setFilteredCardProps(filteredCardProps.filter(card => selectedTags.every(t => {
-        return card.tags?.includes(t.value['tag_title'])
+        return card.tags?.includes(t.value)
       })))
     }
   }, [selectedTags])
