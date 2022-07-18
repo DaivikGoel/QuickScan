@@ -1,13 +1,7 @@
 const Pool = require('pg').Pool
 const formidable = require("formidable");
 
-const pool = new Pool({
-  user: 'admin',
-  host: 'localhost',
-  database: 'quickScan',
-  password: 'password',
-  port: 5432,
-})
+const pool = new Pool({})
 
 const getCollections = (request, response) => {
     pool.query('SELECT * FROM collection ORDER BY timestamp DESC', (error, results) => {
