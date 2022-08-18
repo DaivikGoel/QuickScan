@@ -4,3 +4,7 @@ QuickScan is a mobile app that offers a streamlined end-to-end experience in sca
 
 
 🏆Winner of the People's Choice Adel Sedra Capstone Entrepreneurship Award at the University of Waterloo's 2022 ECE Capstone Symposium🏆
+
+This [video](https://www.youtube.com/watch?v=NPoGub8x8jM) gives a quick demo of our application! 
+
+
